@@ -13,21 +13,19 @@ public class ProjectileExplosionScript : MonoBehaviour
     public static AudioSource combineBallSource;
 
     public GameObject entity;
-
     public bool isCombineBall;
+
+    public Light gn_blinker;
+    private float gn_blinkTimer;
+    public float gn_blinkTimeMax;
+
     private float timer;
     public float timerMax;
-
-    private float floatTimer;
-    public float floatTimeMax;
-
     public ParticleSystem explosionPrefab;
 
-    // Start is called before the first frame update
     void Start()
     {
         timer = 0.0f;
-        floatTimer = 0.0f;
         if (isCombineBall)
         {
             combineBallSource = this.GetComponent<AudioSource>();
@@ -38,32 +36,43 @@ public class ProjectileExplosionScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        print("GrenadeDrop is " + GrenadeScript.gn_explodeDrop);
+        if (GrenadeScript.gn_explodeDrop)
+        {
+            Explosion();
+            Destroy(this.gameObject);
+            GrenadeScript.gn_explodeDrop = false;
+        }
+
         timer += Time.deltaTime;
 
-        // PROJECTILE EXPLODES ANYWAY AFTER 5 SECONDS
+        // PROJECTILE EXPLODES ANYWAY AFTER X SECONDS
         if (timer >= timerMax)
         {
             Explosion();
             Destroy(this.gameObject);
         }
+    }
 
-        // IF TARGET WAS HUMANOID AND HIT BY COMBINE BALL
-        if (entity != null && entity.activeSelf)
+    private void FixedUpdate()
+    {
+        if (this.gameObject.tag.Equals("PlayerGrenade"))
         {
-            if (EntityHealth.isFloating)
-            {
-                entity.GetComponent<EntityHealth>().neutralFace.SetActive(false);
-                entity.GetComponent<EntityHealth>().hostileFace.SetActive(false);
-                entity.GetComponent<EntityHealth>().deadFace.SetActive(true);
-                floatTimer += Time.deltaTime;
+            gn_blinkTimer += Time.deltaTime;
 
-                if (floatTimer >= floatTimeMax)
-                {
-                    Destroy(entity);
-                }
+            // LIGHT BLINKS
+            if (gn_blinkTimer >= gn_blinkTimeMax)
+            {
+                gn_blinker.range = 10;
+                gn_blinkTimer = 0.0f;
+            }
+            else
+            {
+                gn_blinker.range = 5;
             }
         }
     }
+
     private void OnCollisionEnter(Collision col)
     {
         if (isCombineBall)
@@ -84,24 +93,29 @@ public class ProjectileExplosionScript : MonoBehaviour
                             StartCoroutine(Floating(entity));   //float up
                         }
                     }
-                    else if (col.transform.parent.gameObject.GetComponent<EntityHealth>() != null)
+                    if (col.transform.parent != null)
                     {
-                        entity = col.transform.parent.gameObject;
-                        if (entity.GetComponent<EntityHealth>().isHumanoid)
+                        if (col.transform.parent.gameObject.GetComponent<EntityHealth>() != null)
                         {
-                            StartCoroutine(Floating(entity));   //float up
+                            entity = col.transform.parent.gameObject;
+                            if (entity.GetComponent<EntityHealth>().isHumanoid)
+                            {
+                                StartCoroutine(Floating(entity));   //float up
+                            }
                         }
                     }
                 }
             }
         }
     }
+    // IF SMG GRENADE
     private void OnTriggerEnter(Collider other)
     {
         Explosion();      
         Destroy(this.gameObject);  
     }
 
+    // IF COMBINE BALL
     public static IEnumerator BallSound(AudioClip SFX, float delay)
     {
         combineBallSource.PlayOneShot(SFX);
@@ -117,7 +131,7 @@ public class ProjectileExplosionScript : MonoBehaviour
         {
             Rigidbody rb = hit.GetComponent<Rigidbody>();
 
-            if (!hit.transform.tag.Equals("SMGGrenade") && !hit.transform.tag.Equals("CombineBall"))
+            if (!hit.transform.tag.Equals("SMGGrenade") && !hit.transform.tag.Equals("CombineBall") && !hit.transform.tag.Equals("Grenade"))
             {
                 if (rb != null)
                 {
@@ -126,21 +140,27 @@ public class ProjectileExplosionScript : MonoBehaviour
                     if (hit.transform.gameObject.GetComponent<EntityHealth>() != null)
                     {
                         GameObject entity = hit.transform.gameObject;
-                        int damage = Mathf.CeilToInt(CalculateDamage(entity.transform.position));
-                        entity.GetComponent<EntityHealth>().entityCurrentHealth -= damage;
-                        print("Explosive damage " + damage);
+                        EntityExplosionDamage(entity);
                     }
-                    else if (hit.transform.parent.transform.gameObject.GetComponent<EntityHealth>() != null)
+
+                    if (hit.transform.parent != null)
                     {
-                        GameObject entity = hit.transform.parent.transform.gameObject;
-                        int damage = Mathf.CeilToInt(CalculateDamage(entity.transform.position));
-                        entity.GetComponent<EntityHealth>().entityCurrentHealth -= damage;
-                        print("Explosive damage " + damage);
+                        if (hit.transform.parent.transform.gameObject.GetComponent<EntityHealth>() != null)
+                        {
+                            GameObject entity = hit.transform.parent.transform.gameObject;
+                            EntityExplosionDamage(entity);
+                        }
                     }
-                    else
+
+                    if (hit.tag.Equals("Player"))
                     {
-                        int damage = Mathf.CeilToInt(CalculateDamage(hit.transform.position));
-                        print("Explosive damage " + damage);
+                        GameObject player = hit.transform.gameObject;
+                        int damage = Mathf.CeilToInt(CalculateDamage(player.transform.position));
+                        int damageThreshold = Mathf.CeilToInt(player.GetComponent<PlayerHealth>().damageThreshold);
+                        if (damage > damageThreshold)
+                        {
+                            PlayerHealth.playerHealth = PlayerHealth.playerHealth - (damage - damageThreshold);
+                        }
                     }
                 }
             }
@@ -156,22 +176,25 @@ public class ProjectileExplosionScript : MonoBehaviour
             explosionPrefab.Play();
         }
     }
+
+    private void EntityExplosionDamage(GameObject entity)
+    {
+        int damage = Mathf.CeilToInt(CalculateDamage(entity.transform.position));
+        entity.GetComponent<EntityHealth>().entityCurrentHealth -= damage;
+    }
+
     private float CalculateDamage(Vector3 targetPosition)
     {
-
         Vector3 explosionToTarget = targetPosition - transform.position;
-
         float explosionDistance = explosionToTarget.magnitude;
-
         float relativeDistance = (explosionRadius - explosionDistance) / explosionRadius;
-
         float damage = relativeDistance * explosionPower;
-
         damage = Mathf.Max(0f, damage);
-
         return damage;
     }
 
+    // COMBINE BALL MAKES HUMANOID TARGETS FLOAT UP
+    // TODO MAKE HUMANOID TARGETS DISSOLVE
     IEnumerator Floating(GameObject entity)
     {
         if (entity.GetComponent<Rigidbody>() == null)
@@ -189,6 +212,7 @@ public class ProjectileExplosionScript : MonoBehaviour
         }
         float entityMass = entity.GetComponent<Rigidbody>().mass;
         entity.GetComponent<Rigidbody>().AddForce(0, entityMass * 20, 0);
+        entity.GetComponent<EntityHealth>().entityCurrentHealth -= 1000;
         yield return null;
     }
 }

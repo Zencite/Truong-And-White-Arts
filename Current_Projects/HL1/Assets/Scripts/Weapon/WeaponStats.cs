@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class WeaponStats : MonoBehaviour
 {
-    // PRIMARY WEAPON FIRE
+    // PRIMARY WEAPON FIRE STATS
+
     public string weaponName;
     public string getWeaponName() { return weaponName; }
 
@@ -38,7 +39,7 @@ public class WeaponStats : MonoBehaviour
     public float weaponForce;
     public float getWeaponForce() { return weaponForce; }
 
-    // ALT WEAPON FIRE
+    // ALT WEAPON FIRE STATS
 
     public bool weaponHasAltFire;
     public bool isWeaponHasAltFire() { return weaponHasAltFire; }
@@ -76,7 +77,7 @@ public class WeaponStats : MonoBehaviour
     public GameObject projectile;
     public GameObject getProjectile() { return projectile; }
 
-    // CHECK WEAPON
+    // CHECK WEAPON STATUS
 
     public bool weaponPickedUp;
     public bool isWeaponPickedUp() { return weaponPickedUp; }
@@ -112,7 +113,6 @@ public class WeaponStats : MonoBehaviour
 
     private GameObject tempWeapon;
 
-    // Update is called once per frame
     void Update()
     {
         if (this.gameObject.activeSelf)
@@ -127,43 +127,41 @@ public class WeaponStats : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        //Pick up weapon/pickups
+        // PICK UP WEAPONS/PICKUPS
         if (other.tag.Equals("Player"))
         {
             string weaponTag = "Player" + this.gameObject.GetComponent<WeaponStats>().getWeaponName();
             Transform gunCam = GameObject.Find("GunCam").transform;
 
-            //search in gameobject gunCam for the weapon with the tag
+            // SEARCH FOR WEAPON WITH SAME TAG IN THE CHILDREN POOL OF GUNCAM
             foreach (Transform child in gunCam)
             {
-                //Find the weapon in the player's list
+                // IF FOUND, ASSIGN IT TO TEMPWEAPON
                 if (child.gameObject.tag.Equals(weaponTag))
                 {
                     tempWeapon = child.gameObject;
                 }
             }
 
-            //If weapon was picked up first time, enable it
+            // IF PICKED UP FIRST TIME, MAKE ACTIVE WEAPON
             if (tempWeapon.GetComponent<WeaponStats>().isWeaponPickedUp() != true && !isAnAmmoBox && !isAnAmmoCrate)
             {
-                //checks if another weapon was active when new weapon was picked up to deactivate
+                // DEACTIVES ANY OTHER WEAPON IN CHILDREN POOL OF GUNCAM
                 foreach (Transform child in gunCam)
                 {
-                    //print(child);
                     if (child.gameObject.activeInHierarchy == true)
                     {
                         child.gameObject.GetComponent<WeaponStats>().weaponActive = false;
                         child.gameObject.SetActive(false);
                     }
                 }
-                //sets the weapon as the active weapon
+                // SETS NEW GUN AS ACTIVE WEAPON
                 tempWeapon.SetActive(true);
-                //assigns activeWeapon as the tempWeapon
                 WeaponScript.activeWeapon = tempWeapon;
                 bool isCrowbar = tempWeapon.GetComponent<WeaponStats>().getWeaponName().Equals("Crowbar");
                 bool isGravGun = tempWeapon.GetComponent<WeaponStats>().getWeaponName().Equals("GravityGun");
 
-                //if Weapon is not the crowbar of Gravity Gun update the ammo UI
+                // IF WEAPON IS NOT CROWBAR OR GRAV GUN, UPDATE PLAYER WEAPON UI
                 if (!WeaponScript.weaponSwitch && !isAnAmmoBox && !isAnAmmoCrate)
                 {
                     if (!isGravGun)
@@ -185,26 +183,26 @@ public class WeaponStats : MonoBehaviour
                     }
                 }
 
-                //update the weapon pick up UI
+                // UPDATE WEAPON PICK UP UI
                 FindWeaponPickUp(tempWeapon.GetComponent<WeaponStats>().getWeaponName());
 
-                //checks that this weapon has now been picked up by the player
+                // CHECK THAT WEAPON HAS NOW BEEN PICKED UP BY PLAYER
                 tempWeapon.GetComponent<WeaponStats>().weaponPickedUp = true;
 
-                //indicates items has been picked up
+                // PLAYS PICK UP NOISE
                 StartCoroutine(SoundController.gunSounds(ammoPickUpSFX, 0));
 
-                //deletes the gameobject in world
+                // REMOVES THE WORLDVIEW OBJECT
                 Destroy(this.gameObject);
 
             }
-            //Weapon is already picked up
+            // IF WEAPON WAS ALREADY PICKED UP
             else if (tempWeapon.GetComponent<WeaponStats>().isWeaponPickedUp() == true)
             {
-                //If weapon was already picked up, pick up it's ammo stored in weaponStats script if it can
+                // CHECK IF IT CAN PICK UP IT'S AMMO
                 if (!isAnAmmoCrate && !WeaponScript.weaponSwitch)
                 {
-                    //Pick ammo for primary ammo
+                    // PICK UP PRIMARY AMMO
                     if ((tempWeapon.GetComponent<WeaponStats>().getWeaponCurrentAmmo() != tempWeapon.GetComponent<WeaponStats>().getWeaponMaxAmmo()))
                     {
                         WeaponAmmoPickUp(tempWeapon);
@@ -212,7 +210,7 @@ public class WeaponStats : MonoBehaviour
                         StartCoroutine(SoundController.gunSounds(ammoPickUpSFX, 0));
                         Destroy(this.gameObject);
                     }
-                    //Pick ammo for secondary
+                    // PICK UP SECONDARY AMMO
                     else if (tempWeapon.GetComponent<WeaponStats>().isWeaponHasAltFire() && (tempWeapon.GetComponent<WeaponStats>().getAltWeaponCurrentAmmo() != tempWeapon.GetComponent<WeaponStats>().getAltWeaponMaxAmmo()))
                     {
                         WeaponAmmoPickUp(tempWeapon);
@@ -222,13 +220,13 @@ public class WeaponStats : MonoBehaviour
                     }
                 }
 
-                //Pick up ammo from refillable crates
+                // PICK UP AMMO FROM SUPPLY CRATES
                 else if (isAnAmmoCrate && !WeaponScript.weaponSwitch)
                 {
-                    //Check if crate is in resupply mode
+                    // CHECK IF CRATE IS NOT RESUPPLYING
                     if (!ResupplyCrateScript.isResupplying)
                     {
-                        //Pick ammo for primary ammo
+                        // PICK UP PRIMARY AMMO
                         if ((tempWeapon.GetComponent<WeaponStats>().getWeaponCurrentAmmo() != tempWeapon.GetComponent<WeaponStats>().getWeaponMaxAmmo()))
                         {
                             WeaponAmmoPickUp(tempWeapon);
@@ -237,7 +235,7 @@ public class WeaponStats : MonoBehaviour
                             StartCoroutine(SoundController.gunSounds(ammoPickUpSFX, 0));
                             ResupplyCrateScript.isResupplying = true;
                         }
-                        //Pick ammo for secondary ammo
+                        // PICK UP SECONDARY AMMO
                         else if (tempWeapon.GetComponent<WeaponStats>().isWeaponHasAltFire() && (tempWeapon.GetComponent<WeaponStats>().getAltWeaponCurrentAmmo() != tempWeapon.GetComponent<WeaponStats>().getAltWeaponMaxAmmo()))
                         {
                             WeaponAmmoPickUp(tempWeapon);
@@ -257,23 +255,19 @@ public class WeaponStats : MonoBehaviour
         if ((this.GetComponent<WeaponStats>().getWeaponCurrentAmmo() != 0 || this.GetComponent<WeaponStats>().getWeaponCurrentClipSize() != 0) && (tempWeapon.GetComponent<WeaponStats>().getWeaponCurrentAmmo() < tempWeapon.GetComponent<WeaponStats>().getWeaponMaxAmmo()))
         {
             int thisAmmoTotal = this.GetComponent<WeaponStats>().getWeaponCurrentAmmo() + this.GetComponent<WeaponStats>().getWeaponCurrentClipSize();
-            //print("this ammo total is " + thisAmmoTotal);
+
             int currentAmmoTotal = tempWeapon.GetComponent<WeaponStats>().getWeaponCurrentAmmo();
-            //print("current ammo total is " + currentAmmoTotal);
 
             if ((thisAmmoTotal + currentAmmoTotal) > tempWeapon.GetComponent<WeaponStats>().getWeaponMaxAmmo())
             {
-                //print("Picked up max ammo: " + (thisAmmoTotal + currentAmmoTotal));
                 tempWeapon.GetComponent<WeaponStats>().weaponCurrentAmmo = this.gameObject.GetComponent<WeaponStats>().weaponMaxAmmo;
                 WeaponScript.weaponSwitch = true;
-                //print("Ammo is now " + tempWeapon.GetComponent<WeaponStats>().weaponCurrentAmmo);
             }
             else
             {
                 print("picked up min ammo: " + (thisAmmoTotal + currentAmmoTotal));
                 tempWeapon.GetComponent<WeaponStats>().weaponCurrentAmmo += thisAmmoTotal;
                 WeaponScript.weaponSwitch = true;
-                //print("Ammo is now " + tempWeapon.GetComponent<WeaponStats>().weaponCurrentAmmo);
             }
         }
         else if ((tempWeapon.GetComponent<WeaponStats>().getWeaponCurrentAmmo() == tempWeapon.GetComponent<WeaponStats>().getWeaponMaxAmmo()))
@@ -284,6 +278,7 @@ public class WeaponStats : MonoBehaviour
         {
             print("No ammo to pick up!");
         }
+
         // ALT WEAPON AMMO PICK UP 
         if (tempWeapon.GetComponent<WeaponStats>().isWeaponHasAltFire())
         {
@@ -292,23 +287,19 @@ public class WeaponStats : MonoBehaviour
                 if ((this.GetComponent<WeaponStats>().getAltWeaponCurrentAmmo() != 0 && this.GetComponent<WeaponStats>().getAltWeaponCurrentAmmo() != 0) && (tempWeapon.GetComponent<WeaponStats>().getAltWeaponCurrentAmmo() < tempWeapon.GetComponent<WeaponStats>().getAltWeaponMaxAmmo()))
                 {
                     int thisAltAmmoTotal = this.GetComponent<WeaponStats>().getAltWeaponCurrentAmmo();
-                    print("this alt ammo total is " + thisAltAmmoTotal);
+
                     int currentAltAmmoTotal = tempWeapon.GetComponent<WeaponStats>().getAltWeaponCurrentAmmo();
-                    print("current alt ammo total is " + currentAltAmmoTotal);
+
 
                     if ((thisAltAmmoTotal + currentAltAmmoTotal) > tempWeapon.GetComponent<WeaponStats>().getAltWeaponMaxAmmo())
                     {
-                        print("Picked up max alt ammo: " + (thisAltAmmoTotal + currentAltAmmoTotal));
                         tempWeapon.GetComponent<WeaponStats>().altWeaponCurrentAmmo = this.gameObject.GetComponent<WeaponStats>().altWeaponMaxAmmo;
                         WeaponScript.weaponSwitch = true;
-                        print("Alt Ammo is now " + tempWeapon.GetComponent<WeaponStats>().altWeaponCurrentAmmo);
                     }
                     else
                     {
-                        print("picked up min alt ammo: " + (thisAltAmmoTotal + currentAltAmmoTotal));
                         tempWeapon.GetComponent<WeaponStats>().altWeaponCurrentAmmo += thisAltAmmoTotal;
                         WeaponScript.weaponSwitch = true;
-                        print("Alt ammo is now " + tempWeapon.GetComponent<WeaponStats>().altWeaponCurrentAmmo);
                     }
                 }
                 else if ((tempWeapon.GetComponent<WeaponStats>().getAltWeaponCurrentAmmo() == tempWeapon.GetComponent<WeaponStats>().getAltWeaponMaxAmmo()))
@@ -322,7 +313,8 @@ public class WeaponStats : MonoBehaviour
             }
         }
     }
-    //Updates the weapon pick up icon
+
+    // UPDATE PICK UP UI
     public void FindWeaponPickUp(string weaponName)
     {
         switch (weaponName)
@@ -351,11 +343,14 @@ public class WeaponStats : MonoBehaviour
             case "Crossbow":
                 WeaponScript.PickUpText.text += "g\n";
                 break;
+            case "Grenade":
+                WeaponScript.PickUpText.text += "k\n";
+                break;
             default:
                 break;
         }
     }
-    //Updates the pick up icon to show ammo type
+    // UPDATE AMMO PICK UP UI
     public void FindAmmoPickUp(GameObject tempWeapon, string weaponName)
     {
         switch (weaponName)
@@ -400,12 +395,17 @@ public class WeaponStats : MonoBehaviour
                 (tempWeapon.GetComponent<WeaponStats>().getWeaponCurrentClipSize() + tempWeapon.GetComponent<WeaponStats>().getWeaponCurrentAmmo()).ToString()
                 + "\n";
                 break;
+            case "Grenade":
+                WeaponScript.PickUpText.text += "kv" +
+                (tempWeapon.GetComponent<WeaponStats>().getWeaponCurrentClipSize() + tempWeapon.GetComponent<WeaponStats>().getWeaponCurrentAmmo()).ToString()
+                + "\n";
+                break;
             default:
                 break;
         }
     }
 
-    //Updates the ammotype icon above "AmmoText"
+    // UPDATE AMMO TYPE UI
     public static void FindAmmoType(string weaponName)
     { 
         switch (weaponName)
@@ -435,6 +435,9 @@ public class WeaponStats : MonoBehaviour
                 break;
             case "Crossbow":
                 WeaponScript.AmmoTypeIcon.text = "w";
+                break;
+            case "Grenade":
+                WeaponScript.PickUpText.text += "v";
                 break;
             default:
                 break;

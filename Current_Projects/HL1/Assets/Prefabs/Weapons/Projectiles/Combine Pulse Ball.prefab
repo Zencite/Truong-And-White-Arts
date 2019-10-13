@@ -4762,7 +4762,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3774405772887407302}
-  - component: {fileID: 3774405772887407303}
   - component: {fileID: 3774405772887407296}
   - component: {fileID: 5465665462070121693}
   - component: {fileID: -5840098642394733738}
@@ -4790,19 +4789,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &3774405772887407303
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3774405772887407301}
-  m_Material: {fileID: 13400000, guid: c681467706bfc3f458a12054528bfbb3, type: 2}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.11
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &3774405772887407296
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4852,7 +4838,6 @@ MonoBehaviour:
   entity: {fileID: 0}
   isCombineBall: 1
   timerMax: 6
-  floatTimeMax: 3
   explosionPrefab: {fileID: 19807510, guid: 8acce8db8b22b844bbe622829aae32e4, type: 3}
 --- !u!82 &6273256648402709638
 AudioSource:

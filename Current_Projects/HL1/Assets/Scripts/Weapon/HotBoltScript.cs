@@ -9,12 +9,6 @@ public class HotBoltScript : MonoBehaviour
     private bool isBolted;
     public GameObject coreCylinder;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -23,25 +17,14 @@ public class HotBoltScript : MonoBehaviour
 
         if (isBolted)
         {
-            /*this.transform.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            this.transform.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            this.transform.gameObject.GetComponent<Rigidbody>().Sleep();
-
-            coreCylinder.transform.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            coreCylinder.transform.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            coreCylinder.transform.gameObject.GetComponent<Rigidbody>().Sleep();
-
-            Destroy(this.transform.gameObject.GetComponent<Rigidbody>());
-            Destroy(this.transform.gameObject.GetComponent<CapsuleCollider>());
-            Destroy(coreCylinder.transform.gameObject.GetComponent<CapsuleCollider>());
-            isBolted = false;*/
-
+            // TODO GET THE BOLT TO STICK ONTO PEOPLE AND WALLS
             Destroy(this.gameObject);
         }
     }
 
     private void OnCollisionEnter(Collision col)
     {
+        // CROSSBOW COLLIDES
         if (col.gameObject.tag != "Player")
         {
             if (col.transform.gameObject.GetComponent<EntityHealth>() != null)
@@ -49,15 +32,15 @@ public class HotBoltScript : MonoBehaviour
                 entity = col.transform.gameObject;
                 entity.GetComponent<EntityHealth>().entityCurrentHealth -= 1000;
             }
-            else if (col.transform.parent.transform.gameObject.GetComponent<EntityHealth>() != null)
+            if (col.transform.parent)
             {
-                entity = col.transform.parent.transform.gameObject;
-                entity.GetComponent<EntityHealth>().entityCurrentHealth -= 1000;
+                if (col.transform.parent.transform.gameObject.GetComponent<EntityHealth>() != null)
+                {
+                    entity = col.transform.parent.transform.gameObject;
+                    entity.GetComponent<EntityHealth>().entityCurrentHealth -= 1000;
+                }
             }
         }
-
-        //transform.parent = col.transform;
-        //parent = col.gameObject;
         isBolted = true;
     }
 }

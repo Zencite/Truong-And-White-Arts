@@ -34,11 +34,15 @@ public class EntityHealth : MonoBehaviour
     public static bool isFloating;
     private float timer;
     public float timerMax;
+    private float floatTimer;
+    public float floatTimeMax;
 
     // Start is called before the first frame update
     void Start()
     {
+        isFloating = false;
         timer = 0.0f;
+        floatTimer = 0.0f;
         entityCurrentHealth = entityMaxHealth;
         if (isHumanoid)
         {
@@ -49,6 +53,7 @@ public class EntityHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // INSTANTIATE ITEM POSITIONS & TRANSFORM
         Vector3 pos = transform.position;
         Quaternion rotation = transform.rotation;
 
@@ -77,13 +82,16 @@ public class EntityHealth : MonoBehaviour
                 }
             }
 
+            // IF A HUMANOID
             if (isHumanoid)
             {
+                // SET TO DEAD FACE
                 neutralFace.SetActive(false);
                 hostileFace.SetActive(false);
                 deadFace.SetActive(true);
 
-                if(this.GetComponent<NavMeshAgent>() != null && !isFloating)
+                // IF KILLED BY BULLETS
+                if(thisEntity.GetComponent<NavMeshAgent>() != null && !isFloating)
                 {
                     Destroy(this.GetComponent<NavMeshAgent>());
                     Destroy(humanoidHead);
@@ -95,9 +103,23 @@ public class EntityHealth : MonoBehaviour
                     thisEntity.GetComponent<CapsuleCollider>().height = 3;
                     thisEntity.GetComponent<Rigidbody>().AddForce(-entityEndpoint.normal * entityWeaponForce);
                 }
+
+                // IF KILLED BY COMBINE BALL
+                if (isFloating)
+                {
+                    floatTimer += Time.deltaTime;
+                    if (floatTimer >= floatTimeMax)
+                    {
+                        Destroy(this.gameObject);
+                        floatTimer = 0.0f;
+                        isFloating = false;
+                    }
+                }
             }
+            // IF CRATE
             if (isCrate)
             {
+                // NEEDS TIME TO INSTANTIATE ITEM DROPS BEFORE DESTROY
                 activeGameObject.SetActive(false);
                 timer += Time.deltaTime;
 
@@ -110,19 +132,22 @@ public class EntityHealth : MonoBehaviour
     }
     private void OnCollisionEnter(Collision col)
     {
-
-        if (this.transform.parent.gameObject.GetComponent<EntityHealth>() != null)
-        {
-            if (this.transform.parent.gameObject.GetComponent<EntityHealth>().isHumanoid == true)
+        // TODO CHECK FOR PHYSIC'S DAMAGE
+        if (this.transform.parent != null)
+        { 
+            if (this.transform.parent.gameObject.GetComponent<EntityHealth>() != null)
             {
-                GameObject humanoid = this.transform.parent.gameObject;
-                if (this.transform.tag == "Head" || this.transform.tag == "Torso")
+                if (this.transform.parent.gameObject.GetComponent<EntityHealth>().isHumanoid == true)
                 {
-                    float objectMagVel = Vector3.Magnitude(col.relativeVelocity);
-                    print(objectMagVel + " damage to human.");
-                    if (objectMagVel > damageThreshold)
+                    GameObject humanoid = this.transform.parent.gameObject;
+                    if (this.transform.tag == "Head" || this.transform.tag == "Torso")
                     {
-                        humanoid.GetComponent<EntityHealth>().entityCurrentHealth = humanoid.GetComponent<EntityHealth>().entityCurrentHealth - (Mathf.RoundToInt(objectMagVel - damageThreshold));
+                        float objectMagVel = Vector3.Magnitude(col.relativeVelocity);
+                        print(objectMagVel + " damage to human.");
+                        if (objectMagVel > damageThreshold)
+                        {
+                            humanoid.GetComponent<EntityHealth>().entityCurrentHealth = humanoid.GetComponent<EntityHealth>().entityCurrentHealth - (Mathf.RoundToInt(objectMagVel - damageThreshold));
+                        }
                     }
                 }
             }
@@ -144,7 +169,7 @@ public class EntityHealth : MonoBehaviour
             }
         }
     }
-
+    // CALCULATE PHYSIC DAMAGE
     public static float KineticEnergy(Rigidbody rb)
     {
         // mass in kg, velocity in meters per second, result is joules

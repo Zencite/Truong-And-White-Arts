@@ -85,6 +85,7 @@ MonoBehaviour:
   deadFace: {fileID: 5920782159008828328}
   thisEntity: {fileID: 0}
   timerMax: 0
+  floatTimeMax: 4
 --- !u!1 &1167969950288026034
 GameObject:
   m_ObjectHideFlags: 0

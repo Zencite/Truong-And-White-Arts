@@ -26,6 +26,7 @@ public class GravityGun : MonoBehaviour
     private float dropTimeRef;
     private float dropTime = 0.01f;
     public static string NPC = "NPC";
+    private GameObject targetRB;
 
     void Start()
     {
@@ -48,124 +49,135 @@ public class GravityGun : MonoBehaviour
 
                 if (Physics.Raycast(gg_shotPos.transform.position, gg_shotPos.transform.TransformDirection(Vector3.forward), out endpointInfo))
                 {
-                    GameObject targetRB = endpointInfo.collider.gameObject;
-
-                    if (targetRB.tag != "Player" && targetRB.tag != "NPC" && targetRB.tag != "Head" && targetRB.tag != "Torso")
+                    if (endpointInfo.collider.gameObject.GetComponent<Rigidbody>() != null)
                     {
-                        if (targetRB.GetComponent<Rigidbody>() != null)
+                        targetRB = endpointInfo.collider.gameObject;
+                        print("First Object " + targetRB.name);
+                    }
+                    else if (endpointInfo.collider.transform.parent.gameObject.GetComponent<Rigidbody>() != null)
+                    {
+                        targetRB = endpointInfo.collider.transform.parent.gameObject;
+                        print("Parent Object " + targetRB.name);
+                    }
+
+                    if (targetRB != null)
+                    {
+                        if (targetRB.tag != "Player" && targetRB.tag != "NPC" && targetRB.tag != "Head" && targetRB.tag != "Torso")
                         {
-                            activeClaw.SetActive(true);
-                            gravglow.range = 10;
-                            inactiveClaw.SetActive(false);
-
-                            if (once && !PlayerSight.isHolding)
+                            if (targetRB.GetComponent<Rigidbody>() != null)
                             {
-                                if (!SoundController.noiseAudioSource.isPlaying)
-                                {
-                                    StartCoroutine(SoundController.noiseSound(clawsOpen, 0f));
-                                    once = false;
-                                }
-                            }
+                                activeClaw.SetActive(true);
+                                gravglow.range = 10;
+                                inactiveClaw.SetActive(false);
 
-                            // Drop item in gravgun
-                            if (Input.GetKey(KeyCode.Mouse1) && PlayerSight.isHolding)
-                            {
-                                if (!SoundController.noiseAudioSource.isPlaying)
+                                if (once && !PlayerSight.isHolding)
                                 {
-                                    StartCoroutine(SoundController.noiseSound(gravDrop, 0f));
-                                }
-                                targetRB.transform.parent = null;
-                                targetRB.GetComponent<Rigidbody>().isKinematic = false;
-                                targetRB.GetComponent<Rigidbody>().useGravity = true;
-                                if (Time.time > dropTimeRef)
-                                {
-                                    dropTimeRef = Time.time + dropTime;
-                                    PlayerSight.isHolding = false;
-                                }
-                            }
-
-                            //pick up object
-                            else if (Input.GetKey(KeyCode.Mouse1) && !PlayerSight.isHolding)
-                            {
-                                // Pulls item towards grav gun 
-                                if (targetRB.tag != "Player" || targetRB.name != "Player")
-                                {
-                                    pullForce = (targetRB.GetComponent<Rigidbody>().mass * 1000);
-
-                                    // Pick item in gravgun
-                                    if (Vector3.Distance(gravPos.transform.position, targetRB.transform.position) > 3f)
+                                    if (!SoundController.noiseAudioSource.isPlaying)
                                     {
-                                        targetRB.GetComponent<Rigidbody>().AddForce(endpointInfo.normal * pullForce * Time.fixedDeltaTime);
+                                        StartCoroutine(SoundController.noiseSound(clawsOpen, 0f));
+                                        once = false;
+                                    }
+                                }
+
+                                // Drop item in gravgun
+                                if (Input.GetKey(KeyCode.Mouse1) && PlayerSight.isHolding)
+                                {
+                                    if (!SoundController.noiseAudioSource.isPlaying)
+                                    {
+                                        StartCoroutine(SoundController.noiseSound(gravDrop, 0f));
+                                    }
+                                    targetRB.transform.parent = null;
+                                    targetRB.GetComponent<Rigidbody>().isKinematic = false;
+                                    targetRB.GetComponent<Rigidbody>().useGravity = true;
+                                    if (Time.time > dropTimeRef)
+                                    {
+                                        dropTimeRef = Time.time + dropTime;
+                                        PlayerSight.isHolding = false;
+                                    }
+                                }
+
+                                //pick up object
+                                else if (Input.GetKey(KeyCode.Mouse1) && !PlayerSight.isHolding)
+                                {
+                                    // Pulls item towards grav gun 
+                                    if (targetRB.tag != "Player" || targetRB.name != "Player")
+                                    {
+                                        pullForce = (targetRB.GetComponent<Rigidbody>().mass * 1000);
+
+                                        // Pick item in gravgun
+                                        if (Vector3.Distance(gravPos.transform.position, targetRB.transform.position) > 3f)
+                                        {
+                                            targetRB.GetComponent<Rigidbody>().AddForce(endpointInfo.normal * pullForce * Time.fixedDeltaTime);
+                                        }
+                                        else
+                                        {
+                                            if (!SoundController.noiseAudioSource.isPlaying)
+                                            {
+                                                StartCoroutine(SoundController.noiseSound(gravPickUp, 0f));
+                                            }
+                                            targetRB.GetComponent<Rigidbody>().isKinematic = true;
+                                            targetRB.GetComponent<Rigidbody>().useGravity = false;
+                                            Transform gravTrans = gravPos.gameObject.transform;
+                                            targetRB.transform.position = gravTrans.position;
+                                            targetRB.transform.rotation = gravTrans.rotation;
+                                            targetRB.transform.parent = gravTrans;
+                                            PlayerSight.isHolding = true;
+                                        }
+                                    }
+                                }
+
+                                // Launch item in gravgun
+                                if (Input.GetKeyDown(KeyCode.Mouse0))
+                                {
+                                    if (PlayerSight.isHolding)
+                                    {
+                                        targetRB.GetComponent<Rigidbody>().isKinematic = false;
+                                        targetRB.GetComponent<Rigidbody>().useGravity = true;
+                                        targetRB.transform.parent = null;
+                                        endpointInfo.rigidbody.AddForce(-endpointInfo.normal * targetRB.GetComponent<Rigidbody>().mass * 2000);
+                                        PlayerSight.isHolding = false;
+                                        StartCoroutine(SoundController.gunSounds(gravLaunch, 0f));
+                                        WeaponScript.WeaponRecoil(4000f);
+                                    }
+
+                                    if (!PlayerSight.isHolding && targetRB.tag == "Enemy")
+                                    {
+                                        //targetRB.GetComponent<Rigidbody>().AddForce(-endpointInfo.normal * targetRB.GetComponent<Rigidbody>().mass * 100);
+                                        if (Time.time > cooldownRef)
+                                        {
+                                            cooldownRef = Time.time + cooldown;
+                                            print("I did " + (targetRB.GetComponent<Rigidbody>().mass * 10) + " damage.");
+                                            //Vector3.Magnitude(endpointInfo.rigidbody.velocity)
+                                            StartCoroutine(SoundController.gunSounds(gravLaunch, 0f));
+                                        }
                                     }
                                     else
                                     {
-                                        if (!SoundController.noiseAudioSource.isPlaying)
-                                        {
-                                            StartCoroutine(SoundController.noiseSound(gravPickUp, 0f));
-                                        }
-                                        targetRB.GetComponent<Rigidbody>().isKinematic = true;
-                                        targetRB.GetComponent<Rigidbody>().useGravity = false;
-                                        Transform gravTrans = gravPos.gameObject.transform;
-                                        targetRB.transform.position = gravTrans.position;
-                                        targetRB.transform.rotation = gravTrans.rotation;
-                                        targetRB.transform.parent = gravTrans;
-                                        PlayerSight.isHolding = true;
+                                        StartCoroutine(SoundController.gunSounds(gravDryFire, 0f));
                                     }
                                 }
                             }
-
-                            // Launch item in gravgun
-                            if (Input.GetKeyDown(KeyCode.Mouse0))
+                            else if (targetRB.GetComponent<Rigidbody>() == null)
                             {
-                                if (PlayerSight.isHolding)
-                                {
-                                    targetRB.GetComponent<Rigidbody>().isKinematic = false;
-                                    targetRB.GetComponent<Rigidbody>().useGravity = true;
-                                    targetRB.transform.parent = null;
-                                    endpointInfo.rigidbody.AddForce(-endpointInfo.normal * targetRB.GetComponent<Rigidbody>().mass * 2000);
-                                    PlayerSight.isHolding = false;
-                                    StartCoroutine(SoundController.gunSounds(gravLaunch, 0f));
-                                    WeaponScript.WeaponRecoil(4000f);
-                                }
+                                activeClaw.SetActive(false);
+                                gravglow.range = 5;
+                                inactiveClaw.SetActive(true);
 
-                                if (!PlayerSight.isHolding && targetRB.tag == "Enemy")
+                                if (!once && !PlayerSight.isHolding)
                                 {
-                                    //targetRB.GetComponent<Rigidbody>().AddForce(-endpointInfo.normal * targetRB.GetComponent<Rigidbody>().mass * 100);
-                                    if (Time.time > cooldownRef)
+                                    if (!SoundController.noiseAudioSource.isPlaying)
                                     {
-                                        cooldownRef = Time.time + cooldown;
-                                        print("I did " + (targetRB.GetComponent<Rigidbody>().mass * 10) + " damage.");
-                                        //Vector3.Magnitude(endpointInfo.rigidbody.velocity)
-                                        StartCoroutine(SoundController.gunSounds(gravLaunch, 0f));
+                                        StartCoroutine(SoundController.noiseSound(clawsClose, 0f));
+                                        once = true;
                                     }
                                 }
-                                else
-                                {
-                                    StartCoroutine(SoundController.gunSounds(gravDryFire, 0f));
-                                }
                             }
                         }
-                        else if (targetRB.GetComponent<Rigidbody>() == null)
+                        else
                         {
-                            activeClaw.SetActive(false);
-                            gravglow.range = 5;
-                            inactiveClaw.SetActive(true);
-
-                            if (!once && !PlayerSight.isHolding)
-                            {
-                                if (!SoundController.noiseAudioSource.isPlaying)
-                                {
-                                    StartCoroutine(SoundController.noiseSound(clawsClose, 0f));
-                                    once = true;
-                                }
-                            }
+                            targetRB = null;
                         }
                     }
-                    else
-                    {
-                        targetRB = null;
-                    }
-
                     if (PlayerSight.isHolding)
                     {
                         if (!SoundController.gunCamAudioSource.isPlaying)
@@ -175,10 +187,6 @@ public class GravityGun : MonoBehaviour
                     }
                 }
             }
-            /*else
-            {
-                WeaponScript.weaponSwitch = true;
-            }*/
         }
     }
 }
