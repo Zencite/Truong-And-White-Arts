@@ -521,15 +521,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6793b20e3176f2649b80a78c82d7cdc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gn_Projectile: {fileID: 0}
+  gn_InHand: {fileID: 7582724541636691026}
+  gn_Projectile: {fileID: 7582724541636691026, guid: ff44acbb123a2d74c9f14fe404f94a48,
+    type: 3}
   pinned: {fileID: 7582724542431930188}
   unpinned: {fileID: 7582724541123090034}
   gn_shotPos: {fileID: 0}
-  gg_explosionPrefab: {fileID: 5128015836008979111}
   blinker: {fileID: 7582724542193525271}
-  gn_explosionRadius: 5
-  gn_explosionPower: 200
+  gg_explosionPrefab: {fileID: 5128015836008979111}
+  gn_explosionRadius: 6
+  gn_explosionPower: 475
   gn_explosionSFX: {fileID: 8300000, guid: 542c8297cfbedc64b80a01448b8df19c, type: 3}
+  grenadeTick: {fileID: 0}
+  blinkTimeMax: 1
 --- !u!1 &7582724541748497765
 GameObject:
   m_ObjectHideFlags: 0

@@ -146,6 +146,7 @@ public class WeaponStats : MonoBehaviour
             // IF PICKED UP FIRST TIME, MAKE ACTIVE WEAPON
             if (tempWeapon.GetComponent<WeaponStats>().isWeaponPickedUp() != true && !isAnAmmoBox && !isAnAmmoCrate)
             {
+                print("First time picked up " + tempWeapon);
                 // DEACTIVES ANY OTHER WEAPON IN CHILDREN POOL OF GUNCAM
                 foreach (Transform child in gunCam)
                 {
@@ -199,6 +200,7 @@ public class WeaponStats : MonoBehaviour
             // IF WEAPON WAS ALREADY PICKED UP
             else if (tempWeapon.GetComponent<WeaponStats>().isWeaponPickedUp() == true)
             {
+                print("Already picked up " + tempWeapon);
                 // CHECK IF IT CAN PICK UP IT'S AMMO
                 if (!isAnAmmoCrate && !WeaponScript.weaponSwitch)
                 {
@@ -252,20 +254,21 @@ public class WeaponStats : MonoBehaviour
     public void WeaponAmmoPickUp(GameObject tempWeapon)
     {
         // PRIME WEAPON AMMO PICK UP
-        if ((this.GetComponent<WeaponStats>().getWeaponCurrentAmmo() != 0 || this.GetComponent<WeaponStats>().getWeaponCurrentClipSize() != 0) && (tempWeapon.GetComponent<WeaponStats>().getWeaponCurrentAmmo() < tempWeapon.GetComponent<WeaponStats>().getWeaponMaxAmmo()))
+        if ((this.GetComponent<WeaponStats>().getWeaponCurrentAmmo() != 0 || this.GetComponent<WeaponStats>().getWeaponCurrentClipSize() != 0) && (tempWeapon.GetComponent<WeaponStats>().getWeaponCurrentAmmo() <= tempWeapon.GetComponent<WeaponStats>().getWeaponMaxAmmo()))
         {
             int thisAmmoTotal = this.GetComponent<WeaponStats>().getWeaponCurrentAmmo() + this.GetComponent<WeaponStats>().getWeaponCurrentClipSize();
-
+            print("TAT = " + thisAmmoTotal);
             int currentAmmoTotal = tempWeapon.GetComponent<WeaponStats>().getWeaponCurrentAmmo();
-
+            print("CAT = " + currentAmmoTotal);
             if ((thisAmmoTotal + currentAmmoTotal) > tempWeapon.GetComponent<WeaponStats>().getWeaponMaxAmmo())
             {
+                print("Filled Max Ammo with " + (thisAmmoTotal + currentAmmoTotal));
                 tempWeapon.GetComponent<WeaponStats>().weaponCurrentAmmo = this.gameObject.GetComponent<WeaponStats>().weaponMaxAmmo;
                 WeaponScript.weaponSwitch = true;
             }
             else
             {
-                print("picked up min ammo: " + (thisAmmoTotal + currentAmmoTotal));
+                print("Got Min Ammo " + (tempWeapon.GetComponent<WeaponStats>().weaponCurrentAmmo + thisAmmoTotal));
                 tempWeapon.GetComponent<WeaponStats>().weaponCurrentAmmo += thisAmmoTotal;
                 WeaponScript.weaponSwitch = true;
             }
@@ -284,7 +287,7 @@ public class WeaponStats : MonoBehaviour
         {
             if (!tempWeapon.GetComponent<WeaponStats>().isWeaponUsingPrimeAmmo())
             {
-                if ((this.GetComponent<WeaponStats>().getAltWeaponCurrentAmmo() != 0 && this.GetComponent<WeaponStats>().getAltWeaponCurrentAmmo() != 0) && (tempWeapon.GetComponent<WeaponStats>().getAltWeaponCurrentAmmo() < tempWeapon.GetComponent<WeaponStats>().getAltWeaponMaxAmmo()))
+                if ((this.GetComponent<WeaponStats>().getAltWeaponCurrentAmmo() != 0 && this.GetComponent<WeaponStats>().getAltWeaponCurrentAmmo() != 0) && (tempWeapon.GetComponent<WeaponStats>().getAltWeaponCurrentAmmo() <= tempWeapon.GetComponent<WeaponStats>().getAltWeaponMaxAmmo()))
                 {
                     int thisAltAmmoTotal = this.GetComponent<WeaponStats>().getAltWeaponCurrentAmmo();
 
@@ -437,7 +440,7 @@ public class WeaponStats : MonoBehaviour
                 WeaponScript.AmmoTypeIcon.text = "w";
                 break;
             case "Grenade":
-                WeaponScript.PickUpText.text += "v";
+                WeaponScript.AmmoTypeIcon.text += "v";
                 break;
             default:
                 break;

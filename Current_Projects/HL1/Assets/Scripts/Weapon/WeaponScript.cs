@@ -560,7 +560,7 @@ public class WeaponScript : MonoBehaviour
                     SwitchWeapon(weaponTag);
                 }
                 //Switch to grenade if player has it
-                if (Input.GetKey(KeyCode.Alpha8))
+                if (Input.GetKey(KeyCode.Alpha9))
                 {
                     string weaponTag = "PlayerGrenade";
                     SwitchWeapon(weaponTag);

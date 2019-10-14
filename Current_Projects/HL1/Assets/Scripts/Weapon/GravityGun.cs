@@ -54,10 +54,13 @@ public class GravityGun : MonoBehaviour
                         targetRB = endpointInfo.collider.gameObject;
                         print("First Object " + targetRB.name);
                     }
-                    else if (endpointInfo.collider.transform.parent.gameObject.GetComponent<Rigidbody>() != null)
+                    if (endpointInfo.collider.transform.parent != null)
                     {
-                        targetRB = endpointInfo.collider.transform.parent.gameObject;
-                        print("Parent Object " + targetRB.name);
+                        if (endpointInfo.collider.transform.parent.gameObject.GetComponent<Rigidbody>() != null)
+                        {
+                            targetRB = endpointInfo.collider.transform.parent.gameObject;
+                            print("Parent Object " + targetRB.name);
+                        }
                     }
 
                     if (targetRB != null)

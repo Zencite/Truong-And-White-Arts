@@ -355,36 +355,30 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 7582724541636691031, guid: 2e27b78e7212ebb44a2e4099c5c23678,
+    - target: {fileID: 7582724541636691024, guid: 2e27b78e7212ebb44a2e4099c5c23678,
         type: 3}
-      propertyPath: gn_Projectile
-      value: 
-      objectReference: {fileID: 7582724541636691026, guid: ff44acbb123a2d74c9f14fe404f94a48,
+      propertyPath: weaponDamage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7582724541636691024, guid: 2e27b78e7212ebb44a2e4099c5c23678,
         type: 3}
-    - target: {fileID: 7582724541636691031, guid: 2e27b78e7212ebb44a2e4099c5c23678,
+      propertyPath: weaponRange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7582724541636691024, guid: 2e27b78e7212ebb44a2e4099c5c23678,
         type: 3}
-      propertyPath: gn_InHand
-      value: 
-      objectReference: {fileID: 8979487359388910564}
-    - target: {fileID: 7582724541636691031, guid: 2e27b78e7212ebb44a2e4099c5c23678,
+      propertyPath: weaponFireCooldown
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7582724541636691024, guid: 2e27b78e7212ebb44a2e4099c5c23678,
         type: 3}
-      propertyPath: gg_explosionPrefab
-      value: 
-      objectReference: {fileID: 5948389646067850513}
-    - target: {fileID: 7582724541636691031, guid: 2e27b78e7212ebb44a2e4099c5c23678,
+      propertyPath: weaponSpread
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7582724541636691024, guid: 2e27b78e7212ebb44a2e4099c5c23678,
         type: 3}
-      propertyPath: gn_explosionRadius
+      propertyPath: weaponMaxAmmo
       value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7582724541636691031, guid: 2e27b78e7212ebb44a2e4099c5c23678,
-        type: 3}
-      propertyPath: gn_explosionPower
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 7582724541636691031, guid: 2e27b78e7212ebb44a2e4099c5c23678,
-        type: 3}
-      propertyPath: blinkTimeMax
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7582724541193578101, guid: 2e27b78e7212ebb44a2e4099c5c23678,
         type: 3}
@@ -456,6 +450,42 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 7582724541636691031, guid: 2e27b78e7212ebb44a2e4099c5c23678,
+        type: 3}
+      propertyPath: gn_Projectile
+      value: 
+      objectReference: {fileID: 7582724541636691026, guid: ff44acbb123a2d74c9f14fe404f94a48,
+        type: 3}
+    - target: {fileID: 7582724541636691031, guid: 2e27b78e7212ebb44a2e4099c5c23678,
+        type: 3}
+      propertyPath: gn_InHand
+      value: 
+      objectReference: {fileID: 8979487359388910564}
+    - target: {fileID: 7582724541636691031, guid: 2e27b78e7212ebb44a2e4099c5c23678,
+        type: 3}
+      propertyPath: gg_explosionPrefab
+      value: 
+      objectReference: {fileID: 5948389646067850513}
+    - target: {fileID: 7582724541636691031, guid: 2e27b78e7212ebb44a2e4099c5c23678,
+        type: 3}
+      propertyPath: gn_explosionRadius
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7582724541636691031, guid: 2e27b78e7212ebb44a2e4099c5c23678,
+        type: 3}
+      propertyPath: gn_explosionPower
+      value: 475
+      objectReference: {fileID: 0}
+    - target: {fileID: 7582724541636691031, guid: 2e27b78e7212ebb44a2e4099c5c23678,
+        type: 3}
+      propertyPath: blinkTimeMax
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7582724541636691031, guid: 2e27b78e7212ebb44a2e4099c5c23678,
+        type: 3}
+      propertyPath: grenadeTick
+      value: 
+      objectReference: {fileID: 8300000, guid: a91858bda96365149a998d19f82b8f4d, type: 3}
     m_RemovedComponents:
     - {fileID: 5926647842234263314, guid: 2e27b78e7212ebb44a2e4099c5c23678, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2e27b78e7212ebb44a2e4099c5c23678, type: 3}

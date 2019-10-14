@@ -10,10 +10,14 @@ public class ProjectileExplosionScript : MonoBehaviour
     public AudioClip explosionSFX;
     public AudioClip combineBallLaunch;
     public AudioClip combineBallBounce;
-    public static AudioSource combineBallSource;
+    public AudioClip grenadeTick;
+    public static AudioSource projectileSource;
 
     public GameObject entity;
     public bool isCombineBall;
+    public bool isGrenade;
+    private bool once;
+    private float currentTime;
 
     public Light gn_blinker;
     private float gn_blinkTimer;
@@ -28,15 +32,19 @@ public class ProjectileExplosionScript : MonoBehaviour
         timer = 0.0f;
         if (isCombineBall)
         {
-            combineBallSource = this.GetComponent<AudioSource>();
+            projectileSource = this.GetComponent<AudioSource>();
             StartCoroutine(SoundController.gunSounds(explosionSFX, 0));
+        }
+        once = false;
+        if (isGrenade)
+        {
+            projectileSource = this.GetComponent<AudioSource>();
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        print("GrenadeDrop is " + GrenadeScript.gn_explodeDrop);
         if (GrenadeScript.gn_explodeDrop)
         {
             Explosion();
@@ -44,13 +52,31 @@ public class ProjectileExplosionScript : MonoBehaviour
             GrenadeScript.gn_explodeDrop = false;
         }
 
-        timer += Time.deltaTime;
-
-        // PROJECTILE EXPLODES ANYWAY AFTER X SECONDS
-        if (timer >= timerMax)
+        if (!isGrenade)
         {
-            Explosion();
-            Destroy(this.gameObject);
+            timer += Time.deltaTime;
+
+            // PROJECTILE EXPLODES ANYWAY AFTER X SECONDS
+            if (timer >= timerMax)
+            {
+                Explosion();
+                Destroy(this.gameObject);
+            }
+        }
+        else if (isGrenade)
+        {
+            if (!once)
+            {
+                currentTime = GrenadeScript._CurrentCookTime;
+                once = true;
+            }
+            currentTime += Time.deltaTime;
+
+            if (currentTime >= GrenadeScript.gn_MaxCookTime)
+            {
+                Explosion();
+                Destroy(this.gameObject);
+            }
         }
     }
 
@@ -63,12 +89,13 @@ public class ProjectileExplosionScript : MonoBehaviour
             // LIGHT BLINKS
             if (gn_blinkTimer >= gn_blinkTimeMax)
             {
-                gn_blinker.range = 10;
+                gn_blinker.intensity = 10;
+                StartCoroutine(projectileSound(grenadeTick, 0));
                 gn_blinkTimer = 0.0f;
             }
             else
             {
-                gn_blinker.range = 5;
+                gn_blinker.intensity = 5;
             }
         }
     }
@@ -77,7 +104,7 @@ public class ProjectileExplosionScript : MonoBehaviour
     {
         if (isCombineBall)
         {
-            StartCoroutine(BallSound(combineBallBounce, 0));
+            StartCoroutine(projectileSound(combineBallBounce, 0));
 
             Rigidbody rb = col.transform.GetComponent<Rigidbody>();
 
@@ -111,14 +138,17 @@ public class ProjectileExplosionScript : MonoBehaviour
     // IF SMG GRENADE
     private void OnTriggerEnter(Collider other)
     {
-        Explosion();      
-        Destroy(this.gameObject);  
+        if (!isGrenade && !isCombineBall)
+        {
+            Explosion();
+            Destroy(this.gameObject);
+        }
     }
 
     // IF COMBINE BALL
-    public static IEnumerator BallSound(AudioClip SFX, float delay)
+    public static IEnumerator projectileSound(AudioClip SFX, float delay)
     {
-        combineBallSource.PlayOneShot(SFX);
+        projectileSource.PlayOneShot(SFX);
         yield return new WaitForSeconds(delay * 5);
     }
 
