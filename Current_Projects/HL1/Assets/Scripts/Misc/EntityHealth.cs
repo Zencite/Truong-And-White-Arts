@@ -31,7 +31,7 @@ public class EntityHealth : MonoBehaviour
     public static RaycastHit entityEndpoint;
     public static float entityWeaponForce;
 
-    public static bool isFloating;
+    public bool isFloating;
     private float timer;
     public float timerMax;
     private float floatTimer;
@@ -60,6 +60,8 @@ public class EntityHealth : MonoBehaviour
         if (entityCurrentHealth <= 0)
         {
             entityCurrentHealth = 0;
+
+            // IF ENTITY DROPS ITEMS
             if (dropsItems)
             {
                 if (drop1 != null)
@@ -82,7 +84,7 @@ public class EntityHealth : MonoBehaviour
                 }
             }
 
-            // IF A HUMANOID
+            // IF ENTITY WAS A HUMANOID
             if (isHumanoid)
             {
                 // SET TO DEAD FACE
@@ -90,7 +92,7 @@ public class EntityHealth : MonoBehaviour
                 hostileFace.SetActive(false);
                 deadFace.SetActive(true);
 
-                // IF KILLED BY BULLETS
+                // IF KILLED BY BULLETS OR EXPLOSIVES
                 if(thisEntity.GetComponent<NavMeshAgent>() != null && !isFloating)
                 {
                     Destroy(this.GetComponent<NavMeshAgent>());
@@ -103,20 +105,19 @@ public class EntityHealth : MonoBehaviour
                     thisEntity.GetComponent<CapsuleCollider>().height = 3;
                     thisEntity.GetComponent<Rigidbody>().AddForce(-entityEndpoint.normal * entityWeaponForce);
                 }
-
                 // IF KILLED BY COMBINE BALL
-                if (isFloating)
+                else if (isFloating)
                 {
                     floatTimer += Time.deltaTime;
                     if (floatTimer >= floatTimeMax)
                     {
+                        //floatTimer = 0.0f;
                         Destroy(this.gameObject);
-                        floatTimer = 0.0f;
                         isFloating = false;
                     }
                 }
             }
-            // IF CRATE
+            // IF ENTITY WAS CRATE
             if (isCrate)
             {
                 // NEEDS TIME TO INSTANTIATE ITEM DROPS BEFORE DESTROY

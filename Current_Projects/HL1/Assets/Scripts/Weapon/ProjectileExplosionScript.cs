@@ -145,7 +145,7 @@ public class ProjectileExplosionScript : MonoBehaviour
         }
     }
 
-    // IF COMBINE BALL
+    // PLAY PROJECTILE SFX
     public static IEnumerator projectileSound(AudioClip SFX, float delay)
     {
         projectileSource.PlayOneShot(SFX);
@@ -189,7 +189,14 @@ public class ProjectileExplosionScript : MonoBehaviour
                         int damageThreshold = Mathf.CeilToInt(player.GetComponent<PlayerHealth>().damageThreshold);
                         if (damage > damageThreshold)
                         {
-                            PlayerHealth.playerHealth = PlayerHealth.playerHealth - (damage - damageThreshold);
+                            if (PlayerHealth.playerSuit != 0)
+                            {
+                                PlayerHealth.playerSuit = PlayerHealth.playerSuit - (damage - damageThreshold);
+                            }
+                            else if (PlayerHealth.playerHealth != 0)
+                            {
+                                PlayerHealth.playerHealth = PlayerHealth.playerHealth - (damage - damageThreshold);
+                            }
                         }
                     }
                 }
@@ -229,7 +236,7 @@ public class ProjectileExplosionScript : MonoBehaviour
     {
         if (entity.GetComponent<Rigidbody>() == null)
         {
-            EntityHealth.isFloating = true;
+            entity.GetComponent<EntityHealth>().isFloating = true;
             Destroy(entity.GetComponent<NavMeshAgent>());
             Destroy(entity.GetComponent<EntityHealth>().humanoidHead);
             Destroy(entity.GetComponent<EntityHealth>().humanoidTorso);

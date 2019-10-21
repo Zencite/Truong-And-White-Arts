@@ -52,14 +52,12 @@ public class GravityGun : MonoBehaviour
                     if (endpointInfo.collider.gameObject.GetComponent<Rigidbody>() != null)
                     {
                         targetRB = endpointInfo.collider.gameObject;
-                        print("First Object " + targetRB.name);
                     }
                     if (endpointInfo.collider.transform.parent != null)
                     {
                         if (endpointInfo.collider.transform.parent.gameObject.GetComponent<Rigidbody>() != null)
                         {
                             targetRB = endpointInfo.collider.transform.parent.gameObject;
-                            print("Parent Object " + targetRB.name);
                         }
                     }
 
@@ -99,15 +97,15 @@ public class GravityGun : MonoBehaviour
                                     }
                                 }
 
-                                //pick up object
+                                // PICK UP OBJECT
                                 else if (Input.GetKey(KeyCode.Mouse1) && !PlayerSight.isHolding)
                                 {
-                                    // Pulls item towards grav gun 
+                                    // PULL ITEM TOWARDS GRAV GUN
                                     if (targetRB.tag != "Player" || targetRB.name != "Player")
                                     {
                                         pullForce = (targetRB.GetComponent<Rigidbody>().mass * 1000);
 
-                                        // Pick item in gravgun
+                                        // PICK UP ITEM IN GRAV GUN
                                         if (Vector3.Distance(gravPos.transform.position, targetRB.transform.position) > 3f)
                                         {
                                             targetRB.GetComponent<Rigidbody>().AddForce(endpointInfo.normal * pullForce * Time.fixedDeltaTime);
@@ -129,7 +127,7 @@ public class GravityGun : MonoBehaviour
                                     }
                                 }
 
-                                // Launch item in gravgun
+                                // LAUNCH ITEM IN GRAV GUN
                                 if (Input.GetKeyDown(KeyCode.Mouse0))
                                 {
                                     if (PlayerSight.isHolding)

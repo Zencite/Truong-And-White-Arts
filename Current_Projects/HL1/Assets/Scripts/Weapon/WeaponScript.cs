@@ -296,22 +296,24 @@ public class WeaponScript : MonoBehaviour
                             // IF CROSSBOW, SCOPE IN
                             if (activeWeapon.GetComponent<WeaponStats>().getWeaponName().Equals("Crossbow"))
                             {
-                                if (!isScoped)
+                                switch(isScoped)
                                 {
-                                    gunCamera.GetComponent<Camera>().cullingMask = 0;
-                                    firstPersonCamera.GetComponent<Camera>().fieldOfView = 10f;
-                                    crossScope.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-                                    isScoped = true;
-                                }
-                                else if (isScoped)
-                                {
-                                    gunCamera.GetComponent<Camera>().cullingMask = weaponLayerMask;
-                                    crossScope.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
-                                    firstPersonCamera.GetComponent<Camera>().fieldOfView = 70f;
-                                    isScoped = false;
+                                    case true:
+                                        gunCamera.GetComponent<Camera>().cullingMask = weaponLayerMask;
+                                        crossScope.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+                                        firstPersonCamera.GetComponent<Camera>().fieldOfView = 70f;
+                                        isScoped = false;
+                                        break;
+                                    case false:
+                                        gunCamera.GetComponent<Camera>().cullingMask = 0;
+                                        firstPersonCamera.GetComponent<Camera>().fieldOfView = 10f;
+                                        crossScope.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                                        isScoped = true;
+                                        break;
                                 }
                             }
 
+                            // WEAPONS ALT FIRE
                             if (activeWeapon.GetComponent<WeaponStats>().isWeaponHasAltFire())
                             {
                                 if (activeWeapon.GetComponent<WeaponStats>().isWeaponUsingPrimeAmmo())
@@ -326,7 +328,7 @@ public class WeaponScript : MonoBehaviour
 
                                             for (int i = 0; i < weaponAltBulletShots; i++)
                                             {
-                                                //crounching increases aim   
+                                                // CROUCHING INCREASES AIM
                                                 if (PlayerMovement.isCrouching)
                                                 {
                                                     weaponAltSpread = Mathf.CeilToInt(weaponAltSpread / 1.5f);
@@ -337,7 +339,7 @@ public class WeaponScript : MonoBehaviour
                                                     weaponAltForce = activeWeapon.GetComponent<WeaponStats>().getAltWeaponForce();
                                                     weaponAltSpread = activeWeapon.GetComponent<WeaponStats>().getAltWeaponSpread();
                                                 }
-                                                //visualize the raycast
+                                                // CREATE RANDOM HITSCAN SPREAD & DEBUG RAYCAST RAYS
                                                 randomizedVector = RandomInsideCone(weaponAltSpread) * transform.forward;
                                                 Debug.DrawRay(shotPos.transform.position, randomizedVector * weaponAltRange, Color.red, 1);
 
@@ -407,37 +409,42 @@ public class WeaponScript : MonoBehaviour
                         // RELOAD AMMO AND UPDATE PLAYER UI HUD
                         if (Input.GetKey("r"))
                         {
-                            if (!isScoped)
+                            // PREVENT RELOAD SPAM
+                            if (Time.time > cooldownRef)
                             {
-                                if (currentClipAmmo != MaxClipAmmo)
+                                cooldownRef = Time.time + cooldown;
+                                if (!isScoped)
                                 {
-                                    if (currentTotalAmmo != 0)
+                                    if (currentClipAmmo != MaxClipAmmo)
                                     {
-                                        if (activeWeapon.GetComponent<WeaponStats>().getWeaponName().Equals("Crossbow"))
+                                        if (currentTotalAmmo != 0)
                                         {
-                                            if (crossA != null && crossUA != null)
+                                            if (activeWeapon.GetComponent<WeaponStats>().getWeaponName().Equals("Crossbow"))
                                             {
-                                                crossA.SetActive(true);
-                                                crossUA.SetActive(false);
+                                                if (crossA != null && crossUA != null)
+                                                {
+                                                    crossA.SetActive(true);
+                                                    crossUA.SetActive(false);
+                                                }
                                             }
-                                        }
 
-                                        int reloadNumber = (MaxClipAmmo - currentClipAmmo);
+                                            int reloadNumber = (MaxClipAmmo - currentClipAmmo);
 
-                                        AudioClip reloadSFX = activeWeapon.GetComponent<WeaponStats>().getReloadSFX();
-                                        StartCoroutine(SoundController.gunSounds(reloadSFX, cooldown));
+                                            AudioClip reloadSFX = activeWeapon.GetComponent<WeaponStats>().getReloadSFX();
+                                            StartCoroutine(SoundController.gunSounds(reloadSFX, cooldown));
 
-                                        if ((currentTotalAmmo - reloadNumber) < 0)
-                                        {
-                                            currentClipAmmo += currentTotalAmmo;
+                                            if ((currentTotalAmmo - reloadNumber) < 0)
+                                            {
+                                                currentClipAmmo += currentTotalAmmo;
 
-                                            currentTotalAmmo = 0;
-                                        }
-                                        else if ((currentTotalAmmo - reloadNumber) >= 0)
-                                        {
-                                            currentTotalAmmo = (currentTotalAmmo - reloadNumber);
+                                                currentTotalAmmo = 0;
+                                            }
+                                            else if ((currentTotalAmmo - reloadNumber) >= 0)
+                                            {
+                                                currentTotalAmmo = (currentTotalAmmo - reloadNumber);
 
-                                            currentClipAmmo += reloadNumber;
+                                                currentClipAmmo += reloadNumber;
+                                            }
                                         }
                                     }
                                 }

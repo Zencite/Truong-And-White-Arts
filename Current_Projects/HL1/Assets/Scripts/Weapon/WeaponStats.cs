@@ -146,7 +146,6 @@ public class WeaponStats : MonoBehaviour
             // IF PICKED UP FIRST TIME, MAKE ACTIVE WEAPON
             if (tempWeapon.GetComponent<WeaponStats>().isWeaponPickedUp() != true && !isAnAmmoBox && !isAnAmmoCrate)
             {
-                print("First time picked up " + tempWeapon);
                 // DEACTIVES ANY OTHER WEAPON IN CHILDREN POOL OF GUNCAM
                 foreach (Transform child in gunCam)
                 {
@@ -200,7 +199,6 @@ public class WeaponStats : MonoBehaviour
             // IF WEAPON WAS ALREADY PICKED UP
             else if (tempWeapon.GetComponent<WeaponStats>().isWeaponPickedUp() == true)
             {
-                print("Already picked up " + tempWeapon);
                 // CHECK IF IT CAN PICK UP IT'S AMMO
                 if (!isAnAmmoCrate && !WeaponScript.weaponSwitch)
                 {
