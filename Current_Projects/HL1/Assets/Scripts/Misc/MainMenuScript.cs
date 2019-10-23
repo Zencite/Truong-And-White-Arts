@@ -24,12 +24,14 @@ public class MainMenuScript : MonoBehaviour
     public GameObject mainMenu;
     public GameObject levelSelectButton;
     public GameObject creditButton;
+    public GameObject askQuitButton;
     public GameObject quitButton;
     public GameObject backButton;
 
     public GameObject fade;
     public GameObject levels;
     public GameObject credits;
+    public GameObject askQuit;
 
     // Start is called before the first frame update
     void Start()
@@ -45,8 +47,7 @@ public class MainMenuScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(Time.deltaTime);
-        if (fadeAway)
+        if (fadeAway && logo.activeSelf)
         {
             if (!mainMenuSource.isPlaying)
             {
@@ -55,7 +56,7 @@ public class MainMenuScript : MonoBehaviour
             StartCoroutine(FadeLogo(logoPanelOutline, logoText, logoPicture, fadeAway));
             StartCoroutine(Wait());
         }
-        else
+        else if (!fadeAway && logo.activeSelf)
         {
             StartCoroutine(FadeLogo(logoPanelOutline, logoText, logoPicture, fadeAway));
             StartCoroutine(Wait());
@@ -74,7 +75,7 @@ public class MainMenuScript : MonoBehaviour
     // ACTIVATES MAIN MENU AFTER LOGO
     private IEnumerator title()
     {
-        yield return new WaitForSeconds(12);
+        yield return new WaitForSeconds(10);
         logo.SetActive(false);
         mainMenu.SetActive(true);
         sceneChild.SetActive(true);
@@ -94,9 +95,8 @@ public class MainMenuScript : MonoBehaviour
         // fade from transparent to opaque 
         if (fadeAway)
         {
-            print("In");
             // loop over 4 second
-            for (float i = 0.0f; i <= 1.0f; i += fadeTime * Time.deltaTime)
+            for (float i = 0.0f; i <= 1.0f; i += fadeTime * 0.02f)
             {
                 LPO.color = new Color(0f, 0f, 0f, i);
                 LT.color = new Color(1f, 1f, 1f, i);
@@ -107,9 +107,8 @@ public class MainMenuScript : MonoBehaviour
         // fade from opaque to transparent
         else
         {
-            print("Out");
             // loop over 4 second backwards
-            for (float i = 1.0f; i >= 0.0f; i -= fadeTime * Time.deltaTime)
+            for (float i = 1.0f; i >= 0.0f; i -= fadeTime * 0.0125f)
             {
                 LPO.color = new Color(0f, 0f, 0f, i);
                 LT.color = new Color(1f, 1f, 1f, i);
@@ -123,7 +122,7 @@ public class MainMenuScript : MonoBehaviour
     public void SelectLevel()
     {
         levelSelectButton.gameObject.SetActive(false);
-        quitButton.gameObject.SetActive(false);
+        askQuitButton.gameObject.SetActive(false);
         creditButton.gameObject.SetActive(false);
 
         fade.gameObject.SetActive(true);
@@ -134,7 +133,7 @@ public class MainMenuScript : MonoBehaviour
     public void Credits()
     {
         levelSelectButton.gameObject.SetActive(false);
-        quitButton.gameObject.SetActive(false);
+        askQuitButton.gameObject.SetActive(false);
         creditButton.gameObject.SetActive(false);
 
         fade.gameObject.SetActive(true);
@@ -146,10 +145,11 @@ public class MainMenuScript : MonoBehaviour
     public void Back()
     {
         levelSelectButton.gameObject.SetActive(true);
-        quitButton.gameObject.SetActive(true);
+        askQuitButton.gameObject.SetActive(true);
         creditButton.gameObject.SetActive(true);
 
         fade.gameObject.SetActive(false);
+        askQuit.gameObject.SetActive(false);
         credits.gameObject.SetActive(false);
         levels.gameObject.SetActive(false);
         backButton.gameObject.SetActive(false);
@@ -158,6 +158,17 @@ public class MainMenuScript : MonoBehaviour
     public void PlayTestScene()
     {
         SceneManager.LoadScene("PlayTestScene");
+    }
+
+    public void AskQuit()
+    {
+        levelSelectButton.gameObject.SetActive(false);
+        askQuitButton.gameObject.SetActive(false);
+        creditButton.gameObject.SetActive(false);
+
+        fade.gameObject.SetActive(true);
+        askQuit.gameObject.SetActive(true);
+        backButton.gameObject.SetActive(true);
     }
 
     public void Quit()

@@ -24,6 +24,7 @@ TagManager:
   - PlayerCrossbow
   - NPC
   - Vent
+  - PlayerGrenade
   layers:
   - Default
   - TransparentFX
