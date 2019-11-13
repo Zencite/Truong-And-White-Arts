@@ -3,7 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{BEA0DEFF-CEAB-4891-A80B-319B4A81A029}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldBuildingRuntime", "WorldBuildingRuntime.csproj", "{20181853-F15F-D71B-02BE-854793686DCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavMeshComponents", "NavMeshComponents.csproj", "{638C337F-2335-3BD4-A1E3-7A47B898304E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleSFXRuntime", "SimpleSFXRuntime.csproj", "{E0F3913F-7159-EF39-7E98-CA78A8A72C84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skybox3DRuntime", "Skybox3DRuntime.csproj", "{F6EA9F00-A9D2-C293-81B2-3FAC1E8F9FDF}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{C79EBE34-E7F7-D540-B2F0-8ACFBBD900EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavMeshComponentsEditor", "NavMeshComponentsEditor.csproj", "{F702EA47-00E8-104F-134C-9C919A3A951A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageManagerCheck", "PackageManagerCheck.csproj", "{7664C084-B191-5EE0-7497-311953DCAB8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +27,34 @@ Global
 		{BEA0DEFF-CEAB-4891-A80B-319B4A81A029}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEA0DEFF-CEAB-4891-A80B-319B4A81A029}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEA0DEFF-CEAB-4891-A80B-319B4A81A029}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20181853-F15F-D71B-02BE-854793686DCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20181853-F15F-D71B-02BE-854793686DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20181853-F15F-D71B-02BE-854793686DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20181853-F15F-D71B-02BE-854793686DCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{638C337F-2335-3BD4-A1E3-7A47B898304E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{638C337F-2335-3BD4-A1E3-7A47B898304E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{638C337F-2335-3BD4-A1E3-7A47B898304E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{638C337F-2335-3BD4-A1E3-7A47B898304E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0F3913F-7159-EF39-7E98-CA78A8A72C84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0F3913F-7159-EF39-7E98-CA78A8A72C84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0F3913F-7159-EF39-7E98-CA78A8A72C84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0F3913F-7159-EF39-7E98-CA78A8A72C84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6EA9F00-A9D2-C293-81B2-3FAC1E8F9FDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6EA9F00-A9D2-C293-81B2-3FAC1E8F9FDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6EA9F00-A9D2-C293-81B2-3FAC1E8F9FDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6EA9F00-A9D2-C293-81B2-3FAC1E8F9FDF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C79EBE34-E7F7-D540-B2F0-8ACFBBD900EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C79EBE34-E7F7-D540-B2F0-8ACFBBD900EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C79EBE34-E7F7-D540-B2F0-8ACFBBD900EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C79EBE34-E7F7-D540-B2F0-8ACFBBD900EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F702EA47-00E8-104F-134C-9C919A3A951A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F702EA47-00E8-104F-134C-9C919A3A951A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F702EA47-00E8-104F-134C-9C919A3A951A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F702EA47-00E8-104F-134C-9C919A3A951A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7664C084-B191-5EE0-7497-311953DCAB8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7664C084-B191-5EE0-7497-311953DCAB8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7664C084-B191-5EE0-7497-311953DCAB8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7664C084-B191-5EE0-7497-311953DCAB8F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
