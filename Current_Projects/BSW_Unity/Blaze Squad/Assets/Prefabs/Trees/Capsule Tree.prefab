@@ -288,9 +288,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3384467491093633129}
   - component: {fileID: 640833327669068105}
+  - component: {fileID: 3796293186009187891}
   - component: {fileID: 983993056520835997}
-  - component: {fileID: 6698310633864519025}
-  - component: {fileID: 3224657335666912470}
+  - component: {fileID: 1512006686582619992}
   m_Layer: 0
   m_Name: Capsule Tree
   m_TagString: Untagged
@@ -332,6 +332,20 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!136 &3796293186009187891
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3384467491093633128}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.8
+  m_Height: 2.75
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.35, z: 0}
 --- !u!54 &983993056520835997
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -348,7 +362,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6698310633864519025
+--- !u!114 &1512006686582619992
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -357,38 +371,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3384467491093633128}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f86ad52c129ea3418d615b0c0e345a4, type: 3}
+  m_Script: {fileID: 11500000, guid: 39673cae25d3a8e4fa00ab38621da061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireDamage: 2
-  FuelReduction: 1
-  fireRange: 0.5
---- !u!135 &3224657335666912470
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3384467491093633128}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.4099965
-  m_Center: {x: 0, y: 1.6905789, z: 0}
---- !u!135 &5177266044733278119
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5046501252538164959}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  health: 100
+  waterShield: 100
+  flammability: 1
+  fuel: 100
+  burning: 0
 --- !u!1001 &8037718814689647046
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -483,12 +473,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8bd8114547325a43878454529791413, type: 3}
---- !u!1 &5046501252538164959 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2991358323935493913, guid: e8bd8114547325a43878454529791413,
-    type: 3}
-  m_PrefabInstance: {fileID: 8037718814689647046}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5046501252538164944 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2991358323935493910, guid: e8bd8114547325a43878454529791413,

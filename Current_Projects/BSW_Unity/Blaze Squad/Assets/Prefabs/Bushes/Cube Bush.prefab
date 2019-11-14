@@ -38,6 +38,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1344286031826101247}
   - component: {fileID: 4945752805183026086}
+  - component: {fileID: 6900934250536291914}
+  - component: {fileID: 3207924653954797431}
+  - component: {fileID: 7426099739633967872}
   m_Layer: 0
   m_Name: Cube Bush
   m_TagString: Untagged
@@ -79,6 +82,52 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!54 &6900934250536291914
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344286031826101244}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!135 &3207924653954797431
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344286031826101244}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7426099739633967872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344286031826101244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39673cae25d3a8e4fa00ab38621da061, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  waterShield: 0
+  flammability: 0.75
+  fuel: 100
+  burning: 0
 --- !u!1 &1344286032281515383
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,7 +419,7 @@ PrefabInstance:
     - target: {fileID: 2991358323935493913, guid: e8bd8114547325a43878454529791413,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2991358323935493910, guid: e8bd8114547325a43878454529791413,
         type: 3}
@@ -430,17 +479,17 @@ PrefabInstance:
     - target: {fileID: 2991358323935493910, guid: e8bd8114547325a43878454529791413,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2991358323935493910, guid: e8bd8114547325a43878454529791413,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2991358323935493910, guid: e8bd8114547325a43878454529791413,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2991358323935493911, guid: e8bd8114547325a43878454529791413,
         type: 3}
