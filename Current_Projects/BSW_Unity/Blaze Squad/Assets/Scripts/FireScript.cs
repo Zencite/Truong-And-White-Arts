@@ -9,6 +9,10 @@ public class FireScript : MonoBehaviour
     public double fireRange;
     FireSpread parentData;
     SphereCollider col;
+
+    private float timer;
+    public float timerMax;
+
     void Start()
     {
         parentData = transform.GetComponentInParent<FireSpread>();
@@ -19,15 +23,21 @@ public class FireScript : MonoBehaviour
     {
         if(parentData.fuel > 0)
         {
-            parentData.fuel = parentData.fuel - FuelReduction;
+            timer += Time.deltaTime;
+            if (timer >= timerMax)
+            {
+                parentData.fuel = parentData.fuel - FuelReduction;
 
-            if (parentData.fuel >= 51)
-            {
-                fireRange += 0.05;
-            }
-            else
-            {
-                fireRange -= 0.05;
+                if (parentData.fuel >= 51)
+                {
+                    fireRange += 0.05;
+                }
+                else
+                {
+                    fireRange -= 0.05;
+                }
+
+                timer = 0;
             }
         }
         

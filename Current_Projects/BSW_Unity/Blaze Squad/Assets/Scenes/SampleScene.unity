@@ -547,6 +547,7 @@ MonoBehaviour:
   fireDamage: 2
   FuelReduction: 1
   fireRange: 0.5
+  timerMax: 2
 --- !u!1 &576699466
 GameObject:
   m_ObjectHideFlags: 0
@@ -957,8 +958,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.5735764, y: 0, z: 0, w: 0.8191521}
-  m_LocalPosition: {x: -100, y: 2.25, z: -6}
+  m_LocalRotation: {x: 0.57357633, y: -0, z: 0.000000014901159, w: 0.81915206}
+  m_LocalPosition: {x: 0, y: 2.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1590,6 +1591,7 @@ MonoBehaviour:
   flammability: 0.75
   fuel: 100
   burning: 0
+  burned: 0
 --- !u!4 &1778443479 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3384467491093633129, guid: 7b60428030b734644b5b1e10885a1b3c,
@@ -1825,6 +1827,7 @@ MonoBehaviour:
   flammability: 0.75
   fuel: 100
   burning: 0
+  burned: 0
 --- !u!1 &1915393603
 GameObject:
   m_ObjectHideFlags: 0
@@ -2407,6 +2410,11 @@ PrefabInstance:
       propertyPath: fireRange
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1092690474927983354, guid: 543a0bc737f79bb4381ff5124891657d,
+        type: 3}
+      propertyPath: timerMax
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 749744257585828752, guid: 543a0bc737f79bb4381ff5124891657d,
         type: 3}
       propertyPath: m_IsActive
@@ -2556,6 +2564,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6859915527332178202, guid: 17e3300fcae65ee4587e7d9910d85c3c,
+        type: 3}
+      propertyPath: timerMax
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 331029342742703519, guid: 17e3300fcae65ee4587e7d9910d85c3c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17e3300fcae65ee4587e7d9910d85c3c, type: 3}
 --- !u!4 &1716394550748086232 stripped
@@ -2575,6 +2593,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Capsule Tree
+      objectReference: {fileID: 0}
+    - target: {fileID: 5046501252538164959, guid: 7b60428030b734644b5b1e10885a1b3c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3384467491093633129, guid: 7b60428030b734644b5b1e10885a1b3c,
         type: 3}
@@ -2706,11 +2729,6 @@ PrefabInstance:
       propertyPath: fireRange
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 5046501252538164959, guid: 7b60428030b734644b5b1e10885a1b3c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b60428030b734644b5b1e10885a1b3c, type: 3}
 --- !u!1001 &3637896574549227261
@@ -2789,15 +2807,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1915393604}
     m_Modifications:
-    - target: {fileID: 5511631662350184480, guid: 35d879080710989458fa89c2eeb5dcc6,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6029464753737570321, guid: 35d879080710989458fa89c2eeb5dcc6,
         type: 3}
       propertyPath: m_Name
       value: Capsule Bush
+      objectReference: {fileID: 0}
+    - target: {fileID: 5511631662350184480, guid: 35d879080710989458fa89c2eeb5dcc6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5043427755811958946, guid: 35d879080710989458fa89c2eeb5dcc6,
         type: 3}
@@ -2854,6 +2872,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1096717213518026215, guid: 35d879080710989458fa89c2eeb5dcc6,
+        type: 3}
+      propertyPath: timerMax
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35d879080710989458fa89c2eeb5dcc6, type: 3}
 --- !u!4 &3844311036808766185 stripped
@@ -2869,11 +2892,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1915393604}
     m_Modifications:
-    - target: {fileID: 3685412895812544964, guid: 24a322196b10c7a4a98b1c43145dc00f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3851527172408484283, guid: 24a322196b10c7a4a98b1c43145dc00f,
         type: 3}
       propertyPath: m_Name
@@ -2933,6 +2951,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3685412895812544964, guid: 24a322196b10c7a4a98b1c43145dc00f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6117542128124685144, guid: 24a322196b10c7a4a98b1c43145dc00f,
+        type: 3}
+      propertyPath: timerMax
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6117542128124685144, guid: 24a322196b10c7a4a98b1c43145dc00f,
+        type: 3}
+      propertyPath: FuelReduction
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24a322196b10c7a4a98b1c43145dc00f, type: 3}
@@ -3097,6 +3130,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsKinematic
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5093939298151923774, guid: 266cb7888119b2c45b2b6eaf2a92bd80,
+        type: 3}
+      propertyPath: timerMax
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 266cb7888119b2c45b2b6eaf2a92bd80, type: 3}
