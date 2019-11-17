@@ -483,6 +483,7 @@ MonoBehaviour:
   combineBallLaunch: {fileID: 0}
   combineBallBounce: {fileID: 0}
   grenadeTick: {fileID: 8300000, guid: a91858bda96365149a998d19f82b8f4d, type: 3}
+  projectileSource: {fileID: 5102091570434671980}
   entity: {fileID: 0}
   isCombineBall: 0
   isGrenade: 1
@@ -513,7 +514,8 @@ AudioSource:
   m_GameObject: {fileID: 7582724541636691026}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4383625724476718723, guid: 358c7a43dc9cea640996c46e6328982e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -1162,6 +1164,12 @@ Transform:
 --- !u!198 &5128015836008979111 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 19807510, guid: 8acce8db8b22b844bbe622829aae32e4,
+    type: 3}
+  m_PrefabInstance: {fileID: 5128015835990501297}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &5102091570434671980 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 136263006753170141, guid: 8acce8db8b22b844bbe622829aae32e4,
     type: 3}
   m_PrefabInstance: {fileID: 5128015835990501297}
   m_PrefabAsset: {fileID: 0}

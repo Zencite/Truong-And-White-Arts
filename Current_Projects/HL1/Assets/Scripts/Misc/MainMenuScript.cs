@@ -61,7 +61,7 @@ public class MainMenuScript : MonoBehaviour
             StartCoroutine(FadeLogo(logoPanelOutline, logoText, logoPicture, fadeAway));
             StartCoroutine(Wait());
         }
-        StartCoroutine(title());
+        StartCoroutine(Title());
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -73,7 +73,7 @@ public class MainMenuScript : MonoBehaviour
     }
 
     // ACTIVATES MAIN MENU AFTER LOGO
-    private IEnumerator title()
+    private IEnumerator Title()
     {
         yield return new WaitForSeconds(10);
         logo.SetActive(false);
@@ -121,38 +121,38 @@ public class MainMenuScript : MonoBehaviour
     // BUTTONS
     public void SelectLevel()
     {
-        levelSelectButton.gameObject.SetActive(false);
-        askQuitButton.gameObject.SetActive(false);
-        creditButton.gameObject.SetActive(false);
+        levelSelectButton.SetActive(false);
+        askQuitButton.SetActive(false);
+        creditButton.SetActive(false);
 
-        fade.gameObject.SetActive(true);
-        levels.gameObject.SetActive(true);
-        backButton.gameObject.SetActive(true);
+        fade.SetActive(true);
+        levels.SetActive(true);
+        backButton.SetActive(true);
     }
 
     public void Credits()
     {
-        levelSelectButton.gameObject.SetActive(false);
-        askQuitButton.gameObject.SetActive(false);
-        creditButton.gameObject.SetActive(false);
+        levelSelectButton.SetActive(false);
+        askQuitButton.SetActive(false);
+        creditButton.SetActive(false);
 
-        fade.gameObject.SetActive(true);
-        credits.gameObject.SetActive(true);
-        backButton.gameObject.SetActive(true);
+        fade.SetActive(true);
+        credits.SetActive(true);
+        backButton.SetActive(true);
 
     }
 
     public void Back()
     {
-        levelSelectButton.gameObject.SetActive(true);
-        askQuitButton.gameObject.SetActive(true);
-        creditButton.gameObject.SetActive(true);
+        levelSelectButton.SetActive(true);
+        askQuitButton.SetActive(true);
+        creditButton.SetActive(true);
 
-        fade.gameObject.SetActive(false);
-        askQuit.gameObject.SetActive(false);
-        credits.gameObject.SetActive(false);
-        levels.gameObject.SetActive(false);
-        backButton.gameObject.SetActive(false);
+        fade.SetActive(false);
+        askQuit.SetActive(false);
+        credits.SetActive(false);
+        levels.SetActive(false);
+        backButton.SetActive(false);
     }
 
     public void PlayTestScene()
@@ -162,13 +162,13 @@ public class MainMenuScript : MonoBehaviour
 
     public void AskQuit()
     {
-        levelSelectButton.gameObject.SetActive(false);
-        askQuitButton.gameObject.SetActive(false);
-        creditButton.gameObject.SetActive(false);
+        levelSelectButton.SetActive(false);
+        askQuitButton.SetActive(false);
+        creditButton.SetActive(false);
 
-        fade.gameObject.SetActive(true);
-        askQuit.gameObject.SetActive(true);
-        backButton.gameObject.SetActive(true);
+        fade.SetActive(true);
+        askQuit.SetActive(true);
+        backButton.SetActive(true);
     }
 
     public void Quit()

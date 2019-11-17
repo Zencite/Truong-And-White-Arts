@@ -21,9 +21,9 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Explosion
-  m_Shader: {fileID: 210, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _ALPHABLEND_ON _EMISSION _RECEIVE_SHADOWS_OFF
-  m_LightmapFlags: 0
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _ALPHABLEND_ON _EMISSION _GLOSSYREFLECTIONS_OFF _RECEIVE_SHADOWS_OFF
+  m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3000
@@ -31,7 +31,6 @@ Material:
     RenderType: Transparent
   disabledShaderPasses:
   - SHADOWCASTER
-  - ALWAYS
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -106,11 +105,11 @@ Material:
     - _FlipbookBlending: 0
     - _FlipbookMode: 0
     - _GlossMapScale: 0
-    - _Glossiness: 0
+    - _Glossiness: 0.352
     - _GlossyReflections: 0
     - _InvFade: 1.05
     - _LightingEnabled: 1
-    - _Metallic: 0
+    - _Metallic: 1
     - _Mode: 2
     - _OcclusionStrength: 1
     - _Parallax: 0.02
@@ -133,11 +132,11 @@ Material:
     - _BaseColor: {r: 0.6764706, g: 0.64779246, b: 0.48745674, a: 1}
     - _BaseColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
-    - _Color: {r: 0.69702846, g: 0.6981132, b: 0.6289605, a: 1}
+    - _Color: {r: 0.6415094, g: 0.6415094, b: 0.33588463, a: 1}
     - _ColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _EmisColor: {r: 0.5294118, g: 0.5294118, b: 0.5294118, a: 0}
     - _Emission: {r: 0.029411793, g: 0.029411793, b: 0.029411793, a: 0}
-    - _EmissionColor: {r: 0.2264151, g: 0.21446845, b: 0.18689926, a: 1}
+    - _EmissionColor: {r: 0.26415092, g: 0.22303309, b: 0.22303309, a: 1}
     - _EmissionColorUI: {r: 0.9705882, g: 0.61129344, b: 0.44961074, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.5, g: 0.5, b: 0.5, a: 0}

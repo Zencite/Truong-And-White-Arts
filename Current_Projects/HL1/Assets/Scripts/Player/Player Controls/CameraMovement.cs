@@ -15,21 +15,30 @@ public class CameraMovement : MonoBehaviour
 
     private float yaw = 0.0f;                   
     private float pitch = 0.0f;
+    private float isPausedSpeed;
     private bool m_cursorIsLocked = true;
 
     // Update is called once per frame
     void Update()
     {
-            yaw += cameraSpeed * Input.GetAxis("Mouse X");                                  //Moves from left and right
-            pitch -= cameraSpeed * Input.GetAxis("Mouse Y");                                //Moves from up and down
-            pitch = Mathf.Clamp(pitch, minPitch, maxPitch);                                 //Gives limits/parameters to prevent revolving 
+        if (PauseMenuScript.gameIsPaused)
+        {
+            isPausedSpeed = 0.0f;
+        }
+        else
+        {
+            isPausedSpeed = 1.0f;
+        }
+        yaw += cameraSpeed * isPausedSpeed * Input.GetAxis("Mouse X");                                  //Moves from left and right
+        pitch -= cameraSpeed * isPausedSpeed * Input.GetAxis("Mouse Y");                                //Moves from up and down
+        pitch = Mathf.Clamp(pitch, minPitch, maxPitch);                                 //Gives limits/parameters to prevent revolving 
 
-            torsoTransform.transform.eulerAngles = new Vector3(0.0f, yaw, 0.0f);            //Turns the player's torso from left and right
-            holdingPosTransform.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);      //Turns the object in hand from up, down, left and right
+        torsoTransform.transform.eulerAngles = new Vector3(0.0f, yaw, 0.0f);            //Turns the player's torso from left and right
+        holdingPosTransform.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);      //Turns the object in hand from up, down, left and right
 
-            transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);                          //Turns the transform of where this script is located from up, down, left, and right
+        transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);                          //Turns the transform of where this script is located from up, down, left, and right
 
-            UpdateCursorLock();
+        UpdateCursorLock();
     }
 
     public void SetCursorLock(bool value)
@@ -46,7 +55,9 @@ public class CameraMovement : MonoBehaviour
     {
         //if the user set "lockCursor" we check & properly lock the cursos
         if (lockCursor)
+        {
             InternalLockUpdate();
+        }
     }
 
     private void InternalLockUpdate()
@@ -55,7 +66,7 @@ public class CameraMovement : MonoBehaviour
         {
             m_cursorIsLocked = false;
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(0) && !PauseMenuScript.gameIsPaused)
         {
             m_cursorIsLocked = true;
         }

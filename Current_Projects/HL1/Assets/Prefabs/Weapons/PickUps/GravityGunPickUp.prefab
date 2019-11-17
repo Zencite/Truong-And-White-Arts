@@ -23,22 +23,22 @@ PrefabInstance:
     - target: {fileID: 7138480923773061872, guid: 4a2ed7f8e10623e4fab8c35a4c3646a1,
         type: 3}
       propertyPath: m_Name
-      value: GravityGun
+      value: GravityGunPickUp
       objectReference: {fileID: 0}
     - target: {fileID: 7138480923773061873, guid: 4a2ed7f8e10623e4fab8c35a4c3646a1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.03
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7138480923773061873, guid: 4a2ed7f8e10623e4fab8c35a4c3646a1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.523
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7138480923773061873, guid: 4a2ed7f8e10623e4fab8c35a4c3646a1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.94
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7138480923773061873, guid: 4a2ed7f8e10623e4fab8c35a4c3646a1,
         type: 3}

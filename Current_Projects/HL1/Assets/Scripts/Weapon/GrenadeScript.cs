@@ -49,7 +49,7 @@ public class GrenadeScript : MonoBehaviour
     {
         if (WeaponScript.activeWeapon != null)
         {
-            if (WeaponScript.activeWeapon.GetComponent<WeaponStats>().getWeaponName().Equals("Grenade"))
+            if (WeaponScript.activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("Grenade"))
             {
                 
                 if(gn_Active && !hasThrown)

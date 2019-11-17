@@ -11,7 +11,7 @@ public class ProjectileExplosionScript : MonoBehaviour
     public AudioClip combineBallLaunch;
     public AudioClip combineBallBounce;
     public AudioClip grenadeTick;
-    public static AudioSource projectileSource;
+    public AudioSource projectileSource;
 
     public GameObject entity;
     public bool isCombineBall;
@@ -30,16 +30,15 @@ public class ProjectileExplosionScript : MonoBehaviour
     void Start()
     {
         timer = 0.0f;
+        // IF COMBINE BAL PLAY LAUNCH SFX INSIDE EXPLOSIONSFX
+
+        //projectileSource = this.GetComponent<AudioSource>();
+
         if (isCombineBall)
         {
-            projectileSource = this.GetComponent<AudioSource>();
             StartCoroutine(SoundController.gunSounds(explosionSFX, 0));
         }
         once = false;
-        if (isGrenade)
-        {
-            projectileSource = this.GetComponent<AudioSource>();
-        }
     }
 
     // Update is called once per frame
@@ -90,7 +89,7 @@ public class ProjectileExplosionScript : MonoBehaviour
             if (gn_blinkTimer >= gn_blinkTimeMax)
             {
                 gn_blinker.intensity = 10;
-                StartCoroutine(projectileSound(grenadeTick, 0));
+                StartCoroutine(ProjectileSound(grenadeTick, 0));
                 gn_blinkTimer = 0.0f;
             }
             else
@@ -104,7 +103,7 @@ public class ProjectileExplosionScript : MonoBehaviour
     {
         if (isCombineBall)
         {
-            StartCoroutine(projectileSound(combineBallBounce, 0));
+            StartCoroutine(ProjectileSound(combineBallBounce, 0));
 
             Rigidbody rb = col.transform.GetComponent<Rigidbody>();
 
@@ -136,7 +135,7 @@ public class ProjectileExplosionScript : MonoBehaviour
         }
     }
     // IF SMG GRENADE
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter()
     {
         if (!isGrenade && !isCombineBall)
         {
@@ -146,7 +145,7 @@ public class ProjectileExplosionScript : MonoBehaviour
     }
 
     // PLAY PROJECTILE SFX
-    public static IEnumerator projectileSound(AudioClip SFX, float delay)
+    public IEnumerator ProjectileSound(AudioClip SFX, float delay)
     {
         projectileSource.PlayOneShot(SFX);
         yield return new WaitForSeconds(delay * 5);
@@ -154,9 +153,9 @@ public class ProjectileExplosionScript : MonoBehaviour
 
     private void Explosion()
     {
+        StartCoroutine(ProjectileSound(explosionSFX, 0));
         Vector3 explosionPosition = transform.position;
         Collider[] colliders = Physics.OverlapSphere(explosionPosition, explosionRadius);
-        StartCoroutine(SoundController.noiseSound(explosionSFX, 0));
         foreach (Collider hit in colliders)
         {
             Rigidbody rb = hit.GetComponent<Rigidbody>();
@@ -202,15 +201,11 @@ public class ProjectileExplosionScript : MonoBehaviour
                 }
             }
         }
-        if(!isCombineBall)
+        explosionPrefab.transform.parent = null;
+        explosionPrefab.Play();
+        if (!isCombineBall)
         {
-            explosionPrefab.transform.parent = null;
-            explosionPrefab.Play();
             Destroy(explosionPrefab.gameObject, explosionPrefab.main.duration);
-        }
-        else
-        {
-            explosionPrefab.Play();
         }
     }
 

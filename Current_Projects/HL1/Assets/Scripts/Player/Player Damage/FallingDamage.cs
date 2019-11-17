@@ -53,6 +53,10 @@ public class FallingDamage : MonoBehaviour
     {
         float fallingDamage = Vector3.Magnitude(playerRB.velocity);
         float yVel = transform.InverseTransformDirection(playerRB.velocity).y;
+
+        print("yVel = " + yVel);
+        print("Falling Damage = " + fallingDamage);
+
         if(fallingDamage < 0)
         {
             fallingDamage *= -1;
@@ -62,8 +66,9 @@ public class FallingDamage : MonoBehaviour
             fallingDamage *= 10000000;
         }
 
-        print("yVel = " + yVel);
+        
         PlayerHealth.playerHealth -= Mathf.CeilToInt(fallingDamage);
+        print(Mathf.CeilToInt(fallingDamage));
         isFalling = false;
     }
 

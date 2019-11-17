@@ -58,22 +58,22 @@ public class PlayerHealth : MonoBehaviour
 
             if (WeaponScript.activeWeapon != null)
             {
-                if (!(WeaponScript.activeWeapon.GetComponent<WeaponStats>().getWeaponName().Equals("Crowbar")))
+                if (!(WeaponScript.activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("Crowbar")))
                 {
-                    if (!(WeaponScript.activeWeapon.GetComponent<WeaponStats>().getWeaponName().Equals("GravityGun")))
+                    if (!(WeaponScript.activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("GravityGun")))
                     {
                         gravPos.SetActive(false);
-                        if (!WeaponScript.activeWeapon.GetComponent<WeaponStats>().isWeaponUsingPrimeAmmo() && WeaponScript.activeWeapon.GetComponent<WeaponStats>().isWeaponHasAltFire())
+                        if (!WeaponScript.activeWeapon.GetComponent<WeaponStats>().IsWeaponUsingPrimeAmmo() && WeaponScript.activeWeapon.GetComponent<WeaponStats>().IsWeaponHasAltFire())
                         {
                             WeaponScript.AmmoObject.SetActive(false);
                             WeaponScript.AmmoAltObject.SetActive(true);
                         }
-                        else if (WeaponScript.activeWeapon.GetComponent<WeaponStats>().isWeaponUsingPrimeAmmo())
+                        else if (WeaponScript.activeWeapon.GetComponent<WeaponStats>().IsWeaponUsingPrimeAmmo())
                         {
                             WeaponScript.AmmoAltObject.SetActive(false);
                             WeaponScript.AmmoObject.SetActive(true);
                         }
-                        else if (!WeaponScript.activeWeapon.GetComponent<WeaponStats>().isWeaponHasAltFire())
+                        else if (!WeaponScript.activeWeapon.GetComponent<WeaponStats>().IsWeaponHasAltFire())
                         {
                             WeaponScript.AmmoAltObject.SetActive(false);
                             WeaponScript.AmmoObject.SetActive(true);

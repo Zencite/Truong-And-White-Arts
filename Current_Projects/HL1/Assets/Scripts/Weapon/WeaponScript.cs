@@ -127,10 +127,9 @@ public class WeaponScript : MonoBehaviour
         // IF PLAYER HAS A WEAPON
         if (activeWeapon != null)
         {
-            string nameCheck = activeWeapon.GetComponent<WeaponStats>().getWeaponName();
-
-            if (!(nameCheck.Equals("Crowbar")) && !(nameCheck.Equals("GravityGun")))
-            {
+            string nameCheck = activeWeapon.GetComponent<WeaponStats>().GetWeaponName();
+            if (!(nameCheck.Equals("Crowbar")))
+            {           
                 if (weaponSwitch)
                 {
                     // ACTIVATES PLAYER WEAPON UI IF NOT CROWBAR OR GRAVGUN
@@ -144,27 +143,27 @@ public class WeaponScript : MonoBehaviour
                     AssignPrimeStats(activeWeapon);
 
                     // ASSIGN ALTERNATIVE STATS
-                    weaponAltBulletShots = activeWeapon.GetComponent<WeaponStats>().getAltWeaponBulletShots();
-                    weaponAltRange = activeWeapon.GetComponent<WeaponStats>().getAltWeaponRange();
+                    weaponAltBulletShots = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponBulletShots();
+                    weaponAltRange = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponRange();
 
-                    altCooldownRef = activeWeapon.GetComponent<WeaponStats>().getAltWeaponFireCooldown();
-                    altCooldown = activeWeapon.GetComponent<WeaponStats>().getAltWeaponFireCooldown();
+                    altCooldownRef = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponFireCooldown();
+                    altCooldown = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponFireCooldown();
 
-                    weaponAltForce = activeWeapon.GetComponent<WeaponStats>().getAltWeaponForce();
-                    weaponAltSpread = activeWeapon.GetComponent<WeaponStats>().getAltWeaponSpread();
-                    weaponAltDamage = activeWeapon.GetComponent<WeaponStats>().getAltWeaponDamage();
+                    weaponAltForce = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponForce();
+                    weaponAltSpread = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponSpread();
+                    weaponAltDamage = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponDamage();
 
                     // CHECKS IF USING PRIMARY AMMO FOR ALT FIRE
-                    if (!activeWeapon.GetComponent<WeaponStats>().isWeaponUsingPrimeAmmo())
+                    if (!activeWeapon.GetComponent<WeaponStats>().IsWeaponUsingPrimeAmmo())
                     {
-                        currentTotalAltAmmo = activeWeapon.GetComponent<WeaponStats>().getAltWeaponCurrentAmmo();
-                        MaxTotalAltAmmo = activeWeapon.GetComponent<WeaponStats>().getAltWeaponMaxAmmo();
+                        currentTotalAltAmmo = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponCurrentAmmo();
+                        MaxTotalAltAmmo = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponMaxAmmo();
                     }
 
                     // CHECKS IF ALT INSTANTIATES A PROJECTILE
-                    if (activeWeapon.GetComponent<WeaponStats>().isWeaponAltInstantiate() || nameCheck.Equals("Crossbow"))
+                    if (activeWeapon.GetComponent<WeaponStats>().IsWeaponAltInstantiate() || nameCheck.Equals("Crossbow"))
                     {
-                        projectile = activeWeapon.GetComponent<WeaponStats>().getProjectile();
+                        projectile = activeWeapon.GetComponent<WeaponStats>().GetProjectile();
                         if (nameCheck.Equals("Crossbow"))
                         {
                             crossA = GameObject.Find("CrossArmed");
@@ -173,14 +172,15 @@ public class WeaponScript : MonoBehaviour
                     }
 
                     weaponSwitch = false;
+                    print("Weapon Script: weapon switch is " + weaponSwitch);
                 }
 
-                if (activeWeapon.GetComponent<WeaponStats>().isWeaponUsingPrimeAmmo() || !activeWeapon.GetComponent<WeaponStats>().isWeaponHasAltFire())
+                if (activeWeapon.GetComponent<WeaponStats>().IsWeaponUsingPrimeAmmo() || !activeWeapon.GetComponent<WeaponStats>().IsWeaponHasAltFire())
                 {
                     AmmoClipNumber.text = currentClipAmmo.ToString();
                     AmmoTotalNumber.text = currentTotalAmmo.ToString();
                 }
-                else if (activeWeapon.GetComponent<WeaponStats>().isWeaponHasAltFire())
+                else if (activeWeapon.GetComponent<WeaponStats>().IsWeaponHasAltFire())
                 {
                     AmmoPrimClipNumber.text = currentClipAmmo.ToString();
                     AmmoPrimTotalNumber.text = currentTotalAmmo.ToString();
@@ -214,8 +214,8 @@ public class WeaponScript : MonoBehaviour
                                             }
                                             else
                                             {
-                                                weaponForce = activeWeapon.GetComponent<WeaponStats>().getWeaponForce();
-                                                weaponSpread = activeWeapon.GetComponent<WeaponStats>().getWeaponSpread();
+                                                weaponForce = activeWeapon.GetComponent<WeaponStats>().GetWeaponForce();
+                                                weaponSpread = activeWeapon.GetComponent<WeaponStats>().GetWeaponSpread();
                                             }
                                             // WEAPON FIRE SPREAD AND DEBUG
                                             randomizedVector = RandomInsideCone(weaponSpread) * transform.forward;
@@ -233,7 +233,7 @@ public class WeaponScript : MonoBehaviour
                                                 }
                                             }
                                         }
-                                        AudioClip fireSFX = activeWeapon.GetComponent<WeaponStats>().getFireSFX();
+                                        AudioClip fireSFX = activeWeapon.GetComponent<WeaponStats>().GetFireSFX();
                                         StartCoroutine(SoundController.gunSounds(fireSFX, cooldown));
                                         WeaponRecoil(weaponForce);
                                     }
@@ -243,7 +243,7 @@ public class WeaponScript : MonoBehaviour
                                     if (Time.time > cooldownRef)
                                     {
                                         cooldownRef = Time.time + cooldown;
-                                        AudioClip emptySFX = activeWeapon.GetComponent<WeaponStats>().getEmptySFX();
+                                        AudioClip emptySFX = activeWeapon.GetComponent<WeaponStats>().GetEmptySFX();
                                         StartCoroutine(SoundController.gunSounds(emptySFX, cooldown));
                                     }
                                 }
@@ -266,10 +266,10 @@ public class WeaponScript : MonoBehaviour
                                             currentClipAmmo--;
                                         }
 
-                                        AudioClip fireSFX = activeWeapon.GetComponent<WeaponStats>().getFireSFX();
+                                        AudioClip fireSFX = activeWeapon.GetComponent<WeaponStats>().GetFireSFX();
                                         StartCoroutine(SoundController.gunSounds(fireSFX, cooldown));
 
-                                        if (activeWeapon.GetComponent<WeaponStats>().getWeaponName().Equals("Crossbow"))
+                                        if (activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("Crossbow"))
                                         {
                                             crossA.SetActive(false);
                                             crossUA.SetActive(true);
@@ -278,7 +278,7 @@ public class WeaponScript : MonoBehaviour
                                 }
                                 else
                                 {
-                                    if (activeWeapon.GetComponent<WeaponStats>().getWeaponName().Equals("Crossbow"))
+                                    if (activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("Crossbow"))
                                     {
                                         crossA.SetActive(false);
                                         crossUA.SetActive(true);
@@ -294,7 +294,7 @@ public class WeaponScript : MonoBehaviour
                         if (Input.GetKey(KeyCode.Mouse1))
                         {
                             // IF CROSSBOW, SCOPE IN
-                            if (activeWeapon.GetComponent<WeaponStats>().getWeaponName().Equals("Crossbow"))
+                            if (activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("Crossbow"))
                             {
                                 switch(isScoped)
                                 {
@@ -314,9 +314,9 @@ public class WeaponScript : MonoBehaviour
                             }
 
                             // WEAPONS ALT FIRE
-                            if (activeWeapon.GetComponent<WeaponStats>().isWeaponHasAltFire())
+                            if (activeWeapon.GetComponent<WeaponStats>().IsWeaponHasAltFire())
                             {
-                                if (activeWeapon.GetComponent<WeaponStats>().isWeaponUsingPrimeAmmo())
+                                if (activeWeapon.GetComponent<WeaponStats>().IsWeaponUsingPrimeAmmo())
                                 {
                                     if (currentClipAmmo != 0 && !(currentClipAmmo < 0))
                                     {
@@ -336,8 +336,8 @@ public class WeaponScript : MonoBehaviour
                                                 }
                                                 else
                                                 {
-                                                    weaponAltForce = activeWeapon.GetComponent<WeaponStats>().getAltWeaponForce();
-                                                    weaponAltSpread = activeWeapon.GetComponent<WeaponStats>().getAltWeaponSpread();
+                                                    weaponAltForce = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponForce();
+                                                    weaponAltSpread = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponSpread();
                                                 }
                                                 // CREATE RANDOM HITSCAN SPREAD & DEBUG RAYCAST RAYS
                                                 randomizedVector = RandomInsideCone(weaponAltSpread) * transform.forward;
@@ -353,7 +353,7 @@ public class WeaponScript : MonoBehaviour
                                                     }
                                                 }
                                             }
-                                            AudioClip projectileSFX = activeWeapon.GetComponent<WeaponStats>().getProjectileSFX();
+                                            AudioClip projectileSFX = activeWeapon.GetComponent<WeaponStats>().GetProjectileSFX();
                                             StartCoroutine(SoundController.gunSounds(projectileSFX, altCooldown));
                                             WeaponRecoil(weaponAltForce);
                                         }
@@ -363,12 +363,12 @@ public class WeaponScript : MonoBehaviour
                                         if (Time.time > altCooldownRef)
                                         {
                                             altCooldownRef = Time.time + altCooldown;
-                                            AudioClip emptySFX = activeWeapon.GetComponent<WeaponStats>().getEmptySFX();
+                                            AudioClip emptySFX = activeWeapon.GetComponent<WeaponStats>().GetEmptySFX();
                                             StartCoroutine(SoundController.gunSounds(emptySFX, altCooldown));
                                         }
                                     }
                                 }
-                                else if (activeWeapon.GetComponent<WeaponStats>().isWeaponAltInstantiate())
+                                else if (activeWeapon.GetComponent<WeaponStats>().IsWeaponAltInstantiate())
                                 {
                                     if (currentTotalAltAmmo != 0 && !(currentTotalAltAmmo < 0))
                                     {
@@ -383,7 +383,7 @@ public class WeaponScript : MonoBehaviour
                                                 projectileShot.AddForce(shotPos.transform.forward * weaponAltForce);
                                                 currentTotalAltAmmo--;
 
-                                                AudioClip projectileSFX = activeWeapon.GetComponent<WeaponStats>().getProjectileSFX();
+                                                AudioClip projectileSFX = activeWeapon.GetComponent<WeaponStats>().GetProjectileSFX();
                                                 StartCoroutine(SoundController.gunSounds(projectileSFX, altCooldown));
                                             }
 
@@ -394,7 +394,7 @@ public class WeaponScript : MonoBehaviour
                                         if (Time.time > altCooldownRef)
                                         {
                                             altCooldownRef = Time.time + altCooldown;
-                                            AudioClip emptySFX = activeWeapon.GetComponent<WeaponStats>().getEmptySFX();
+                                            AudioClip emptySFX = activeWeapon.GetComponent<WeaponStats>().GetEmptySFX();
                                             StartCoroutine(SoundController.gunSounds(emptySFX, altCooldown));
                                         }
                                     }
@@ -409,42 +409,37 @@ public class WeaponScript : MonoBehaviour
                         // RELOAD AMMO AND UPDATE PLAYER UI HUD
                         if (Input.GetKey("r"))
                         {
-                            // PREVENT RELOAD SPAM
-                            if (Time.time > cooldownRef)
+                            if (!isScoped)
                             {
-                                cooldownRef = Time.time + cooldown;
-                                if (!isScoped)
+                                if (currentClipAmmo != MaxClipAmmo)
                                 {
-                                    if (currentClipAmmo != MaxClipAmmo)
+                                    if (currentTotalAmmo != 0)
                                     {
-                                        if (currentTotalAmmo != 0)
+                                        if (activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("Crossbow"))
                                         {
-                                            if (activeWeapon.GetComponent<WeaponStats>().getWeaponName().Equals("Crossbow"))
+                                            if (crossA != null && crossUA != null)
                                             {
-                                                if (crossA != null && crossUA != null)
-                                                {
-                                                    crossA.SetActive(true);
-                                                    crossUA.SetActive(false);
-                                                }
+                                                crossA.SetActive(true);
+                                                crossUA.SetActive(false);
                                             }
+                                        }
 
-                                            int reloadNumber = (MaxClipAmmo - currentClipAmmo);
+                                        int reloadNumber = (MaxClipAmmo - currentClipAmmo);
 
-                                            AudioClip reloadSFX = activeWeapon.GetComponent<WeaponStats>().getReloadSFX();
-                                            StartCoroutine(SoundController.gunSounds(reloadSFX, cooldown));
+                                        AudioClip reloadSFX = activeWeapon.GetComponent<WeaponStats>().GetReloadSFX();
+                                        StartCoroutine(SoundController.gunSounds(reloadSFX, cooldown));
 
-                                            if ((currentTotalAmmo - reloadNumber) < 0)
-                                            {
-                                                currentClipAmmo += currentTotalAmmo;
+                                        if ((currentTotalAmmo - reloadNumber) < 0)
+                                        {
+                                            currentClipAmmo += currentTotalAmmo;
 
-                                                currentTotalAmmo = 0;
-                                            }
-                                            else if ((currentTotalAmmo - reloadNumber) >= 0)
-                                            {
-                                                currentTotalAmmo = (currentTotalAmmo - reloadNumber);
+                                            currentTotalAmmo = 0;
+                                        }
+                                        else if ((currentTotalAmmo - reloadNumber) >= 0)
+                                        {
+                                            currentTotalAmmo = (currentTotalAmmo - reloadNumber);
 
-                                                currentClipAmmo += reloadNumber;
-                                            }
+                                            currentClipAmmo += reloadNumber;
                                         }
                                     }
                                 }
@@ -455,7 +450,7 @@ public class WeaponScript : MonoBehaviour
                 }
             }
             // IF CROWBAR IS ACTIVE WEAPON
-            else if (activeWeapon.GetComponent<WeaponStats>().getWeaponName().Equals("Crowbar"))
+            else if (activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("Crowbar"))
             {
                 if (weaponSwitch)
                 {
@@ -474,7 +469,7 @@ public class WeaponScript : MonoBehaviour
                         cooldownRef = Time.time + cooldown;
 
                         //Firing SFX is assigned to clip
-                        AudioClip fireSFX = activeWeapon.GetComponent<WeaponStats>().getFireSFX();
+                        AudioClip fireSFX = activeWeapon.GetComponent<WeaponStats>().GetFireSFX();
                         StartCoroutine(SoundController.gunSounds(fireSFX, cooldown));
 
                         //visualize the raycast
@@ -578,22 +573,22 @@ public class WeaponScript : MonoBehaviour
     // ASSIGNS THE PRIMARY STATS FOR WEAPONS FROM WEAPON STATS
     public void AssignPrimeStats(GameObject activeWeapon)
     {
-        weaponBulletShots = activeWeapon.GetComponent<WeaponStats>().getWeaponBulletShots();
-        weaponRange = activeWeapon.GetComponent<WeaponStats>().getWeaponRange();
+        weaponBulletShots = activeWeapon.GetComponent<WeaponStats>().GetWeaponBulletShots();
+        weaponRange = activeWeapon.GetComponent<WeaponStats>().GetWeaponRange();
 
-        MaxClipAmmo = activeWeapon.GetComponent<WeaponStats>().getWeaponMaxClipSize();
-        currentClipAmmo = activeWeapon.GetComponent<WeaponStats>().getWeaponCurrentClipSize();
+        MaxClipAmmo = activeWeapon.GetComponent<WeaponStats>().GetWeaponMaxClipSize();
+        currentClipAmmo = activeWeapon.GetComponent<WeaponStats>().GetWeaponCurrentClipSize();
 
-        MaxTotalAmmo = activeWeapon.GetComponent<WeaponStats>().getWeaponMaxAmmo();
-        currentTotalAmmo = activeWeapon.GetComponent<WeaponStats>().getWeaponCurrentAmmo();
+        MaxTotalAmmo = activeWeapon.GetComponent<WeaponStats>().GetWeaponMaxAmmo();
+        currentTotalAmmo = activeWeapon.GetComponent<WeaponStats>().GetWeaponCurrentAmmo();
 
-        cooldownRef = activeWeapon.GetComponent<WeaponStats>().getWeaponFireCooldown();
-        cooldown = activeWeapon.GetComponent<WeaponStats>().getWeaponFireCooldown();
+        cooldownRef = activeWeapon.GetComponent<WeaponStats>().GetWeaponFireCooldown();
+        cooldown = activeWeapon.GetComponent<WeaponStats>().GetWeaponFireCooldown();
 
-        weaponForce = activeWeapon.GetComponent<WeaponStats>().getWeaponForce();
-        weaponSpread = activeWeapon.GetComponent<WeaponStats>().getWeaponSpread();
+        weaponForce = activeWeapon.GetComponent<WeaponStats>().GetWeaponForce();
+        weaponSpread = activeWeapon.GetComponent<WeaponStats>().GetWeaponSpread();
 
-        weaponDamage = activeWeapon.GetComponent<WeaponStats>().getWeaponDamage();
+        weaponDamage = activeWeapon.GetComponent<WeaponStats>().GetWeaponDamage();
     }
 
     // RANDOMIZES RAYCASTS FOR HITSCAN WEAPONS
@@ -605,7 +600,7 @@ public class WeaponScript : MonoBehaviour
     }
 
     // IF NEW WEAPON IS PICKED UP, CHANGE IT TO ACTIVE WEAPON
-    public GameObject changeActiveWeapon(GameObject tempWeapon)
+    public GameObject ChangeActiveWeapon(GameObject tempWeapon)
     {
         foreach (Transform child in gunCam.transform)
         {
@@ -630,12 +625,12 @@ public class WeaponScript : MonoBehaviour
             if (child.gameObject.tag.Equals(weaponTag))
             {
                 tempWeapon = child.gameObject;
-                if (tempWeapon.GetComponent<WeaponStats>().isWeaponPickedUp() == true)
+                if (tempWeapon.GetComponent<WeaponStats>().IsWeaponPickedUp() == true)
                 {
-                    if (tempWeapon.GetComponent<WeaponStats>().isWeaponActive() != true)
+                    if (tempWeapon.GetComponent<WeaponStats>().IsWeaponActive() != true)
                     {
-                        changeActiveWeapon(tempWeapon);
-                        string weaponName = tempWeapon.GetComponent<WeaponStats>().getWeaponName();
+                        ChangeActiveWeapon(tempWeapon);
+                        string weaponName = tempWeapon.GetComponent<WeaponStats>().GetWeaponName();
                         WeaponStats.FindAmmoType(weaponName);
                     }
                 }
@@ -705,14 +700,14 @@ public class WeaponScript : MonoBehaviour
 
     private void CheckHUD(GameObject activeWeapon)
     {
-        if (activeWeapon.GetComponent<WeaponStats>().isWeaponHasAltFire())
+        if (activeWeapon.GetComponent<WeaponStats>().IsWeaponHasAltFire())
         {
-            if (!activeWeapon.GetComponent<WeaponStats>().isWeaponUsingPrimeAmmo())
+            if (!activeWeapon.GetComponent<WeaponStats>().IsWeaponUsingPrimeAmmo())
             {
                 AmmoObject.SetActive(false);
                 AmmoAltObject.SetActive(true);
             }
-            else if (activeWeapon.GetComponent<WeaponStats>().isWeaponUsingPrimeAmmo())
+            else if (activeWeapon.GetComponent<WeaponStats>().IsWeaponUsingPrimeAmmo())
             {
                 AmmoAltObject.SetActive(false);
                 AmmoObject.SetActive(true);

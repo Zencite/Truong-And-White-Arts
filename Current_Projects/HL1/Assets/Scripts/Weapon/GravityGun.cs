@@ -22,7 +22,7 @@ public class GravityGun : MonoBehaviour
     private RaycastHit endpointInfo;
     private bool once;
     private float cooldownRef;
-    private float cooldown = 5.0f;
+    private float cooldown = 1.5f;
     private float dropTimeRef;
     private float dropTime = 0.01f;
     public static string NPC = "NPC";
@@ -43,7 +43,7 @@ public class GravityGun : MonoBehaviour
     {
         if (WeaponScript.activeWeapon != null)
         {
-            if (WeaponScript.activeWeapon.GetComponent<WeaponStats>().getWeaponName().Equals("GravityGun"))
+            if (WeaponScript.activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("GravityGun"))
             {
                 gravPos = GameObject.Find("GravPos");
 
@@ -187,6 +187,10 @@ public class GravityGun : MonoBehaviour
                         }
                     }
                 }
+            }
+            else
+            {
+                gravPos = null;
             }
         }
     }
