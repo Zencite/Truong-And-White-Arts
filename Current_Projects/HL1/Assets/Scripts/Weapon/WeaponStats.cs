@@ -164,7 +164,6 @@ public class WeaponStats : MonoBehaviour
                 {
                     UpdateCurrentUI(tempWeapon);
                     WeaponScript.weaponSwitch = true;
-                    print("Weapon Stats: weapon switch is " + WeaponScript.weaponSwitch);
                 }
 
                 // UPDATE WEAPON PICK UP UI
@@ -334,28 +333,16 @@ public class WeaponStats : MonoBehaviour
 
     void UpdateCurrentUI(GameObject tempWeapon)
     {
-        print("Working in UpdateCurrentUI in weapon stats");
-        print(tempWeapon);
-
         WeaponScript.currentClipAmmo = this.gameObject.GetComponent<WeaponStats>().GetWeaponCurrentClipSize();
-        print("weapon script CCA = " + this.gameObject.GetComponent<WeaponStats>().GetWeaponCurrentClipSize());
-
         tempWeapon.GetComponent<WeaponStats>().weaponCurrentClipSize = this.gameObject.GetComponent<WeaponStats>().GetWeaponCurrentClipSize();
-        print("activeweapon CCS = " + this.gameObject.GetComponent<WeaponStats>().GetWeaponCurrentClipSize());
 
         WeaponScript.currentTotalAmmo = this.gameObject.GetComponent<WeaponStats>().GetWeaponCurrentAmmo();
-        print("weapon script CTA = " + this.gameObject.GetComponent<WeaponStats>().GetWeaponCurrentAmmo());
 
         tempWeapon.GetComponent<WeaponStats>().weaponCurrentAmmo = this.gameObject.GetComponent<WeaponStats>().GetWeaponCurrentAmmo();
-        print("activeweapon CTA = " + this.gameObject.GetComponent<WeaponStats>().GetWeaponCurrentAmmo());
-
         FindAmmoType(this.gameObject.GetComponent<WeaponStats>().GetWeaponName());
 
         WeaponScript.currentTotalAltAmmo = this.gameObject.GetComponent<WeaponStats>().GetAltWeaponCurrentAmmo();
-        print("weapon script CTAA = " + this.gameObject.GetComponent<WeaponStats>().GetAltWeaponCurrentAmmo());
-
         tempWeapon.GetComponent<WeaponStats>().altWeaponCurrentAmmo = this.gameObject.GetComponent<WeaponStats>().GetAltWeaponCurrentAmmo();
-        print("activeweapon CTAA = " + this.gameObject.GetComponent<WeaponStats>().GetAltWeaponCurrentAmmo());
     }
 
     // UPDATE AMMO PICK UP UI

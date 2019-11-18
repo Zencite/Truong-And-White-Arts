@@ -128,156 +128,145 @@ public class WeaponScript : MonoBehaviour
         if (activeWeapon != null)
         {
             string nameCheck = activeWeapon.GetComponent<WeaponStats>().GetWeaponName();
-            if (!(nameCheck.Equals("Crowbar")))
-            {           
-                if (weaponSwitch)
+                      
+            if (weaponSwitch)
+            {
+                // ACTIVATES PLAYER WEAPON UI IF NOT CROWBAR OR GRAVGUN
+                if (PlayerHealth.hasSuit)
                 {
-                    // ACTIVATES PLAYER WEAPON UI IF NOT CROWBAR OR GRAVGUN
-                    if (PlayerHealth.hasSuit)
+                    // CHECKS FOR HUD UPDATE
+                    CheckHUD(activeWeapon);
+                }
+
+                // ASSIGN PRIMARY STATS
+                AssignPrimeStats(activeWeapon);
+
+                // ASSIGN ALTERNATIVE STATS
+                weaponAltBulletShots = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponBulletShots();
+                weaponAltRange = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponRange();
+
+                altCooldownRef = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponFireCooldown();
+                altCooldown = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponFireCooldown();
+
+                weaponAltForce = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponForce();
+                weaponAltSpread = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponSpread();
+                weaponAltDamage = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponDamage();
+
+                // CHECKS IF USING PRIMARY AMMO FOR ALT FIRE
+                if (!activeWeapon.GetComponent<WeaponStats>().IsWeaponUsingPrimeAmmo())
+                {
+                    currentTotalAltAmmo = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponCurrentAmmo();
+                    MaxTotalAltAmmo = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponMaxAmmo();
+                }
+
+                // CHECKS IF ALT INSTANTIATES A PROJECTILE
+                if (activeWeapon.GetComponent<WeaponStats>().IsWeaponAltInstantiate() || nameCheck.Equals("Crossbow"))
+                {
+                    projectile = activeWeapon.GetComponent<WeaponStats>().GetProjectile();
+                    if (nameCheck.Equals("Crossbow"))
                     {
-                        // CHECKS FOR HUD UPDATE
-                        CheckHUD(activeWeapon);
+                        crossA = GameObject.Find("CrossArmed");
+                        crossUA = GameObject.Find("CrossUnarmed");
                     }
+                }
 
-                    // ASSIGN PRIMARY STATS
-                    AssignPrimeStats(activeWeapon);
+                weaponSwitch = false;
+            }
 
-                    // ASSIGN ALTERNATIVE STATS
-                    weaponAltBulletShots = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponBulletShots();
-                    weaponAltRange = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponRange();
+            if (activeWeapon.GetComponent<WeaponStats>().IsWeaponUsingPrimeAmmo() || !activeWeapon.GetComponent<WeaponStats>().IsWeaponHasAltFire())
+            {
+                AmmoClipNumber.text = currentClipAmmo.ToString();
+                AmmoTotalNumber.text = currentTotalAmmo.ToString();
+            }
+            else if (activeWeapon.GetComponent<WeaponStats>().IsWeaponHasAltFire())
+            {
+                AmmoPrimClipNumber.text = currentClipAmmo.ToString();
+                AmmoPrimTotalNumber.text = currentTotalAmmo.ToString();
+                AmmoAltAmmoNumber.text = currentTotalAltAmmo.ToString();
+            }
 
-                    altCooldownRef = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponFireCooldown();
-                    altCooldown = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponFireCooldown();
-
-                    weaponAltForce = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponForce();
-                    weaponAltSpread = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponSpread();
-                    weaponAltDamage = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponDamage();
-
-                    // CHECKS IF USING PRIMARY AMMO FOR ALT FIRE
-                    if (!activeWeapon.GetComponent<WeaponStats>().IsWeaponUsingPrimeAmmo())
+            if (!PlayerSight.isHolding && !PlayerSight.isZoomed)
+            {
+                if (!(nameCheck.Equals("Grenade")) && !(nameCheck.Equals("Crowbar")))
+                {
+                    // PRIMARY FIRE WEAPON (MOUSE 0)
+                    if (Input.GetKey(KeyCode.Mouse0))
                     {
-                        currentTotalAltAmmo = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponCurrentAmmo();
-                        MaxTotalAltAmmo = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponMaxAmmo();
-                    }
-
-                    // CHECKS IF ALT INSTANTIATES A PROJECTILE
-                    if (activeWeapon.GetComponent<WeaponStats>().IsWeaponAltInstantiate() || nameCheck.Equals("Crossbow"))
-                    {
-                        projectile = activeWeapon.GetComponent<WeaponStats>().GetProjectile();
-                        if (nameCheck.Equals("Crossbow"))
+                        if (!nameCheck.Equals("Crossbow"))
                         {
-                            crossA = GameObject.Find("CrossArmed");
-                            crossUA = GameObject.Find("CrossUnarmed");
-                        }
-                    }
-
-                    weaponSwitch = false;
-                    print("Weapon Script: weapon switch is " + weaponSwitch);
-                }
-
-                if (activeWeapon.GetComponent<WeaponStats>().IsWeaponUsingPrimeAmmo() || !activeWeapon.GetComponent<WeaponStats>().IsWeaponHasAltFire())
-                {
-                    AmmoClipNumber.text = currentClipAmmo.ToString();
-                    AmmoTotalNumber.text = currentTotalAmmo.ToString();
-                }
-                else if (activeWeapon.GetComponent<WeaponStats>().IsWeaponHasAltFire())
-                {
-                    AmmoPrimClipNumber.text = currentClipAmmo.ToString();
-                    AmmoPrimTotalNumber.text = currentTotalAmmo.ToString();
-                    AmmoAltAmmoNumber.text = currentTotalAltAmmo.ToString();
-                }
-
-                if (!PlayerSight.isHolding && !PlayerSight.isZoomed)
-                {
-                    if (!(nameCheck.Equals("Grenade")))
-                    {
-                        // PRIMARY FIRE WEAPON (MOUSE 0)
-                        if (Input.GetKey(KeyCode.Mouse0))
-                        {
-                            if (!nameCheck.Equals("Crossbow"))
+                            if (currentClipAmmo != 0 && !(currentClipAmmo < 0))
                             {
-                                if (currentClipAmmo != 0 && !(currentClipAmmo < 0))
+                                if (Time.time > cooldownRef)
                                 {
-                                    if (Time.time > cooldownRef)
+                                    cooldownRef = Time.time + cooldown;
+
+                                    currentClipAmmo--;
+
+                                    for (int i = 0; i < weaponBulletShots; i++)
                                     {
-                                        cooldownRef = Time.time + cooldown;
-
-                                        currentClipAmmo--;
-
-                                        for (int i = 0; i < weaponBulletShots; i++)
+                                        // CROUCHING INCREASES PLAYER AIM  
+                                        if (PlayerMovement.isCrouching)
                                         {
-                                            // CROUCHING INCREASES PLAYER AIM  
-                                            if (PlayerMovement.isCrouching)
-                                            {
-                                                weaponSpread = Mathf.CeilToInt(weaponSpread / 1.5f);
-                                                weaponForce = weaponForce / 1.5f;
-                                            }
-                                            else
-                                            {
-                                                weaponForce = activeWeapon.GetComponent<WeaponStats>().GetWeaponForce();
-                                                weaponSpread = activeWeapon.GetComponent<WeaponStats>().GetWeaponSpread();
-                                            }
-                                            // WEAPON FIRE SPREAD AND DEBUG
-                                            randomizedVector = RandomInsideCone(weaponSpread) * transform.forward;
-                                            Debug.DrawRay(shotPos.transform.position, randomizedVector * weaponRange, Color.red, 1);
+                                            weaponSpread = Mathf.CeilToInt(weaponSpread / 1.5f);
+                                            weaponForce = weaponForce / 1.5f;
+                                        }
+                                        else
+                                        {
+                                            weaponForce = activeWeapon.GetComponent<WeaponStats>().GetWeaponForce();
+                                            weaponSpread = activeWeapon.GetComponent<WeaponStats>().GetWeaponSpread();
+                                        }
+                                        // WEAPON FIRE SPREAD AND DEBUG
+                                        randomizedVector = RandomInsideCone(weaponSpread) * transform.forward;
+                                        Debug.DrawRay(shotPos.transform.position, randomizedVector * weaponRange, Color.red, 1);
 
-                                            if (Physics.Raycast(shotPos.transform.position, randomizedVector, out endpointInfo))
+                                        if (Physics.Raycast(shotPos.transform.position, randomizedVector, out endpointInfo))
+                                        {
+                                            float rayRange = endpointInfo.distance;
+
+                                            if (rayRange <= weaponRange)
                                             {
-                                                float rayRange = endpointInfo.distance;
+                                                // CHECKS WEAPON DAMAGE AND FORCE AT ENDPOINT
+                                                WeaponRayCastHit(endpointInfo, weaponForce, weaponDamage);
 
-                                                if (rayRange <= weaponRange)
-                                                {
-                                                    // CHECKS WEAPON DAMAGE AND FORCE AT ENDPOINT
-                                                    WeaponRayCastHit(endpointInfo, weaponForce, weaponDamage);
-
-                                                }
                                             }
                                         }
-                                        AudioClip fireSFX = activeWeapon.GetComponent<WeaponStats>().GetFireSFX();
-                                        StartCoroutine(SoundController.gunSounds(fireSFX, cooldown));
-                                        WeaponRecoil(weaponForce);
                                     }
-                                }
-                                else
-                                {
-                                    if (Time.time > cooldownRef)
-                                    {
-                                        cooldownRef = Time.time + cooldown;
-                                        AudioClip emptySFX = activeWeapon.GetComponent<WeaponStats>().GetEmptySFX();
-                                        StartCoroutine(SoundController.gunSounds(emptySFX, cooldown));
-                                    }
+                                    AudioClip fireSFX = activeWeapon.GetComponent<WeaponStats>().GetFireSFX();
+                                    StartCoroutine(SoundController.gunSounds(fireSFX, cooldown));
+                                    WeaponRecoil(weaponForce);
                                 }
                             }
-                            else if (nameCheck.Equals("Crossbow"))
+                            else
                             {
-                                // CROSSBOW FIRE, INSTANTIATE BOLT
-                                if (currentClipAmmo != 0 && !(currentClipAmmo < 0))
+                                if (Time.time > cooldownRef)
                                 {
-                                    if (Time.time > cooldownRef)
-                                    {
-                                        cooldownRef = Time.time + cooldown;
-
-                                        for (int i = 0; i < weaponBulletShots; i++)
-                                        {
-                                            Quaternion shotPosRotation = shotPos.transform.rotation;
-                                            Rigidbody projectileShot = Instantiate(projectile.GetComponent<Rigidbody>(), shotPos.transform.position, shotPosRotation) as Rigidbody;
-                                            projectileShot.transform.LookAt(shotPos.transform.position);
-                                            projectileShot.AddForce(shotPos.transform.forward * weaponForce);
-                                            currentClipAmmo--;
-                                        }
-
-                                        AudioClip fireSFX = activeWeapon.GetComponent<WeaponStats>().GetFireSFX();
-                                        StartCoroutine(SoundController.gunSounds(fireSFX, cooldown));
-
-                                        if (activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("Crossbow"))
-                                        {
-                                            crossA.SetActive(false);
-                                            crossUA.SetActive(true);
-                                        }
-                                    }
+                                    cooldownRef = Time.time + cooldown;
+                                    AudioClip emptySFX = activeWeapon.GetComponent<WeaponStats>().GetEmptySFX();
+                                    StartCoroutine(SoundController.gunSounds(emptySFX, cooldown));
                                 }
-                                else
+                            }
+                        }
+                        else if (nameCheck.Equals("Crossbow"))
+                        {
+                            // CROSSBOW FIRE, INSTANTIATE BOLT
+                            if (currentClipAmmo != 0 && !(currentClipAmmo < 0))
+                            {
+                                if (Time.time > cooldownRef)
                                 {
+                                    cooldownRef = Time.time + cooldown;
+
+                                    for (int i = 0; i < weaponBulletShots; i++)
+                                    {
+                                        Quaternion shotPosRotation = shotPos.transform.rotation;
+                                        Rigidbody projectileShot = Instantiate(projectile.GetComponent<Rigidbody>(), shotPos.transform.position, shotPosRotation) as Rigidbody;
+                                        projectileShot.transform.LookAt(shotPos.transform.position);
+                                        projectileShot.AddForce(shotPos.transform.forward * weaponForce);
+                                        currentClipAmmo--;
+                                    }
+
+                                    AudioClip fireSFX = activeWeapon.GetComponent<WeaponStats>().GetFireSFX();
+                                    StartCoroutine(SoundController.gunSounds(fireSFX, cooldown));
+
                                     if (activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("Crossbow"))
                                     {
                                         crossA.SetActive(false);
@@ -285,172 +274,181 @@ public class WeaponScript : MonoBehaviour
                                     }
                                 }
                             }
-                        }
-                    }
-
-                    if (!(nameCheck.Equals("Grenade")))
-                    {
-                        // ALT FIRE FOR WEAPONS (MOUSE 2)
-                        if (Input.GetKey(KeyCode.Mouse1))
-                        {
-                            // IF CROSSBOW, SCOPE IN
-                            if (activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("Crossbow"))
+                            else
                             {
-                                switch(isScoped)
+                                if (activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("Crossbow"))
                                 {
-                                    case true:
-                                        gunCamera.GetComponent<Camera>().cullingMask = weaponLayerMask;
-                                        crossScope.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
-                                        firstPersonCamera.GetComponent<Camera>().fieldOfView = 70f;
-                                        isScoped = false;
-                                        break;
-                                    case false:
-                                        gunCamera.GetComponent<Camera>().cullingMask = 0;
-                                        firstPersonCamera.GetComponent<Camera>().fieldOfView = 10f;
-                                        crossScope.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-                                        isScoped = true;
-                                        break;
-                                }
-                            }
-
-                            // WEAPONS ALT FIRE
-                            if (activeWeapon.GetComponent<WeaponStats>().IsWeaponHasAltFire())
-                            {
-                                if (activeWeapon.GetComponent<WeaponStats>().IsWeaponUsingPrimeAmmo())
-                                {
-                                    if (currentClipAmmo != 0 && !(currentClipAmmo < 0))
-                                    {
-                                        if (Time.time > altCooldownRef)
-                                        {
-                                            altCooldownRef = Time.time + altCooldown;
-
-                                            currentClipAmmo--;
-
-                                            for (int i = 0; i < weaponAltBulletShots; i++)
-                                            {
-                                                // CROUCHING INCREASES AIM
-                                                if (PlayerMovement.isCrouching)
-                                                {
-                                                    weaponAltSpread = Mathf.CeilToInt(weaponAltSpread / 1.5f);
-                                                    weaponAltForce = weaponAltForce / 1.5f;
-                                                }
-                                                else
-                                                {
-                                                    weaponAltForce = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponForce();
-                                                    weaponAltSpread = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponSpread();
-                                                }
-                                                // CREATE RANDOM HITSCAN SPREAD & DEBUG RAYCAST RAYS
-                                                randomizedVector = RandomInsideCone(weaponAltSpread) * transform.forward;
-                                                Debug.DrawRay(shotPos.transform.position, randomizedVector * weaponAltRange, Color.red, 1);
-
-                                                if (Physics.Raycast(shotPos.transform.position, randomizedVector, out endpointInfo))
-                                                {
-                                                    float rayRange = endpointInfo.distance;
-
-                                                    if (rayRange <= weaponAltRange)
-                                                    {
-                                                        WeaponRayCastHit(endpointInfo, weaponAltForce, weaponAltDamage);
-                                                    }
-                                                }
-                                            }
-                                            AudioClip projectileSFX = activeWeapon.GetComponent<WeaponStats>().GetProjectileSFX();
-                                            StartCoroutine(SoundController.gunSounds(projectileSFX, altCooldown));
-                                            WeaponRecoil(weaponAltForce);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (Time.time > altCooldownRef)
-                                        {
-                                            altCooldownRef = Time.time + altCooldown;
-                                            AudioClip emptySFX = activeWeapon.GetComponent<WeaponStats>().GetEmptySFX();
-                                            StartCoroutine(SoundController.gunSounds(emptySFX, altCooldown));
-                                        }
-                                    }
-                                }
-                                else if (activeWeapon.GetComponent<WeaponStats>().IsWeaponAltInstantiate())
-                                {
-                                    if (currentTotalAltAmmo != 0 && !(currentTotalAltAmmo < 0))
-                                    {
-                                        if (Time.time > altCooldownRef)
-                                        {
-                                            altCooldownRef = Time.time + altCooldown;
-                                            for (int i = 0; i < weaponAltBulletShots; i++)
-                                            {
-                                                Quaternion shotPosRotation = shotPos.transform.rotation;
-                                                Rigidbody projectileShot = Instantiate(projectile.GetComponent<Rigidbody>(), shotPos.transform.position, shotPosRotation) as Rigidbody;
-                                                projectileShot.transform.LookAt(shotPos.transform.position);
-                                                projectileShot.AddForce(shotPos.transform.forward * weaponAltForce);
-                                                currentTotalAltAmmo--;
-
-                                                AudioClip projectileSFX = activeWeapon.GetComponent<WeaponStats>().GetProjectileSFX();
-                                                StartCoroutine(SoundController.gunSounds(projectileSFX, altCooldown));
-                                            }
-
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (Time.time > altCooldownRef)
-                                        {
-                                            altCooldownRef = Time.time + altCooldown;
-                                            AudioClip emptySFX = activeWeapon.GetComponent<WeaponStats>().GetEmptySFX();
-                                            StartCoroutine(SoundController.gunSounds(emptySFX, altCooldown));
-                                        }
-                                    }
+                                    crossA.SetActive(false);
+                                    crossUA.SetActive(true);
                                 }
                             }
                         }
-
-                        // SAVES AMMO DATA EITHER WHEN SWITCHING WEAPONS
-                        activeWeapon.GetComponent<WeaponStats>().weaponCurrentClipSize = currentClipAmmo;
-                        activeWeapon.GetComponent<WeaponStats>().altWeaponCurrentAmmo = currentTotalAltAmmo;
-
-                        // RELOAD AMMO AND UPDATE PLAYER UI HUD
-                        if (Input.GetKey("r"))
-                        {
-                            if (!isScoped)
-                            {
-                                if (currentClipAmmo != MaxClipAmmo)
-                                {
-                                    if (currentTotalAmmo != 0)
-                                    {
-                                        if (activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("Crossbow"))
-                                        {
-                                            if (crossA != null && crossUA != null)
-                                            {
-                                                crossA.SetActive(true);
-                                                crossUA.SetActive(false);
-                                            }
-                                        }
-
-                                        int reloadNumber = (MaxClipAmmo - currentClipAmmo);
-
-                                        AudioClip reloadSFX = activeWeapon.GetComponent<WeaponStats>().GetReloadSFX();
-                                        StartCoroutine(SoundController.gunSounds(reloadSFX, cooldown));
-
-                                        if ((currentTotalAmmo - reloadNumber) < 0)
-                                        {
-                                            currentClipAmmo += currentTotalAmmo;
-
-                                            currentTotalAmmo = 0;
-                                        }
-                                        else if ((currentTotalAmmo - reloadNumber) >= 0)
-                                        {
-                                            currentTotalAmmo = (currentTotalAmmo - reloadNumber);
-
-                                            currentClipAmmo += reloadNumber;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        activeWeapon.GetComponent<WeaponStats>().weaponCurrentAmmo = currentTotalAmmo;
                     }
                 }
+
+                if (!(nameCheck.Equals("Grenade")) && !(nameCheck.Equals("Crowbar")))
+                {
+                    // ALT FIRE FOR WEAPONS (MOUSE 2)
+                    if (Input.GetKey(KeyCode.Mouse1))
+                    {
+                        // IF CROSSBOW, SCOPE IN
+                        if (activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("Crossbow"))
+                        {
+                            switch(isScoped)
+                            {
+                                case true:
+                                    gunCamera.GetComponent<Camera>().cullingMask = weaponLayerMask;
+                                    crossScope.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+                                    firstPersonCamera.GetComponent<Camera>().fieldOfView = 70f;
+                                    isScoped = false;
+                                    break;
+                                case false:
+                                    gunCamera.GetComponent<Camera>().cullingMask = 0;
+                                    firstPersonCamera.GetComponent<Camera>().fieldOfView = 10f;
+                                    crossScope.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                                    isScoped = true;
+                                    break;
+                            }
+                        }
+
+                        // WEAPONS ALT FIRE
+                        if (activeWeapon.GetComponent<WeaponStats>().IsWeaponHasAltFire())
+                        {
+                            if (activeWeapon.GetComponent<WeaponStats>().IsWeaponUsingPrimeAmmo())
+                            {
+                                if (currentClipAmmo != 0 && !(currentClipAmmo < 0))
+                                {
+                                    if (Time.time > altCooldownRef)
+                                    {
+                                        altCooldownRef = Time.time + altCooldown;
+
+                                        currentClipAmmo--;
+
+                                        for (int i = 0; i < weaponAltBulletShots; i++)
+                                        {
+                                            // CROUCHING INCREASES AIM
+                                            if (PlayerMovement.isCrouching)
+                                            {
+                                                weaponAltSpread = Mathf.CeilToInt(weaponAltSpread / 1.5f);
+                                                weaponAltForce = weaponAltForce / 1.5f;
+                                            }
+                                            else
+                                            {
+                                                weaponAltForce = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponForce();
+                                                weaponAltSpread = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponSpread();
+                                            }
+                                            // CREATE RANDOM HITSCAN SPREAD & DEBUG RAYCAST RAYS
+                                            randomizedVector = RandomInsideCone(weaponAltSpread) * transform.forward;
+                                            Debug.DrawRay(shotPos.transform.position, randomizedVector * weaponAltRange, Color.red, 1);
+
+                                            if (Physics.Raycast(shotPos.transform.position, randomizedVector, out endpointInfo))
+                                            {
+                                                float rayRange = endpointInfo.distance;
+
+                                                if (rayRange <= weaponAltRange)
+                                                {
+                                                    WeaponRayCastHit(endpointInfo, weaponAltForce, weaponAltDamage);
+                                                }
+                                            }
+                                        }
+                                        AudioClip projectileSFX = activeWeapon.GetComponent<WeaponStats>().GetProjectileSFX();
+                                        StartCoroutine(SoundController.gunSounds(projectileSFX, altCooldown));
+                                        WeaponRecoil(weaponAltForce);
+                                    }
+                                }
+                                else
+                                {
+                                    if (Time.time > altCooldownRef)
+                                    {
+                                        altCooldownRef = Time.time + altCooldown;
+                                        AudioClip emptySFX = activeWeapon.GetComponent<WeaponStats>().GetEmptySFX();
+                                        StartCoroutine(SoundController.gunSounds(emptySFX, altCooldown));
+                                    }
+                                }
+                            }
+                            else if (activeWeapon.GetComponent<WeaponStats>().IsWeaponAltInstantiate())
+                            {
+                                if (currentTotalAltAmmo != 0 && !(currentTotalAltAmmo < 0))
+                                {
+                                    if (Time.time > altCooldownRef)
+                                    {
+                                        altCooldownRef = Time.time + altCooldown;
+                                        for (int i = 0; i < weaponAltBulletShots; i++)
+                                        {
+                                            Quaternion shotPosRotation = shotPos.transform.rotation;
+                                            Rigidbody projectileShot = Instantiate(projectile.GetComponent<Rigidbody>(), shotPos.transform.position, shotPosRotation) as Rigidbody;
+                                            projectileShot.transform.LookAt(shotPos.transform.position);
+                                            projectileShot.AddForce(shotPos.transform.forward * weaponAltForce);
+                                            currentTotalAltAmmo--;
+
+                                            AudioClip projectileSFX = activeWeapon.GetComponent<WeaponStats>().GetProjectileSFX();
+                                            StartCoroutine(SoundController.gunSounds(projectileSFX, altCooldown));
+                                        }
+
+                                    }
+                                }
+                                else
+                                {
+                                    if (Time.time > altCooldownRef)
+                                    {
+                                        altCooldownRef = Time.time + altCooldown;
+                                        AudioClip emptySFX = activeWeapon.GetComponent<WeaponStats>().GetEmptySFX();
+                                        StartCoroutine(SoundController.gunSounds(emptySFX, altCooldown));
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // SAVES AMMO DATA EITHER WHEN SWITCHING WEAPONS
+                    activeWeapon.GetComponent<WeaponStats>().weaponCurrentClipSize = currentClipAmmo;
+                    activeWeapon.GetComponent<WeaponStats>().altWeaponCurrentAmmo = currentTotalAltAmmo;
+
+                    // RELOAD AMMO AND UPDATE PLAYER UI HUD
+                    if (Input.GetKey("r") && !(nameCheck.Equals("Crowbar")))
+                    {
+                        if (!isScoped)
+                        {
+                            if (currentClipAmmo != MaxClipAmmo)
+                            {
+                                if (currentTotalAmmo != 0)
+                                {
+                                    if (activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("Crossbow"))
+                                    {
+                                        if (crossA != null && crossUA != null)
+                                        {
+                                            crossA.SetActive(true);
+                                            crossUA.SetActive(false);
+                                        }
+                                    }
+
+                                    int reloadNumber = (MaxClipAmmo - currentClipAmmo);
+
+                                    AudioClip reloadSFX = activeWeapon.GetComponent<WeaponStats>().GetReloadSFX();
+                                    StartCoroutine(SoundController.gunSounds(reloadSFX, cooldown));
+
+                                    if ((currentTotalAmmo - reloadNumber) < 0)
+                                    {
+                                        currentClipAmmo += currentTotalAmmo;
+
+                                        currentTotalAmmo = 0;
+                                    }
+                                    else if ((currentTotalAmmo - reloadNumber) >= 0)
+                                    {
+                                        currentTotalAmmo = (currentTotalAmmo - reloadNumber);
+
+                                        currentClipAmmo += reloadNumber;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    activeWeapon.GetComponent<WeaponStats>().weaponCurrentAmmo = currentTotalAmmo;
+                }
             }
+
             // IF CROWBAR IS ACTIVE WEAPON
-            else if (activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("Crowbar"))
+            if (activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("Crowbar"))
             {
                 if (weaponSwitch)
                 {

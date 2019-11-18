@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 4}
-  m_MinSize: {x: 950, y: 300}
+  m_MinSize: {x: 950, y: 544}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -70,8 +70,8 @@ MonoBehaviour:
     y: 0
     width: 1229
     height: 435
-  m_MinSize: {x: 302, y: 222}
-  m_MaxSize: {x: 8002, y: 4022}
+  m_MinSize: {x: 306, y: 222}
+  m_MaxSize: {x: 8006, y: 4022}
   vertical: 0
   controlID: 32
 --- !u!114 &4
@@ -163,8 +163,8 @@ MonoBehaviour:
     y: 30
     width: 1810
     height: 909
-  m_MinSize: {x: 811, y: 494}
-  m_MaxSize: {x: 22006, y: 14044}
+  m_MinSize: {x: 817, y: 494}
+  m_MaxSize: {x: 22012, y: 14044}
   vertical: 0
   controlID: 30
 --- !u!114 &8
@@ -188,8 +188,8 @@ MonoBehaviour:
     y: 0
     width: 1229
     height: 909
-  m_MinSize: {x: 302, y: 444}
-  m_MaxSize: {x: 8002, y: 8044}
+  m_MinSize: {x: 306, y: 444}
+  m_MaxSize: {x: 8006, y: 8044}
   vertical: 1
   controlID: 31
 --- !u!114 &9
@@ -211,8 +211,8 @@ MonoBehaviour:
     y: 0
     width: 819
     height: 435
-  m_MinSize: {x: 202, y: 222}
-  m_MaxSize: {x: 4002, y: 4022}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -238,8 +238,8 @@ MonoBehaviour:
     y: 435
     width: 1229
     height: 474
-  m_MinSize: {x: 202, y: 222}
-  m_MaxSize: {x: 4002, y: 4022}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -269,7 +269,7 @@ MonoBehaviour:
   m_MinSize: {x: 234, y: 494}
   m_MaxSize: {x: 10004, y: 14044}
   vertical: 1
-  controlID: 148
+  controlID: 119
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -289,8 +289,8 @@ MonoBehaviour:
     y: 0
     width: 277
     height: 448
-  m_MinSize: {x: 204, y: 222}
-  m_MaxSize: {x: 4004, y: 4022}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -587,7 +587,7 @@ MonoBehaviour:
   m_Position:
     m_Target: {x: 5.30972, y: 2.1023645, z: 4.4123297}
     speed: 2
-    m_Value: {x: 5.30972, y: 2.1023645, z: 4.4123297}
+    m_Value: {x: 0.13537598, y: -0.06488037, z: -0.08720398}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -618,11 +618,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.303389, y: -0.06538932, z: 0.020873979, w: -0.95039123}
     speed: 2
-    m_Value: {x: -0.30338904, y: -0.06538933, z: 0.02087398, w: -0.9503913}
+    m_Value: {x: 0.10142358, y: 0.7535574, z: -0.119645655, w: 0.63839597}
   m_Size:
-    m_Target: 42.10974
+    m_Target: 116.65149
     speed: 2
-    m_Value: 42.10974
+    m_Value: 91.85157
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -676,10 +676,10 @@ MonoBehaviour:
   m_ViewDataDictionary: {fileID: 0}
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 84}
+      scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 6cfbffff4a3d0000
+      m_ExpandedIDs: 6cfbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -767,7 +767,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs/Weapons/PickUps
+    - Assets/Prefabs/Weapons/PlayerWeapons
   m_ViewMode: 0
   m_StartGridSize: 64
   m_LastFolders:
@@ -805,10 +805,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 0}
+    scrollPos: {x: 0, y: 11}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff0000000086300000a832000064330000
+    m_ExpandedIDs: ffffffff0000000086300000d2310000a8320000643300006e330000d8340000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: GravityGun
