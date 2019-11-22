@@ -65,8 +65,15 @@
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\FireScript.cs" />
     <Compile Include="Assets\Scripts\FireSpread.cs" />
+    <Compile Include="Assets\Scripts\InverseMesh.cs" />
+    <Compile Include="Assets\Scripts\MainMenuScripts\LevelChangeTrigger.cs" />
+    <Compile Include="Assets\Scripts\MainMenuScripts\MainMenuButtons.cs" />
+    <Compile Include="Assets\Scripts\MainMenuScripts\SuitUpScriptMainMenu.cs" />
+    <Compile Include="Assets\Scripts\MainMenuScripts\TruckScriptMainMenu.cs" />
+    <Compile Include="Assets\Scripts\MainMenuScripts\UnitMainMenuMovement.cs" />
     <Compile Include="Assets\Scripts\PlayerHealth.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\RotateScript.cs" />
     <Compile Include="Assets\Scripts\UnitControl.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Zecit/UnityProjects/Blaze Squad/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
