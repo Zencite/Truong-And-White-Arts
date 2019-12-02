@@ -65,21 +65,26 @@
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\FireScript.cs" />
     <Compile Include="Assets\Scripts\FireSpread.cs" />
-    <Compile Include="Assets\Scripts\InverseMesh.cs" />
+    <Compile Include="Assets\Scripts\MainMenuScripts\IntroScript.cs" />
+    <Compile Include="Assets\Scripts\MainMenuScripts\InverseMesh.cs" />
     <Compile Include="Assets\Scripts\MainMenuScripts\LevelChangeTrigger.cs" />
     <Compile Include="Assets\Scripts\MainMenuScripts\MainMenuButtons.cs" />
+    <Compile Include="Assets\Scripts\MainMenuScripts\RotateScript.cs" />
+    <Compile Include="Assets\Scripts\MainMenuScripts\SpaceScript.cs" />
     <Compile Include="Assets\Scripts\MainMenuScripts\SuitUpScriptMainMenu.cs" />
     <Compile Include="Assets\Scripts\MainMenuScripts\TruckScriptMainMenu.cs" />
     <Compile Include="Assets\Scripts\MainMenuScripts\UnitMainMenuMovement.cs" />
     <Compile Include="Assets\Scripts\PlayerHealth.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\RotateScript.cs" />
     <Compile Include="Assets\Scripts\UnitControl.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Zecit/UnityProjects/Blaze Squad/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>C:/Users/Zecit/UnityProjects/Blaze Squad/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ProBuilder.AssetIdRemapUtility">
+      <HintPath>C:/Users/Zecit/UnityProjects/Blaze Squad/Library/ScriptAssemblies/Unity.ProBuilder.AssetIdRemapUtility.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Zecit/UnityProjects/Blaze Squad/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
@@ -95,6 +100,9 @@
     </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>C:/Users/Zecit/UnityProjects/Blaze Squad/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ProBuilder.AddOns.Editor">
+      <HintPath>C:/Users/Zecit/UnityProjects/Blaze Squad/Library/ScriptAssemblies/Unity.ProBuilder.AddOns.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>C:/Users/Zecit/UnityProjects/Blaze Squad/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>

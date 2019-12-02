@@ -75,6 +75,9 @@
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>C:/Users/Zecit/UnityProjects/Blaze Squad/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.ProBuilder.AssetIdRemapUtility">
+      <HintPath>C:/Users/Zecit/UnityProjects/Blaze Squad/Library/ScriptAssemblies/Unity.ProBuilder.AssetIdRemapUtility.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Zecit/UnityProjects/Blaze Squad/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
@@ -89,6 +92,9 @@
     </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>C:/Users/Zecit/UnityProjects/Blaze Squad/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ProBuilder.AddOns.Editor">
+      <HintPath>C:/Users/Zecit/UnityProjects/Blaze Squad/Library/ScriptAssemblies/Unity.ProBuilder.AddOns.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>C:/Users/Zecit/UnityProjects/Blaze Squad/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
