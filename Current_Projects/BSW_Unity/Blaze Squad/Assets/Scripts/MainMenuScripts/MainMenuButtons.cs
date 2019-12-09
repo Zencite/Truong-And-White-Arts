@@ -9,10 +9,13 @@ public class MainMenuButtons : MonoBehaviour
 
     public GameObject missionGoButton;
     public GameObject quitPromptButton;
+    public GameObject creditsButton;
 
     public GameObject missionGoHighlight;
     public GameObject quitPrompt;
     public GameObject quitPromptHighlight;
+    public GameObject creditsHighlight;
+    public GameObject credits;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +29,7 @@ public class MainMenuButtons : MonoBehaviour
         if (LevelChangeTrigger.changeLevel)
         {
             print("LEVEL CHANGE");
-            //SceneManager.LoadScene("SCENENAME HERE");
+            SceneManager.LoadScene("MapScene");
             LevelChangeTrigger.changeLevel = false;
         }
     }
@@ -68,9 +71,31 @@ public class MainMenuButtons : MonoBehaviour
     {
         missionGoButton.SetActive(false);
         quitPromptButton.SetActive(false);
+        creditsButton.SetActive(false);
 
         quitPrompt.SetActive(true);
         quitPromptHighlight.SetActive(false);
+    }
+
+    //========================================
+
+    // CREDITS BUTTON
+    public void HoverCredits()
+    {
+        creditsHighlight.SetActive(true);
+    }
+
+    public void NotHoverCredits()
+    {
+        creditsHighlight.SetActive(false);
+    }
+
+    public void Credits()
+    {
+        credits.SetActive(true);
+        missionGoButton.SetActive(false);
+        quitPromptButton.SetActive(false);
+        creditsHighlight.SetActive(false);
     }
 
     //========================================
@@ -85,7 +110,9 @@ public class MainMenuButtons : MonoBehaviour
     {
         missionGoButton.SetActive(true);
         quitPromptButton.SetActive(true);
+        creditsButton.SetActive(true);
 
+        credits.SetActive(false);
         quitPrompt.SetActive(false);
         quitPromptHighlight.SetActive(false);
     }

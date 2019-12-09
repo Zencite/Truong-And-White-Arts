@@ -62,9 +62,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\CameraController.cs" />
-    <Compile Include="Assets\Scripts\FireScript.cs" />
-    <Compile Include="Assets\Scripts\FireSpread.cs" />
     <Compile Include="Assets\Scripts\MainMenuScripts\IntroScript.cs" />
     <Compile Include="Assets\Scripts\MainMenuScripts\InverseMesh.cs" />
     <Compile Include="Assets\Scripts\MainMenuScripts\LevelChangeTrigger.cs" />
@@ -74,9 +71,15 @@
     <Compile Include="Assets\Scripts\MainMenuScripts\SuitUpScriptMainMenu.cs" />
     <Compile Include="Assets\Scripts\MainMenuScripts\TruckScriptMainMenu.cs" />
     <Compile Include="Assets\Scripts\MainMenuScripts\UnitMainMenuMovement.cs" />
-    <Compile Include="Assets\Scripts\PlayerHealth.cs" />
-    <Compile Include="Assets\Scripts\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\UnitControl.cs" />
+    <Compile Include="Assets\Scripts\MapSceneScripts\CameraController.cs" />
+    <Compile Include="Assets\Scripts\MapSceneScripts\FireScript.cs" />
+    <Compile Include="Assets\Scripts\MapSceneScripts\FireSpread.cs" />
+    <Compile Include="Assets\Scripts\MapSceneScripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\MapSceneScripts\PlantManager.cs" />
+    <Compile Include="Assets\Scripts\MapSceneScripts\PlayerHealth.cs" />
+    <Compile Include="Assets\Scripts\MapSceneScripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\MapSceneScripts\UnitControl.cs" />
+    <Compile Include="Assets\Scripts\MapSceneScripts\Water.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Zecit/UnityProjects/Blaze Squad/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
