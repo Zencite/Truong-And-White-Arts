@@ -22,9 +22,11 @@ public class PlantManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameDone = false;
         childCount = transform.childCount;
         randChild = Random.Range(0, childCount);
         transform.GetChild(randChild).transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(randChild).GetComponent<FireSpread>().burning = true;
         print("Child number " + randChild + " has been selected to burn!");
     }
 
@@ -61,6 +63,10 @@ public class PlantManager : MonoBehaviour
 
     public void CheckTrees()
     {
+        burntTreeCount = 0;
+        choppedTreeCount = 0;
+        greenTreeCount = 0;
+
         foreach (Transform child in transform)
         {
             if (child.gameObject.GetComponent<FireSpread>().isBurnt())

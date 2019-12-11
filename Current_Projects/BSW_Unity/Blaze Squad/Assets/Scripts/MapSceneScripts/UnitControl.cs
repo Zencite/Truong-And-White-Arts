@@ -10,11 +10,8 @@ public class UnitControl : MonoBehaviour
     public GameObject unit4;
     public GameObject unit5;
 
-    //public bool unit1Selected;
-    //public bool unit2Selected;
-    //public bool unit3Selected;
-    //public bool unit4Selected;
-    //public bool unit5Selected;
+    public GameObject controlsPrompt;
+    public GameObject backButton;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +26,30 @@ public class UnitControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKey(KeyCode.Alpha1))
+        {
+            SelectUnit1();
+        }
 
+        if (Input.GetKey(KeyCode.Alpha2))
+        {
+            SelectUnit2();
+        }
+
+        if (Input.GetKey(KeyCode.Alpha3))
+        {
+            SelectUnit3();
+        }
+
+        if (Input.GetKey(KeyCode.Alpha4))
+        {
+            SelectUnit4();
+        }
+
+        if (Input.GetKey(KeyCode.Alpha5))
+        {
+            SelectUnit5();
+        }
     }
 
     public void SelectUnit1()
@@ -120,5 +140,15 @@ public class UnitControl : MonoBehaviour
 
         unit4.GetComponent<PlayerMovement>().activeSelected = false;
         unit4.transform.GetChild(5).gameObject.SetActive(false);
+    }
+
+    public void ControlPrompt()
+    {
+        controlsPrompt.SetActive(true);
+    }
+
+    public void Back()
+    {
+        controlsPrompt.SetActive(false);
     }
 }

@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\MainMenuScripts\InverseMesh.cs" />
     <Compile Include="Assets\Scripts\MainMenuScripts\LevelChangeTrigger.cs" />
     <Compile Include="Assets\Scripts\MainMenuScripts\MainMenuButtons.cs" />
+    <Compile Include="Assets\Scripts\MainMenuScripts\NickScript.cs" />
     <Compile Include="Assets\Scripts\MainMenuScripts\RotateScript.cs" />
     <Compile Include="Assets\Scripts\MainMenuScripts\SpaceScript.cs" />
     <Compile Include="Assets\Scripts\MainMenuScripts\SuitUpScriptMainMenu.cs" />

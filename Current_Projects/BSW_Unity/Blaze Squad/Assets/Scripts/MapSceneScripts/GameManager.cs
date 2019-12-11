@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public AudioSource audioSource;
+    public AudioClip levelMusic;
+    public AudioClip endMusic;
+
     public GameObject endscreen;
     public GameObject unitUI;
 
@@ -18,13 +22,40 @@ public class GameManager : MonoBehaviour
 
     private int score;
     private int maxScore;
+    private bool once;
 
+    string sceneName;
+    public Scene activeScene;
+
+    void Start()
+    {
+        activeScene = SceneManager.GetActiveScene();
+        sceneName = activeScene.name;
+    }
 
     // Update is called once per frame
     void Update()
     {
+        if (!audioSource.isPlaying && !PlantManager.gameDone)
+        {
+            audioSource.loop = true;
+            audioSource.PlayOneShot(levelMusic);
+        }
+
         if (PlantManager.gameDone)
         {
+            if (!once)
+            {
+                audioSource.Stop();
+                once = true;
+            }
+
+            if (!audioSource.isPlaying && once)
+            {
+                audioSource.loop = false;
+                audioSource.PlayOneShot(endMusic);
+            }
+
             endscreen.SetActive(true);
             unitUI.SetActive(false);
 
@@ -41,7 +72,7 @@ public class GameManager : MonoBehaviour
     public void PlayAgain()
     {
         // RELOAD SCENE
-        SceneManager.LoadScene("MapScene");
+        SceneManager.LoadScene(sceneName);
     }
 
     public void MainMenu()
