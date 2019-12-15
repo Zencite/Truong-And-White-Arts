@@ -4,18 +4,7 @@ using UnityEngine;
 
 public class SuitUpScriptMainMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    // ACTIVATES THEIR SUITS
     private void OnTriggerEnter(Collider other)
     {
         if(other.transform.parent.transform.childCount > 3)

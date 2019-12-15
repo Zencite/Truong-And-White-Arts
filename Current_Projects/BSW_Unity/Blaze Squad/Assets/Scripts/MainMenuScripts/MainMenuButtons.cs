@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class MainMenuButtons : MonoBehaviour
 {
     public static bool missionGo;
+    public static bool hardMode;
 
     public GameObject menu;
     public GameObject ssds;
@@ -14,6 +15,7 @@ public class MainMenuButtons : MonoBehaviour
     public GameObject quitPromptButton;
     public GameObject creditsButton;
     public GameObject controlButton;
+    public GameObject hardModeButton;
     public GameObject xWingButton;
 
     public GameObject missionGoHighlight;
@@ -28,6 +30,9 @@ public class MainMenuButtons : MonoBehaviour
     public GameObject controlHighlight;
     public GameObject controls;
 
+    public GameObject pup;
+    public GameObject dog;
+
     public GameObject xWingHighlight;
 
     public AudioSource audioSource;
@@ -41,21 +46,32 @@ public class MainMenuButtons : MonoBehaviour
     {
         once = false;
         missionGo = false;
+        if (hardMode)
+        {
+            pup.SetActive(false);
+            dog.SetActive(true);
+        }
+        else
+        {
+            pup.SetActive(true);
+            dog.SetActive(false);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        // PLAYS MUSIC
         if (!audioSource.isPlaying && !LevelChangeTrigger.changeLevel)
         {
             audioSource.loop = true;
             audioSource.PlayOneShot(levelMusic);
         }
 
+        // RANDOMLY SELECTS LEVEL
         if (LevelChangeTrigger.changeLevel)
         {
-            print("LEVEL CHANGE");
-            int levelNumber = Random.Range(1, 3);
+            int levelNumber = Random.Range(1, 5);
             switch (levelNumber)
             {
                 case 1:
@@ -66,6 +82,14 @@ public class MainMenuButtons : MonoBehaviour
                     SceneManager.LoadScene("MapScene1");
                     LevelChangeTrigger.changeLevel = false;
                     break;
+                case 3:
+                    SceneManager.LoadScene("MapScene2");
+                    LevelChangeTrigger.changeLevel = false;
+                    break;
+                case 4:
+                    SceneManager.LoadScene("MapScene3");
+                    LevelChangeTrigger.changeLevel = false;
+                    break;
                 default:
                     break;
             }
@@ -73,7 +97,7 @@ public class MainMenuButtons : MonoBehaviour
     }
 
 
-    // MISSION GO BUTTON
+    // MISSION GO BUTTONS
     public void HoverMissionGo()
     {
         missionGoHighlight.SetActive(true);
@@ -104,6 +128,7 @@ public class MainMenuButtons : MonoBehaviour
         quitPromptButton.SetActive(false);
         creditsButton.SetActive(false);
         controlButton.SetActive(false);
+        hardModeButton.SetActive(false);
         missionGoHighlight.SetActive(false);
         xWingButton.SetActive(false);
     }
@@ -127,6 +152,7 @@ public class MainMenuButtons : MonoBehaviour
         quitPromptButton.SetActive(false);
         creditsButton.SetActive(false);
         controlButton.SetActive(false);
+        hardModeButton.SetActive(false);
         xWingButton.SetActive(false);
 
         quitPrompt.SetActive(true);
@@ -154,12 +180,13 @@ public class MainMenuButtons : MonoBehaviour
         quitPromptButton.SetActive(false);
         creditsHighlight.SetActive(false);
         controlButton.SetActive(false);
+        hardModeButton.SetActive(false);
         xWingButton.SetActive(false);
     }
 
     //========================================
 
-    // CREDITS BUTTON
+    // EASTER EGG BUTTON
     public void HoverXWing()
     {
         xWingHighlight.SetActive(true);
@@ -197,8 +224,57 @@ public class MainMenuButtons : MonoBehaviour
         creditsButton.SetActive(false);
         missionGoButton.SetActive(false);
         quitPromptButton.SetActive(false);
-        xWingButton.SetActive(false);
         controlHighlight.SetActive(false);
+        hardModeButton.SetActive(false);
+        xWingButton.SetActive(false);
+        
+    }
+
+    //========================================
+
+    // HARDMODE BUTTON
+    public void HoverHardMode()
+    {
+        if (pup.activeSelf)
+        {
+            pup.transform.GetChild(pup.transform.childCount - 1).gameObject.SetActive(true);
+        }
+        else if (dog.activeSelf)
+        {
+            dog.transform.GetChild(dog.transform.childCount - 1).gameObject.SetActive(true);
+        }
+    }
+
+    public void NotHoverHardMode()
+    {
+        if (pup.activeSelf)
+        {
+            pup.transform.GetChild(pup.transform.childCount - 1).gameObject.SetActive(false);
+        }
+        else if (dog.activeSelf)
+        {
+            dog.transform.GetChild(dog.transform.childCount - 1).gameObject.SetActive(false);
+        }
+    }
+
+    public void HardMode()
+    {
+        if (pup.activeSelf)
+        {
+            pup.transform.GetChild(pup.transform.childCount - 1).gameObject.SetActive(false);
+            pup.SetActive(false);
+            dog.SetActive(true);
+            hardMode = true;
+            print("Hard mode is " + hardMode);
+        }
+        else if (dog.activeSelf)
+        {
+            dog.transform.GetChild(dog.transform.childCount - 1).gameObject.SetActive(false);
+            dog.SetActive(false);
+            pup.SetActive(true);
+            hardMode = false;
+            print("Hard mode is " + hardMode);
+        }
     }
 
     //========================================
@@ -214,8 +290,9 @@ public class MainMenuButtons : MonoBehaviour
         missionGoButton.SetActive(true);
         quitPromptButton.SetActive(true);
         creditsButton.SetActive(true);
-        xWingButton.SetActive(true);
         controlButton.SetActive(true);
+        hardModeButton.SetActive(true);
+        xWingButton.SetActive(true);     
 
         credits.SetActive(false);
         controls.SetActive(false);

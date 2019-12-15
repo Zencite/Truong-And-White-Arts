@@ -386,8 +386,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f86ad52c129ea3418d615b0c0e345a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireDamage: 10
-  FuelReduction: 3.5
+  fireDamage: 5
+  FuelReduction: 10
   fireRange: 0.5
   timerMax: 2
 --- !u!1 &6029464753737570321
@@ -488,7 +488,7 @@ MonoBehaviour:
   health: 100
   waterShield: 0
   flammability: 1
-  fuel: 40
+  fuel: 100
   burning: 0
   burned: 0
   chopped: 0
@@ -753,17 +753,17 @@ PrefabInstance:
     - target: {fileID: 2991358323935493910, guid: e8bd8114547325a43878454529791413,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2991358323935493910, guid: e8bd8114547325a43878454529791413,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2991358323935493910, guid: e8bd8114547325a43878454529791413,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2991358323935493911, guid: e8bd8114547325a43878454529791413,
         type: 3}

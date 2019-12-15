@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class SpaceScript : MonoBehaviour
 {
+    //TIE FIGHTER MOVES FORWARD AND SCALES DOWN
+
     public float x;
     public float y;
     public float z;
     public float speed;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()

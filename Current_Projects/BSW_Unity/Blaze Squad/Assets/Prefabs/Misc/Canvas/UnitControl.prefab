@@ -928,6 +928,7 @@ GameObject:
   - component: {fileID: 4772564535624907565}
   - component: {fileID: 4772564535624907567}
   - component: {fileID: 4772564535624907566}
+  - component: {fileID: 3884487648120982390}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -994,6 +995,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3884487648120982390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4772564535624907564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 10, y: -10}
+  m_UseGraphicAlpha: 1
 --- !u!1 &4772564535695736909
 GameObject:
   m_ObjectHideFlags: 0
@@ -1183,7 +1199,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: fb0c4ffb1010ecd49b8cc18715831cca, type: 3}
-    m_FontSize: 1
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -1379,7 +1395,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: fb0c4ffb1010ecd49b8cc18715831cca, type: 3}
-    m_FontSize: 1
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -1530,7 +1546,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: fb0c4ffb1010ecd49b8cc18715831cca, type: 3}
-    m_FontSize: 1
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -1926,7 +1942,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: fb0c4ffb1010ecd49b8cc18715831cca, type: 3}
-    m_FontSize: 1
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -2020,7 +2036,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: fb0c4ffb1010ecd49b8cc18715831cca, type: 3}
-    m_FontSize: 1
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -2099,7 +2115,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: fb0c4ffb1010ecd49b8cc18715831cca, type: 3}
-    m_FontSize: 1
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1

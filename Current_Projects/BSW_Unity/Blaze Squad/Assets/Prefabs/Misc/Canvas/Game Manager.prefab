@@ -43,6 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56b198b2b0257f44f864de63d9074b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
+  levelMusic: {fileID: 8300000, guid: df21909f0458bec499ad2b768a887ece, type: 3}
+  endMusic: {fileID: 8300000, guid: 390b71982183c354c89af5a8a485c8cc, type: 3}
   endscreen: {fileID: 0}
   unitUI: {fileID: 0}
   abortPrompt: {fileID: 0}
@@ -50,3 +53,7 @@ MonoBehaviour:
   cScore: {fileID: 0}
   bScore: {fileID: 0}
   tScore: {fileID: 0}
+  starScore: {fileID: 0}
+  timerMax: 1.5
+  activeScene:
+    m_Handle: 0

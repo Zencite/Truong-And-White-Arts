@@ -26,6 +26,8 @@ public class UnitControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // IF PLAYER USES NUMBERS TO SELECT UNITS
+
         if(Input.GetKey(KeyCode.Alpha1))
         {
             SelectUnit1();
@@ -52,6 +54,7 @@ public class UnitControl : MonoBehaviour
         }
     }
 
+    // SELECT UNIT 1 BUTTON IN MISSION
     public void SelectUnit1()
     {
         unit1.GetComponent<PlayerMovement>().activeSelected = true;
@@ -70,6 +73,7 @@ public class UnitControl : MonoBehaviour
         unit5.transform.GetChild(5).gameObject.SetActive(false);
     }
 
+    // SELECT UNIT 2 BUTTON IN MISSION
     public void SelectUnit2()
     {
         unit2.GetComponent<PlayerMovement>().activeSelected = true;
@@ -88,6 +92,7 @@ public class UnitControl : MonoBehaviour
         unit5.transform.GetChild(5).gameObject.SetActive(false);
     }
 
+    // SELECT UNIT 3 BUTTON IN MISSION
     public void SelectUnit3()
     {
         unit3.GetComponent<PlayerMovement>().activeSelected = true;
@@ -106,6 +111,7 @@ public class UnitControl : MonoBehaviour
         unit5.transform.GetChild(5).gameObject.SetActive(false);
     }
 
+    // SELECT UNIT 4 BUTTON IN MISSION
     public void SelectUnit4()
     {
         unit4.GetComponent<PlayerMovement>().activeSelected = true;
@@ -124,6 +130,7 @@ public class UnitControl : MonoBehaviour
         unit5.transform.GetChild(5).gameObject.SetActive(false);
     }
 
+    // SELECT UNIT 5 BUTTON IN MISSION
     public void SelectUnit5()
     {
         unit5.GetComponent<PlayerMovement>().activeSelected = true;
@@ -142,11 +149,13 @@ public class UnitControl : MonoBehaviour
         unit4.transform.GetChild(5).gameObject.SetActive(false);
     }
 
+    // SHOWS CONTROLS IN MISSION
     public void ControlPrompt()
     {
         controlsPrompt.SetActive(true);
     }
 
+    // RESUMES GAME
     public void Back()
     {
         controlsPrompt.SetActive(false);

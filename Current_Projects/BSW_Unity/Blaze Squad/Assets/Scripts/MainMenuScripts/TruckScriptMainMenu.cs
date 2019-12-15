@@ -35,6 +35,7 @@ public class TruckScriptMainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // ONCE ALL UNITS ARE IN MOVE FIRETRUCK
         if(!u1Active && !u2Active && !u3Active && !u4Active && !u5Active)
         {
             boxCollider.enabled = false;
@@ -48,6 +49,7 @@ public class TruckScriptMainMenu : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // CHECKS EACH UNIT'S LAYER AND "PUTS THEM" IN THE FIRETRUCK
         switch(other.gameObject.layer)
         {
             case 8:

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RotateScript : MonoBehaviour
 {
+    // ROTATE GAMEOBJECT
     public float yAng;
     public float speed;
     // Start is called before the first frame update

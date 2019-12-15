@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class NickScript : MonoBehaviour
 {
+    // EASTER EGG
+
     public GameObject fighters;
     public GameObject menu;
     public GameObject ssds;
@@ -29,6 +31,7 @@ public class NickScript : MonoBehaviour
         }
     }
 
+    // RETURNS BACK TO MENU
     private void OnTriggerEnter(Collider other)
     {
         playTheme = false;

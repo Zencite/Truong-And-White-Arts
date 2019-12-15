@@ -16,6 +16,9 @@ public class PlantManager : MonoBehaviour
     public static int childCount;
     private int checkCount;
     private int randChild;
+    private int fireNumStart;
+    private List<int> activeFires = new List<int>();
+    private bool checkFireNum;
 
     public static bool gameDone;
 
@@ -24,20 +27,53 @@ public class PlantManager : MonoBehaviour
     {
         gameDone = false;
         childCount = transform.childCount;
-        randChild = Random.Range(0, childCount);
-        transform.GetChild(randChild).transform.GetChild(0).gameObject.SetActive(true);
-        transform.GetChild(randChild).GetComponent<FireSpread>().burning = true;
-        print("Child number " + randChild + " has been selected to burn!");
+
+        // CHECKS IF HARDMODE WAS ACTIVATED
+        if (MainMenuButtons.hardMode)
+        {
+            fireNumStart = 5;
+        }
+        else
+        {
+            fireNumStart = 1;
+        }
+
+        // RANDOMLY SELECTS PLANTS TO SET ON FIRE
+        for (int i = 0; i < fireNumStart; i++)
+        {
+            print("I is on " + i);
+            randChild = Random.Range(0, childCount);
+            checkFireNum = true;
+
+            foreach(int x in activeFires)
+            {
+                // CHILD HAS ALREADY BEEN SELECTED BEFORE
+                if(x == randChild)
+                {
+                    print(randChild + " has already been selected!");
+                    checkFireNum = false;
+                    break;
+                }
+            }
+
+            if (checkFireNum)
+            {
+                transform.GetChild(randChild).transform.GetChild(0).gameObject.SetActive(true);
+                transform.GetChild(randChild).GetComponent<FireSpread>().burning = true;
+                print("Child number " + randChild + " has been selected to burn!");
+                activeFires.Add(randChild);
+            }
+        }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        // CHECKS IF GAME IS OVER VIA # OF FIRES LEFT
+
         fireCount = CheckFires();
 
         fCount.text = fireCount.ToString();
-
-        print("fire count = " + fireCount);
 
         if(fireCount == 0)
         {
@@ -48,6 +84,7 @@ public class PlantManager : MonoBehaviour
         }
     }
 
+    // COUNTS ACTIVE FIRES
     public int CheckFires()
     {
         int fires = 0;
@@ -61,6 +98,7 @@ public class PlantManager : MonoBehaviour
         return fires;
     }
 
+    // COUNTS TREES FOR SCORING IN GAME MANAGER
     public void CheckTrees()
     {
         burntTreeCount = 0;
@@ -82,7 +120,6 @@ public class PlantManager : MonoBehaviour
                 greenTreeCount++;
             }
         }
-        print("burntTreeCount = " + burntTreeCount + " choppedTreeCount = " + choppedTreeCount + " greenTreeCount = " + greenTreeCount);
         gameDone = true;
     }
 }

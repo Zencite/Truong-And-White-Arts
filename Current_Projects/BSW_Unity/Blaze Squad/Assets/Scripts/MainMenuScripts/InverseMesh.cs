@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class InverseMesh : MonoBehaviour
 {
+    //INVERSES ANY MESH
+
     public bool InvertFaces = true;
     public bool InvertNormals = true;
     void Start()
