@@ -2,3 +2,26 @@ BLAZESQUAD WILDFIRES
 This is the submited Blazesquad Wildfires exe application, Created by William White, Lewis Truong and Mariano Pimentel 
 for our Fall 2019 Advance Game Development final. It is a firefighting "simulator" which you must prevent the spread of
 a forest fire by cutting down surrounding plants without cutting down the entire forest in the process.
+
+William White : Lead Director/Project Manager/Programmer
+
+Developed and coded the fire script and fire spread scripts (Yes it’s called the fire script). These two scripts were the 
+main core of the game and part of the minimum viable product goal. Coded part of the playerMovement script. Actively directed 
+implementations into the game and reined in focus on the more important tasks (A cinematic cutscene to fly into the face of 
+animation is not the focus of the game). Developed pseudocode; primarily, the aforementioned fire related scripts, as well 
+as coding the ability for players to shift between chopping and moving code within the playerMovement scripts.
+
+Lewis Truong : Artist/Programmer
+Created assets and prefabs for nearly every object in the game (made proudly with only primitives). Coded the Game Manager 
+that does what it says, manages the game, the Plant Manager, which randomly select(s) the plants to set on fire and check 
+if there are no fires left in conjunction with the Game Manager. Also coded the player movement, via mouse click, and worked 
+alongside with William to also implement the cutting down script. Created the cinematic cutscene (which is very important to 
+the visual stylization of the game thank you very much), and the design of the User Interface.
+
+	Mariano Pimentel : Level Design/Programmer
+Drew and conceptualize map designs for the game which would be the basis for other maps added into the game. Designed and 
+coded the camera controller that would allow the player to view and move around the map. Included sprites for certain images 
+and textures, such as the control sprites used to inform player of controls. Helped conceptualize and design game mechanics, 
+such as the variability of fire spreading within shapes of trees and bushes. 
+
+Post Mortem Link: https://docs.google.com/document/d/1LwxqLwBnyjo-1uPl4LrcLNQBZxuE9v4eKREzl_zmfn8/edit?usp=sharing
