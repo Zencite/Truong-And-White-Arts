@@ -67,6 +67,14 @@ public class FireSpread : MonoBehaviour
             if (health <= 0)                                //3)
             {
                 burning = true;
+                if(this.GetComponent<CapsuleCollider>() != null)
+                {
+                    this.GetComponent<CapsuleCollider>().enabled = false;
+                }
+                else if(this.GetComponent<SphereCollider>() != null)
+                {
+                    this.GetComponent<SphereCollider>().enabled = false;
+                }
                 this.transform.GetChild(0).gameObject.SetActive(true);
             }
         }

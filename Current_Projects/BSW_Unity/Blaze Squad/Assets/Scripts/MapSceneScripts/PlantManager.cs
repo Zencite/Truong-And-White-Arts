@@ -41,7 +41,6 @@ public class PlantManager : MonoBehaviour
         // RANDOMLY SELECTS PLANTS TO SET ON FIRE
         for (int i = 0; i < fireNumStart; i++)
         {
-            print("I is on " + i);
             randChild = Random.Range(0, childCount);
             checkFireNum = true;
 
@@ -50,7 +49,6 @@ public class PlantManager : MonoBehaviour
                 // CHILD HAS ALREADY BEEN SELECTED BEFORE
                 if(x == randChild)
                 {
-                    print(randChild + " has already been selected!");
                     checkFireNum = false;
                     break;
                 }
@@ -60,7 +58,6 @@ public class PlantManager : MonoBehaviour
             {
                 transform.GetChild(randChild).transform.GetChild(0).gameObject.SetActive(true);
                 transform.GetChild(randChild).GetComponent<FireSpread>().burning = true;
-                print("Child number " + randChild + " has been selected to burn!");
                 activeFires.Add(randChild);
             }
         }

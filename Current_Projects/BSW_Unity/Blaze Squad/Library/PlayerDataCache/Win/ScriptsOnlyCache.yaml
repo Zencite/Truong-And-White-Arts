@@ -939,7 +939,7 @@ ScriptsOnlyBuild:
     className: SignalReceiver
   - hash:
       serializedVersion: 2
-      Hash: 3a9bb22662c8c3b034c47a847271a636
+      Hash: e703516f269e649dbaa5a91c31348e46
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerMovement
@@ -1160,4 +1160,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/MapScene1.unity
   - Assets/Scenes/MapScene2.unity
   - Assets/Scenes/MapScene3.unity
-  playerPath: C:/Users/robust gamer/Desktop/BSW/Blaze Squad.exe
+  playerPath: C:/Users/Zecit/Desktop/BSW/Blaze Squad.exe
