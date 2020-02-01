@@ -5426,6 +5426,7 @@ MonoBehaviour:
   gravHold: {fileID: 8300000, guid: 0756e37efc6bdb94ba6c130e2795f249, type: 3}
   gg_shotPos: {fileID: 0}
   gravPos: {fileID: 0}
+  targetRB: {fileID: 0}
 --- !u!114 &7138480923773061874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5465,9 +5466,9 @@ MonoBehaviour:
   weaponActive: 0
   isAnAmmoBox: 0
   isAnAmmoCrate: 0
-  fireSFX: {fileID: 0}
-  reloadSFX: {fileID: 0}
-  emptySFX: {fileID: 0}
+  fireSFX: {fileID: 8300000, guid: e52c0ed279aa7ca43aa75ef7e6f0764f, type: 3}
+  reloadSFX: {fileID: 8300000, guid: e52c0ed279aa7ca43aa75ef7e6f0764f, type: 3}
+  emptySFX: {fileID: 8300000, guid: e52c0ed279aa7ca43aa75ef7e6f0764f, type: 3}
   ammoPickUpSFX: {fileID: 8300000, guid: 2bf374e0844a7a74fa79469d677420b9, type: 3}
   projectileSFX: {fileID: 0}
 --- !u!1 &7138480923780804457

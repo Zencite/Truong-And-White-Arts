@@ -79,6 +79,12 @@ public class WeaponScript : MonoBehaviour
     public RawImage crossScope;
     public static bool isScoped;
 
+    // RPG ROCKETS
+    public static Vector3 laserPoint;
+    public static bool rocketFired;
+    public static bool targetInRange;
+    private Rigidbody rocketShot;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -152,6 +158,12 @@ public class WeaponScript : MonoBehaviour
                 weaponAltSpread = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponSpread();
                 weaponAltDamage = activeWeapon.GetComponent<WeaponStats>().GetAltWeaponDamage();
 
+                // CHECKS IF IT HAS A PROJECTILE
+                if (activeWeapon.GetComponent<WeaponStats>().projectile != null)
+                {
+                    projectile = activeWeapon.GetComponent<WeaponStats>().GetProjectile();
+                }
+
                 // CHECKS IF USING PRIMARY AMMO FOR ALT FIRE
                 if (!activeWeapon.GetComponent<WeaponStats>().IsWeaponUsingPrimeAmmo())
                 {
@@ -162,7 +174,6 @@ public class WeaponScript : MonoBehaviour
                 // CHECKS IF ALT INSTANTIATES A PROJECTILE
                 if (activeWeapon.GetComponent<WeaponStats>().IsWeaponAltInstantiate() || nameCheck.Equals("Crossbow"))
                 {
-                    projectile = activeWeapon.GetComponent<WeaponStats>().GetProjectile();
                     if (nameCheck.Equals("Crossbow"))
                     {
                         crossA = GameObject.Find("CrossArmed");
@@ -189,12 +200,38 @@ public class WeaponScript : MonoBehaviour
             {
                 if (!(nameCheck.Equals("Grenade")) && !(nameCheck.Equals("Crowbar")))
                 {
+                    // GETS THE RAYCAST ENDPOINT FOR THE RPG
+                    if (nameCheck.Equals("RPG"))
+                    {
+                        randomizedVector = RandomInsideCone(weaponSpread) * transform.forward;
+                        Debug.DrawRay(shotPos.transform.position, randomizedVector * weaponRange, Color.black, 1);
+
+                        if (Physics.Raycast(shotPos.transform.position, randomizedVector, out endpointInfo))
+                        {
+                            float rayRange = endpointInfo.distance;
+
+                            if (rayRange <= weaponRange)
+                            {
+                                if (!(endpointInfo.transform.gameObject.tag.Equals("Rocket")))
+                                {
+                                    targetInRange = true;
+                                    laserPoint = endpointInfo.point;
+                                    //print("laserpoint = " + laserPoint.ToString());
+                                }
+                            }
+                        }
+                        else
+                        {
+                               targetInRange = false;
+                        }
+                    }
+
                     // PRIMARY FIRE WEAPON (MOUSE 0)
                     if (Input.GetKey(KeyCode.Mouse0))
                     {
-                        if (!nameCheck.Equals("Crossbow"))
+                        if (!nameCheck.Equals("Crossbow") && !nameCheck.Equals("RPG"))
                         {
-                            if (currentClipAmmo != 0 && !(currentClipAmmo < 0))
+                            if (currentClipAmmo != 0 && !(currentClipAmmo <= 0))
                             {
                                 if (Time.time > cooldownRef)
                                 {
@@ -283,6 +320,31 @@ public class WeaponScript : MonoBehaviour
                                 }
                             }
                         }
+
+                        // RPG SHOOTING CODE
+                        else if (nameCheck.Equals("RPG"))
+                        {
+                            if (!(currentClipAmmo <= 0) && !rocketFired)
+                            {
+                                if (Time.time > cooldownRef)
+                                {
+                                    cooldownRef = Time.time + cooldown;                                
+                                    for (int i = 0; i < weaponBulletShots; i++)
+                                    {
+                                        //Firing SFX is assigned to clip
+                                        AudioClip fireSFX = activeWeapon.GetComponent<WeaponStats>().GetFireSFX();
+                                        StartCoroutine(SoundController.gunSounds(fireSFX, cooldown));
+
+                                        Quaternion shotPosRotation = shotPos.transform.rotation;
+                                        rocketShot = Instantiate(projectile.GetComponent<Rigidbody>(), shotPos.transform.position, shotPosRotation) as Rigidbody;
+                                        rocketShot.transform.LookAt(shotPos.transform.position);
+                                        rocketShot.AddForce(shotPos.transform.forward * weaponForce);
+                                        rocketFired = true;
+                                        currentClipAmmo--;
+                                    }      
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -294,7 +356,7 @@ public class WeaponScript : MonoBehaviour
                         // IF CROSSBOW, SCOPE IN
                         if (activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("Crossbow"))
                         {
-                            switch(isScoped)
+                            switch (isScoped)
                             {
                                 case true:
                                     gunCamera.GetComponent<Camera>().cullingMask = weaponLayerMask;
@@ -405,7 +467,7 @@ public class WeaponScript : MonoBehaviour
                     activeWeapon.GetComponent<WeaponStats>().altWeaponCurrentAmmo = currentTotalAltAmmo;
 
                     // RELOAD AMMO AND UPDATE PLAYER UI HUD
-                    if (Input.GetKey("r") && !(nameCheck.Equals("Crowbar")))
+                    if (Input.GetKey("r") && (!(nameCheck.Equals("Crowbar")) || !(nameCheck.Equals("GravityGun"))))
                     {
                         if (!isScoped)
                         {
@@ -450,15 +512,9 @@ public class WeaponScript : MonoBehaviour
             // IF CROWBAR IS ACTIVE WEAPON
             if (activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("Crowbar"))
             {
-                if (weaponSwitch)
-                {
-                    AmmoObject.SetActive(false);
-                    AmmoAltObject.SetActive(false);
+                CheckHUD(activeWeapon);
 
-                    AssignPrimeStats(activeWeapon);
-
-                    weaponSwitch = false;
-                }
+                //AssignPrimeStats(activeWeapon);
 
                 if (Input.GetKey(KeyCode.Mouse0))
                 {
@@ -565,6 +621,13 @@ public class WeaponScript : MonoBehaviour
                     string weaponTag = "PlayerGrenade";
                     SwitchWeapon(weaponTag);
                 }
+
+                //Switch to RPG if player has it
+                if (Input.GetKey(KeyCode.Alpha0))
+                {
+                    string weaponTag = "PlayerRPG";
+                    SwitchWeapon(weaponTag);
+                }
             }
         }
     }
@@ -630,6 +693,7 @@ public class WeaponScript : MonoBehaviour
                         ChangeActiveWeapon(tempWeapon);
                         string weaponName = tempWeapon.GetComponent<WeaponStats>().GetWeaponName();
                         WeaponStats.FindAmmoType(weaponName);
+                        weaponSwitch = true;
                     }
                 }
             }
@@ -698,14 +762,22 @@ public class WeaponScript : MonoBehaviour
 
     private void CheckHUD(GameObject activeWeapon)
     {
-        if (activeWeapon.GetComponent<WeaponStats>().IsWeaponHasAltFire())
+        if (!(activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("Crowbar")) && !(activeWeapon.GetComponent<WeaponStats>().GetWeaponName().Equals("GravityGun")))
         {
-            if (!activeWeapon.GetComponent<WeaponStats>().IsWeaponUsingPrimeAmmo())
+            if (activeWeapon.GetComponent<WeaponStats>().IsWeaponHasAltFire())
             {
-                AmmoObject.SetActive(false);
-                AmmoAltObject.SetActive(true);
+                if (!activeWeapon.GetComponent<WeaponStats>().IsWeaponUsingPrimeAmmo())
+                {
+                    AmmoObject.SetActive(false);
+                    AmmoAltObject.SetActive(true);
+                }
+                else if (activeWeapon.GetComponent<WeaponStats>().IsWeaponUsingPrimeAmmo())
+                {
+                    AmmoAltObject.SetActive(false);
+                    AmmoObject.SetActive(true);
+                }
             }
-            else if (activeWeapon.GetComponent<WeaponStats>().IsWeaponUsingPrimeAmmo())
+            else
             {
                 AmmoAltObject.SetActive(false);
                 AmmoObject.SetActive(true);
@@ -714,7 +786,7 @@ public class WeaponScript : MonoBehaviour
         else
         {
             AmmoAltObject.SetActive(false);
-            AmmoObject.SetActive(true);
+            AmmoObject.SetActive(false);
         }
     }
 }

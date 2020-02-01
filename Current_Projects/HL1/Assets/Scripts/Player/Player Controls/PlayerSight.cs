@@ -14,6 +14,7 @@ public class PlayerSight : MonoBehaviour
 
     public static bool lookingAtStation;
     public static bool isZoomed;
+    public static bool lookingAtVending;
     static float t = 0.0f;
     public int weaponLayerMask;
 
@@ -42,7 +43,7 @@ public class PlayerSight : MonoBehaviour
             float rayDistance = hit.distance;
             if (rayDistance <= sightDistance)
             {
-                //print("I can detect " + hit.collider.name);
+                //print("I can detect " + hit.collider.name + " with tag " + hit.collider.tag);
                 if (hit.transform.tag != "PlayerHead" || hit.transform.tag != "PlayerHead")
                 {
                     //Pick Up physics Object
@@ -76,7 +77,7 @@ public class PlayerSight : MonoBehaviour
                             }
                         }
                         //Physically Drop the Object
-                        else if (isHolding)
+                        else if (isHolding && (playerHoldingPosition.childCount > 0))
                         {
                             //if wanting to release object
                             if (Input.GetKeyUp("e"))
@@ -102,7 +103,7 @@ public class PlayerSight : MonoBehaviour
                     }
                     else if(HealPlayer.atStation || ChargePlayer.atStation)
                     {
-                        if (hit.collider.tag == "PlayerStation")
+                        if (hit.collider.tag.Equals("PlayerStation"))
                         {
                             //print("Player is looking at me");
                             lookingAtStation = true;
@@ -110,6 +111,35 @@ public class PlayerSight : MonoBehaviour
                         else
                         {
                             lookingAtStation = false;
+                        }
+                    }
+                    else if(hit.collider.tag.Equals("Button"))
+                    {
+                        if(hit.collider.gameObject.GetComponent<VendingMachineButton>() != null)
+                        {
+                            GameObject vendingButton = hit.collider.gameObject;
+                            if(!vendingButton.GetComponent<VendingMachineButton>().pressed)
+                            {
+                                lookingAtVending = true;
+                                GameObject vendingCan = vendingButton.GetComponent<VendingMachineButton>().GetVendingCan();
+                                Transform vendingPos = vendingButton.GetComponent<VendingMachineButton>().GetVendingPos();
+
+                                if (Input.GetKey("e") && lookingAtVending)
+                                {
+                                    vendingButton.GetComponent<VendingMachineButton>().pressed = true;
+                                    vendingButton.GetComponent<VendingMachineButton>().green.SetActive(false);
+                                    vendingButton.GetComponent<VendingMachineButton>().red.SetActive(true);
+                                    Rigidbody can = Instantiate(vendingCan.GetComponent<Rigidbody>(), vendingPos.position, vendingPos.rotation) as Rigidbody;
+                                }
+                            }
+                            else
+                            {
+                                lookingAtVending = false;
+                            }
+                        }
+                        else
+                        {
+                            print("other buttons being added in future");
                         }
                     }
                 }
@@ -205,7 +235,7 @@ public class PlayerSight : MonoBehaviour
     //==========================
     private void ThrowObject(GameObject hitObject , RaycastHit hit)
     {
-        if (hitObject.transform.parent != null && !(hitObject.transform.parent.name.Equals(playerHoldingPosition.name)))
+        if (hitObject.transform.parent != null && (!(hitObject.transform.parent.name.Equals(playerHoldingPosition.name)) && !(hitObject.transform.parent.name.Equals("GravPos"))))
         {
             hitObject = hitObject.transform.parent.gameObject;
         }

@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\Misc\EntityHealth.cs" />
     <Compile Include="Assets\Scripts\Misc\MainMenuScript.cs" />
     <Compile Include="Assets\Scripts\Misc\PauseMenuScript.cs" />
+    <Compile Include="Assets\Scripts\Misc\VendingMachineButton.cs" />
     <Compile Include="Assets\Scripts\NPC\NPCEditor\NPCSightEditor.cs" />
     <Compile Include="Assets\Scripts\NPC\NPCSight.cs" />
     <Compile Include="Assets\Scripts\NPC\PatrolScript.cs" />

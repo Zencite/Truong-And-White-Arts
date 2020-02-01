@@ -25,6 +25,9 @@ TagManager:
   - NPC
   - Vent
   - PlayerGrenade
+  - PlayerRPG
+  - Rocket
+  - Button
   layers:
   - Default
   - TransparentFX

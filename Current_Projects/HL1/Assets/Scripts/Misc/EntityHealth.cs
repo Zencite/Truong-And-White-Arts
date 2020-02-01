@@ -13,10 +13,9 @@ public class EntityHealth : MonoBehaviour
 
     public float damageThreshold;
 
+    public List<GameObject> itemList = new List<GameObject>();
+
     public bool dropsItems;
-    public GameObject drop1;
-    public GameObject drop2;
-    public GameObject drop3;
     public bool isCrate;
     public GameObject activeGameObject;
 
@@ -64,24 +63,16 @@ public class EntityHealth : MonoBehaviour
             // IF ENTITY DROPS ITEMS
             if (dropsItems)
             {
-                if (drop1 != null)
+                foreach(GameObject item in itemList)
                 {
-                    Instantiate(drop1, pos, rotation);
-                    drop1.transform.parent = null;
-                    drop1 = null;
+                    if(item.gameObject.GetComponent<WeaponStats>() != null)
+                    {
+                        item.gameObject.GetComponent<WeaponStats>().isInstantiated = true;
+                    }
+                    Instantiate(item, pos, rotation);
+                    item.transform.parent = null;
                 }
-                if (drop2 != null)
-                {
-                    Instantiate(drop2, pos, rotation);
-                    drop2.transform.parent = null;
-                    drop2 = null;
-                }
-                if (drop3 != null)
-                {
-                    Instantiate(drop3, pos, rotation);
-                    drop3.transform.parent = null;
-                    drop3 = null;
-                }
+                dropsItems = false;
             }
 
             // IF ENTITY WAS A HUMANOID
@@ -131,10 +122,10 @@ public class EntityHealth : MonoBehaviour
             }
         }
     }
-    private void OnCollisionEnter(Collision col)
+    void OnCollisionEnter(Collision col)
     {
         // TODO CHECK FOR PHYSIC'S DAMAGE
-        if (this.transform.parent != null)
+        /*if (this.transform.parent != null)
         { 
             if (this.transform.parent.gameObject.GetComponent<EntityHealth>() != null)
             {
@@ -152,22 +143,26 @@ public class EntityHealth : MonoBehaviour
                     }
                 }
             }
-        }
+        }*/
+
+        print(this.transform.name + " has collided with " + col.transform.name);
         if (col.gameObject.GetComponent<Rigidbody>() != null)
         {
-            float kineticDamage = KineticEnergy(col.gameObject.GetComponent<Rigidbody>());
-            if (kineticDamage > damageThreshold)
+            float kineticColDamage = KineticEnergy(col.gameObject.GetComponent<Rigidbody>());
+            print("KineticColDamage is " + kineticColDamage);
+            if (kineticColDamage > damageThreshold)
             {
-                entityCurrentHealth = entityCurrentHealth - (Mathf.RoundToInt(kineticDamage - damageThreshold));
+                entityCurrentHealth = entityCurrentHealth - (Mathf.RoundToInt(kineticColDamage - damageThreshold));
+                print(this.transform.name + " took physics damage and now is at " + entityCurrentHealth + " hp.");
             }
         }
-        if (this.gameObject.GetComponent<Rigidbody>() != null)
+
+        float kineticDamage = KineticEnergy(this.transform.GetComponent<Rigidbody>());
+        print("KineticDamage is " + kineticDamage);
+        if (kineticDamage > damageThreshold)
         {
-            float kineticDamageSelf = KineticEnergy(this.gameObject.GetComponent<Rigidbody>());
-            if (kineticDamageSelf > damageThreshold)
-            {
-                entityCurrentHealth = entityCurrentHealth - (Mathf.RoundToInt(kineticDamageSelf - damageThreshold));
-            }
+            entityCurrentHealth = entityCurrentHealth - (Mathf.RoundToInt(kineticDamage - damageThreshold));
+            print(this.transform.name + " took physics damage and now is at " + entityCurrentHealth + " hp.");
         }
     }
     // CALCULATE PHYSIC DAMAGE

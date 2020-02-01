@@ -16,6 +16,8 @@ public class ProjectileExplosionScript : MonoBehaviour
     public GameObject entity;
     public bool isCombineBall;
     public bool isGrenade;
+    public bool isRocket;
+    public bool isBarrel;
     private bool once;
     private float currentTime;
 
@@ -30,7 +32,7 @@ public class ProjectileExplosionScript : MonoBehaviour
     void Start()
     {
         timer = 0.0f;
-        // IF COMBINE BAL PLAY LAUNCH SFX INSIDE EXPLOSIONSFX
+        // IF COMBINE BALL PLAY LAUNCH SFX INSIDE EXPLOSIONSFX
 
         //projectileSource = this.GetComponent<AudioSource>();
 
@@ -44,6 +46,33 @@ public class ProjectileExplosionScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(this.gameObject.GetComponent<EntityHealth>() != null && isBarrel)
+        {
+            int maxHealth = this.gameObject.GetComponent<EntityHealth>().getEntityMaxHealth();
+            int health = this.gameObject.GetComponent<EntityHealth>().getEntityCurrentHealth();
+
+            if(health < (maxHealth/2))
+            {
+                transform.GetChild(0).gameObject.SetActive(true);
+                transform.GetChild(0).eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+
+                timer += Time.deltaTime;
+                if (timer >= timerMax)
+                {
+                    this.gameObject.GetComponent<EntityHealth>().entityCurrentHealth--;
+                    timer = 0.0f;
+                }
+
+                if(health <= 0)
+                {
+                    Explosion();
+                    Destroy(this.gameObject);
+                }
+            }
+        }
+
+
+        // IF GRENADE IS HELD ON FOR TOO LONG
         if (GrenadeScript.gn_explodeDrop)
         {
             Explosion();
@@ -51,17 +80,18 @@ public class ProjectileExplosionScript : MonoBehaviour
             GrenadeScript.gn_explodeDrop = false;
         }
 
-        if (!isGrenade)
+        // BLOWS UP PROJECTILE AFTER X SECONDS
+        if (!isGrenade && !isBarrel)
         {
             timer += Time.deltaTime;
 
-            // PROJECTILE EXPLODES ANYWAY AFTER X SECONDS
             if (timer >= timerMax)
             {
                 Explosion();
                 Destroy(this.gameObject);
             }
         }
+        // GRENADE  TICK
         else if (isGrenade)
         {
             if (!once)
@@ -75,6 +105,17 @@ public class ProjectileExplosionScript : MonoBehaviour
             {
                 Explosion();
                 Destroy(this.gameObject);
+            }
+        }
+
+        // HAS ROCKET MOVE TOWARDS POSITION
+        if (isRocket)
+        {
+            if (WeaponScript.targetInRange)
+            {
+                transform.LookAt(WeaponScript.laserPoint);
+                float step = 10.0f * Time.deltaTime;
+                transform.position = Vector3.MoveTowards(transform.position, WeaponScript.laserPoint, step);
             }
         }
     }
@@ -134,10 +175,10 @@ public class ProjectileExplosionScript : MonoBehaviour
             }
         }
     }
-    // IF SMG GRENADE
+    // IF SMG GRENADE OR RPG ROCKET
     private void OnTriggerEnter()
     {
-        if (!isGrenade && !isCombineBall)
+        if (!isGrenade && !isCombineBall && !isBarrel)
         {
             Explosion();
             Destroy(this.gameObject);
@@ -190,11 +231,27 @@ public class ProjectileExplosionScript : MonoBehaviour
                         {
                             if (PlayerHealth.playerSuit != 0)
                             {
-                                PlayerHealth.playerSuit = PlayerHealth.playerSuit - (damage - damageThreshold);
+                                if (damage - damageThreshold <= PlayerHealth.playerSuit)
+                                {
+                                    PlayerHealth.playerSuit = PlayerHealth.playerSuit - (damage - damageThreshold);
+                                }
+                                else if (damage - damageThreshold > PlayerHealth.playerSuit)
+                                {
+                                    int remainder = ((damage - damageThreshold) - PlayerHealth.playerSuit);
+                                    PlayerHealth.playerSuit = 0;
+                                    PlayerHealth.playerHealth = PlayerHealth.playerHealth - remainder;
+                                }
                             }
                             else if (PlayerHealth.playerHealth != 0)
                             {
-                                PlayerHealth.playerHealth = PlayerHealth.playerHealth - (damage - damageThreshold);
+                                if (damage - damageThreshold <= PlayerHealth.playerHealth)
+                                {
+                                    PlayerHealth.playerHealth = PlayerHealth.playerHealth - (damage - damageThreshold);
+                                }
+                                else if (damage - damageThreshold > PlayerHealth.playerHealth)
+                                {
+                                    print("Death");
+                                }
                             }
                         }
                     }
@@ -207,6 +264,7 @@ public class ProjectileExplosionScript : MonoBehaviour
         {
             Destroy(explosionPrefab.gameObject, explosionPrefab.main.duration);
         }
+        WeaponScript.rocketFired = false;
     }
 
     private void EntityExplosionDamage(GameObject entity)

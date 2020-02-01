@@ -111,7 +111,31 @@ public class WeaponStats : MonoBehaviour
     public AudioClip GetProjectileSFX() { return projectileSFX; }
     //============================================================
 
+    public bool isInstantiated;
+
     private GameObject tempWeapon;
+
+    void Start()
+    {
+        // IF WEAPON CAME FROM A CRATE
+        if(isInstantiated)
+        {
+            if (!weaponName.Equals("Grenade"))
+            {
+                weaponCurrentClipSize = Random.Range(0, weaponMaxClipSize);
+                weaponCurrentAmmo = Random.Range(0, weaponMaxAmmo);
+            }
+            else
+            {
+                weaponCurrentClipSize = 1;
+            }
+
+            if(weaponHasAltFire && !weaponAltUsesPrimeAmmo)
+            {
+                altWeaponCurrentAmmo = Random.Range(0, altWeaponMaxAmmo);
+            }
+        }
+    }
 
     void Update()
     {
@@ -326,6 +350,9 @@ public class WeaponStats : MonoBehaviour
             case "Grenade":
                 WeaponScript.PickUpText.text += "k\n";
                 break;
+            case "RPG":
+                WeaponScript.PickUpText.text += "i\n";
+                break;
             default:
                 break;
         }
@@ -395,6 +422,11 @@ public class WeaponStats : MonoBehaviour
                 (tempWeapon.GetComponent<WeaponStats>().GetWeaponCurrentClipSize() + tempWeapon.GetComponent<WeaponStats>().GetWeaponCurrentAmmo()).ToString()
                 + "\n";
                 break;
+            case "RPG":
+                WeaponScript.PickUpText.text += "ix" +
+                (tempWeapon.GetComponent<WeaponStats>().GetWeaponCurrentClipSize() + tempWeapon.GetComponent<WeaponStats>().GetWeaponCurrentAmmo()).ToString()
+                + "\n";
+                break;
             default:
                 break;
         }
@@ -432,7 +464,10 @@ public class WeaponStats : MonoBehaviour
                 WeaponScript.AmmoTypeIcon.text = "w";
                 break;
             case "Grenade":
-                WeaponScript.AmmoTypeIcon.text += "v";
+                WeaponScript.AmmoTypeIcon.text = "v";
+                break;
+            case "RPG":
+                WeaponScript.AmmoTypeIcon.text = "x";
                 break;
             default:
                 break;
