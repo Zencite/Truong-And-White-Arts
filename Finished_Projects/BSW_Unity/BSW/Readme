@@ -18,7 +18,7 @@ if there are no fires left in conjunction with the Game Manager. Also coded the 
 alongside with William to also implement the cutting down script. Created the cinematic cutscene (which is very important to 
 the visual stylization of the game thank you very much), and the design of the User Interface.
 
-	Mariano Pimentel : Level Design/Programmer
+Mariano Pimentel : Level Design/Programmer
 Drew and conceptualize map designs for the game which would be the basis for other maps added into the game. Designed and 
 coded the camera controller that would allow the player to view and move around the map. Included sprites for certain images 
 and textures, such as the control sprites used to inform player of controls. Helped conceptualize and design game mechanics, 
