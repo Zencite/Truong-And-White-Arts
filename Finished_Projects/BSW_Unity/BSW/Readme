@@ -4,7 +4,6 @@ for our Fall 2019 Advance Game Development final. It is a firefighting "simulato
 a forest fire by cutting down surrounding plants without cutting down the entire forest in the process.
 
 William White : Lead Director/Project Manager/Programmer
-
 Developed and coded the fire script and fire spread scripts (Yes it’s called the fire script). These two scripts were the 
 main core of the game and part of the minimum viable product goal. Coded part of the playerMovement script. Actively directed 
 implementations into the game and reined in focus on the more important tasks (A cinematic cutscene to fly into the face of 
